@@ -1,0 +1,30 @@
+{
+    "name": "mapnik-omnivore",
+    "version": "1.0.1",
+    "description": "Node module that returns metadata of sptial files.",
+    "main": "index.js",
+    "keywords": [
+        "mapbox",
+        "mapnik",
+        "tilemill",
+        "vector tile",
+        "mbtiles"
+    ],
+    "dependencies": {
+        "srs": "0.3.12",
+        "mkdirp": "0.3.5",
+        "mapnik": "~1.4.2",
+        "mbtiles": "0.4.2",
+        "sphericalmercator": "1.0.2"
+    },
+    "engines": {
+        "node": "0.10.x"
+    },
+    "devDependencies": {
+        "mocha": "1.17.x"
+    },
+    "scripts": {
+        "test": "./node_modules/.bin/mocha"
+    },
+    "author": "Carol B. Hansen"
+}
