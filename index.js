@@ -5,7 +5,7 @@ var fs = require('fs'),
 var _options = {
     encoding: 'utf8'
 }
-module.exports.digest = function(file, callback) {
+function digest(file, callback) {
     getMetadata(file, function(err, metadata) {
         if (err) return callback(err);
         return callback(null, metadata);
@@ -16,24 +16,14 @@ function getMetadata(file, callback) {
     var metadata = {};
     //Get filsize from fs.stats
     fs.stat(file, function(err, stats) {
-        if (err) return callback(invalid('Error getting stats from file.'));
+        if (err) return callback(invalid('Error getting stats from file. File might not exist.'));
         var filesize = stats['size'];
         if (filesize > 216066856) return callback(invalid('File is larger than 200MB. Too big to process.'));
         getFileType(file, function(err, filetype) {
-            if (err) return callback(invalid('Error getting filetype.'));
+            if (err) return callback(err);
             processDatasource.init(file, filesize, filetype, function(err, dsConfigs) {
                 if (err) return callback(err);
-                metadata.filesize = filesize;
-                metadata.fileType = filetype;
-                metadata.projection = dsConfigs.projection;
-                metadata.extent = dsConfigs.extent;
-                metadata.center = dsConfigs.center;
-                metadata.minzoom = dsConfigs.minzoom;
-                metadata.maxzoom = dsConfigs.maxzoom;
-                metadata.json = dsConfigs.json;
-                metadata.layers = dsConfigs.layers;
-                metadata.dstype = dsConfigs.dstype;
-                return callback(null, metadata);
+                return callback(null, dsConfigs);
             });
         });
     });
@@ -61,4 +51,9 @@ function getFileType(file, callback) {
             });
         });
     });
+};
+module.exports = {
+	digest: digest,
+	getFileType: getFileType,
+	getMetadata: getMetadata
 };

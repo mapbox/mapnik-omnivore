@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Folder>
+	<name>Tornado Tracks and Icons</name>
+	<visibility>0</visibility>
+	<open>1</open>
+  <LookAt>
+    <longitude>-89.82</longitude>
+    <latitude>36.73</latitude>
+    <altitude>3000000</altitude>
+  </LookAt>
+
+	<description>Individual files are large so be patient as the download...especailly the Time Loop KMZ.</description>
+	
+	<ScreenOverlay id="readme">
+		<name>READ ME</name>
+		<drawOrder>100</drawOrder>
+		<Icon>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/openinng_splash.png</href>
+		</Icon>
+		<overlayXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+		<screenXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+		<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+		<size x="0" y="0" xunits="fraction" yunits="fraction"/>
+	</ScreenOverlay>
+		
+	<NetworkLink>
+		<name>Tornadoes by F-scale</name>
+		<visibility>0</visibility>
+		<open>1</open>
+		<Url>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/fscale_tor.kmz</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Tornadoes by year</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/years_tor.kmz</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Tornadoes by month</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/months_tor.kmz</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Tornadoes by state</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/state_tor.kmz</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Tornado Icons Time Loop</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/time_tor.kmz</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Tornado tracks and icons</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>http://www.srh.noaa.gov/gis/kml/TIMS/tracks_tor.kmz</href>
+		</Url>
+	</NetworkLink>
+</Folder>
+</kml>
