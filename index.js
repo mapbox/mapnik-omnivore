@@ -18,13 +18,10 @@ function getMetadata(file, callback) {
     fs.stat(file, function(err, stats) {
         if (err) return callback(invalid('Error getting stats from file.'));
         var filesize = stats['size'];
-        console.log("filesize: " + filesize);
         if (filesize > 216066856) return callback(invalid('File is larger than 200MB. Too big to process.'));
         getFileType(file, function(err, filetype) {
-            console.log("filetype: " + filetype);
             if (err) return callback(invalid('Error getting filetype.'));
             processDatasource.init(file, filesize, filetype, function(err, dsConfigs) {
-            	console.log("dsConfigs returned to index..." + JSON.stringify(dsConfigs));
                 if (err) return callback(err);
                 metadata.filesize = filesize;
                 metadata.fileType = filetype;
@@ -43,7 +40,6 @@ function getMetadata(file, callback) {
 };
 
 function getFileType(file, callback) {
-    console.log("in getFileType");
     //get file contents
     fs.open(file, 'r', function(err, fd) {
         if (err) return callback(err);

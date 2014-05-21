@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+- '0.10'
+before_script:
+- echo "$TRAVIS_SECURE_ENV_VARS"
+- echo "$TRAVIS_PULL_REQUEST"
+- echo "$TRAVIS_BRANCH"
+- echo "$TRAVIS_COMMIT"
+- echo "$TRAVIS_REPO_SLUG"
