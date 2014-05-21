@@ -24,6 +24,7 @@ function getMetadata(file, callback) {
             console.log("filetype: " + filetype);
             if (err) return callback(invalid('Error getting filetype.'));
             processDatasource.init(file, filesize, filetype, function(err, dsConfigs) {
+            	console.log("dsConfigs returned to index..." + JSON.stringify(dsConfigs));
                 if (err) return callback(err);
                 metadata.filesize = filesize;
                 metadata.fileType = filetype;
@@ -34,6 +35,7 @@ function getMetadata(file, callback) {
                 metadata.maxzoom = dsConfigs.maxzoom;
                 metadata.json = dsConfigs.json;
                 metadata.layers = dsConfigs.layers;
+                metadata.dstype = dsConfigs.dstype;
                 return callback(null, metadata);
             });
         });
