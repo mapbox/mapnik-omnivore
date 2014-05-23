@@ -7,12 +7,12 @@ Currently supports the following file types:
 - `.kml`
 - `.gpx`
 - `.geo.json`
-- `.shp`  (In order to find the projection, `mapnik-omnivore` assumes there is a `.prj` file in the same directory as the `.shp` file that was passed in)
+- `.shp`  (In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file)
 
 # How to Use
 
 ```
-var mapnikOmnivore = require('./index.js'),
+var mapnikOmnivore = require('mapnik-omnivore'),
     path = require('path');
 
 var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
@@ -40,22 +40,24 @@ mapnikOmnivore.digest(file, function(err, metadata){
   extent: [ -180, -59.47306100000001, 180, 83.57026863098147 ],
   json: { 
   	vector_layers: [ { 
-    id: 'world_merc',
-    description: '',
-    minzoom: 0,
-    maxzoom: 22,
-    fields: 
-     { FIPS: 'String',
-       ISO2: 'String',
-       ISO3: 'String',
-       UN: 'Number',
-       NAME: 'String',
-       AREA: 'Number',
-       POP2005: 'Number',
-       REGION: 'Number',
-       SUBREGION: 'Number',
-       LON: 'Number',
-       LAT: 'Number' } } ] },
+      id: 'world_merc',
+      description: '',
+      minzoom: 0,
+      maxzoom: 22,
+      fields: { 
+        FIPS: 'String',
+        ISO2: 'String',
+        ISO3: 'String',
+        UN: 'Number',
+        NAME: 'String',
+        AREA: 'Number',
+        POP2005: 'Number',
+        REGION: 'Number',
+        SUBREGION: 'Number',
+        LON: 'Number',
+        LAT: 'Number' } 
+    } ] 
+  },
   minzoom: 0,    // calculates the optimal minimum and
   maxzoom: 5,   // maximum zoom levels for the file
   layers: [ 'world_merc' ],
