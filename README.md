@@ -3,11 +3,13 @@ Node module that returns metadata of spatial files.
 
 [![Build Status](https://travis-ci.org/mapbox/mapnik-omnivore.svg?branch=master)](https://travis-ci.org/mapbox/mapnik-omnivore)
 
+
 Currently supports the following file types:
 - `.kml`
 - `.gpx`
 - `.geo.json`
 - `.shp`  (In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file)
+
 
 # How to Use
 
@@ -28,7 +30,8 @@ mapnikOmnivore.digest(file, function(err, metadata){
 
 ### mapnikOmnivore.digest(filepath, callback)
 - filepath `required`
-- callback
+- callback `(err, metadata)`
+
 
 #### Example of returned `metadata`
 ```
@@ -64,6 +67,7 @@ mapnikOmnivore.digest(file, function(err, metadata){
   dstype: 'shape',
   filetype: '.shp' }
 ```
+
 
 Run `node runModule.js` from the root to try it out.
 
