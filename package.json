@@ -5,10 +5,7 @@
     "main": "index.js",
     "keywords": [
         "mapbox",
-        "mapnik",
-        "tilemill",
-        "vector tile",
-        "mbtiles"
+        "mapnik"
     ],
     "dependencies": {
         "srs": "0.3.12",
