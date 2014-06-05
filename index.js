@@ -8,14 +8,22 @@ mapnik.register_default_input_plugins()
 var _options = {
     encoding: 'utf8'
 };
-
+/**
+ * Initializes the module
+ * @param file (filepath)
+ * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
+ */
 function digest(file, callback) {
     getMetadata(file, function(err, metadata) {
         if (err) return callback(err);
         return callback(null, metadata);
     });
 };
-
+/**
+ * Validates size of file and processes the file
+ * @param file (filepath)
+ * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
+ */
 function getMetadata(file, callback) {
     var metadata = {};
     //Get filsize from fs.stats
@@ -25,14 +33,18 @@ function getMetadata(file, callback) {
         if (filesize > 216066856) return callback(invalid('File is larger than 200MB. Too big to process.'));
         getFileType(file, function(err, filetype) {
             if (err) return callback(err);
-            processDatasource.init(file, filesize, filetype, function(err, dsConfigs) {
+            processDatasource.init(file, filesize, filetype, function(err, metadata) {
                 if (err) return callback(err);
-                return callback(null, dsConfigs);
+                return callback(null, metadata);
             });
         });
     });
 };
-
+/**
+ * Validates filetype based on the file's contents
+ * @param file (filepath)
+ * @returns (error, filetype);
+ */
 function getFileType(file, callback) {
     //get file contents
     fs.open(file, 'r', function(err, fd) {
@@ -48,6 +60,7 @@ function getFileType(file, callback) {
             else if (head.indexOf('\"type\":') !== -1) return callback(null, '.geo.json');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
+            //should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
             else if (isCSV(file)) return callback(null, '.csv');
             else return callback(invalid('Incompatible filetype.'));
             //Close file
@@ -57,13 +70,18 @@ function getFileType(file, callback) {
         });
     });
 };
-// Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what 
-// will be digesting it to obtain fields, extent, and center point
+/**
+ * Checks if tile is valid geoCSV
+ * @param file (filepath)
+ * @returns boolean;
+ */
 function isCSV(file) {
     var options = {
         type: 'csv',
         file: file
     };
+    // Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what 
+    // will be digesting it to obtain fields, extent, and center point
     try {
         var ds = new mapnik.Datasource(options);
         return true;
