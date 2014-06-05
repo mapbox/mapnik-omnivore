@@ -6,7 +6,8 @@ var assert = require('assert'),
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
-var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));    
+var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 /**
  * Testing mapnik-omnivore.digest
  */
@@ -27,13 +28,30 @@ describe('[SHAPE] Getting datasources', function() {
         });
     });
 });
+describe('[CSV] Getting datasources', function() {
+    it('should return expected metadata', function(done) {
+        var file = path.resolve('test/data/csv/bbl_current_csv.csv');
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_bbl_csv);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
+            }
+            done();
+        });
+    });
+});
 describe('[KML] Getting datasources', function() {
     it('should return expected metadata', function(done) {
         var file = path.resolve('test/data/kml/1week_earthquake.kml');
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
-  try {
+            try {
                 assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
             } catch (err) {
                 console.log(err);
@@ -82,7 +100,18 @@ describe('[GPX] Getting datasource', function() {
 describe('Getting filetype ', function() {
     it('should return an error due to incompatible file', function(done) {
         var file = path.resolve('test/data/errors/incompatible.txt');
-        mapnik_omnivore.getFileType(file, function(err, type){
+        mapnik_omnivore.getFileType(file, function(err, type) {
+            assert.ok(err instanceof Error);
+            assert.equal('EINVALID', err.code);
+            assert.equal(err.message, 'Incompatible filetype.');
+            done();
+        });
+    });
+});
+describe('Getting filetype ', function() {
+    it('should return an error due to non-geo CSV file', function(done) {
+        var file = path.resolve('test/data/errors/nongeo.csv');
+        mapnik_omnivore.getFileType(file, function(err, type) {
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
             assert.equal(err.message, 'Incompatible filetype.');
@@ -93,7 +122,7 @@ describe('Getting filetype ', function() {
 describe('Getting filetype ', function() {
     it('should return an error because file does not exist.', function(done) {
         var file = 'doesnt/exist.shp';
-        mapnik_omnivore.getMetadata(file, function(err, configs){
+        mapnik_omnivore.getMetadata(file, function(err, configs) {
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
             assert.equal(err.message, 'Error getting stats from file. File might not exist.');

@@ -1,10 +1,14 @@
 var fs = require('fs'),
     path = require('path'),
     invalid = require('./lib/invalid'),
-    processDatasource = require('./lib/datasourceProcessor');
+    processDatasource = require('./lib/datasourceProcessor'),
+    mapnik = require('mapnik');
+// Register datasource plugins
+mapnik.register_default_input_plugins()
 var _options = {
     encoding: 'utf8'
-}
+};
+
 function digest(file, callback) {
     getMetadata(file, function(err, metadata) {
         if (err) return callback(err);
@@ -44,6 +48,7 @@ function getFileType(file, callback) {
             else if (head.indexOf('\"type\":') !== -1) return callback(null, '.geo.json');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
+            else if (isCSV(file)) return callback(null, '.csv');
             else return callback(invalid('Incompatible filetype.'));
             //Close file
             fs.close(fd, function() {
@@ -52,8 +57,22 @@ function getFileType(file, callback) {
         });
     });
 };
+// Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what 
+// will be digesting it to obtain fields, extent, and center point
+function isCSV(file) {
+    var options = {
+        type: 'csv',
+        file: file
+    };
+    try {
+        var ds = new mapnik.Datasource(options);
+        return true;
+    } catch (err) {
+        return false;
+    }
+};
 module.exports = {
-	digest: digest,
-	getFileType: getFileType,
-	getMetadata: getMetadata
+    digest: digest,
+    getFileType: getFileType,
+    getMetadata: getMetadata
 };

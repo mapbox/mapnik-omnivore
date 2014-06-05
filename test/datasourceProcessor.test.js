@@ -7,6 +7,7 @@ var assert = require('assert'),
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
+var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));    
 /**
  * Testing datasourceProcessor.getCenterAndExtent
@@ -17,12 +18,37 @@ describe('[SHAPE] Getting center of extent', function() {
         var shapefile = path.resolve('test/data/zip/world_merc/world_merc.shp');
         var ds = new mapnik.Datasource({
             type: 'shape',
-            file: shapefile
+            file: shapefile,
+            layer: 'world_merc'
         });
         var type = '.shp';
         var expectedCenter = [0, 12.048603815490733];
         var expectedExtent = [-180, -59.47306100000001, 180, 83.57026863098147];
         var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        assert.ok(result);
+        assert.ok(result.center);
+        assert.ok(result.extent);
+        assert.ok(typeof result.extent == 'object');
+        assert.ok(typeof result.center == 'object');
+        assert.deepEqual(result.center, expectedCenter);
+        assert.deepEqual(result.extent, expectedExtent);
+    });
+});
+describe('[CSV] Getting center of extent', function() {
+    it('should return expected values', function() {
+        var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+        var csvFile = path.resolve('test/data/csv/bbl_current_csv.csv');
+        var filetype = '.csv';
+        var options = {
+            type: 'csv',
+            file: csvFile,
+            filesize_max:10,
+            layer: 'bbl_current_csv'
+        };
+        var ds = new mapnik.Datasource(options);
+        var expectedCenter = [-77.0481382917019, 38.93765872502635];
+        var expectedExtent = [-77.0925920175155,38.9142786070481,-77.0036845658883,38.9610388430046];
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj, filetype);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
@@ -57,7 +83,7 @@ describe('[KML] Getting center of extent', function() {
 });
 describe('[GeoJson] Getting center of extent', function() {
     it('should return expected values', function() {
-        var proj = '+init=epsg:4326';
+        var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         var geoJsonFile = path.resolve('test/data/geojson/DC_polygon.geo.json');
         var type = '.geo.json';
         var options = {
@@ -119,6 +145,25 @@ describe('[SHAPE] Getting datasources', function() {
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
+            }
+            done();
+        });
+    });
+});
+describe('[CSV] Getting datasources', function() {
+    it('should return expected layers and json', function(done) {
+        var csvFile = path.resolve('test/data/csv/bbl_current_csv.csv');
+        var filesize = 1667;
+        var type = '.csv';
+        datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_bbl_csv);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
             }
             done();
         });
