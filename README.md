@@ -1,18 +1,18 @@
 # mapnik-omnivore
 Node module that returns metadata of spatial files.
+Version format follows [Semantic Version](http://semver.org/)
 
 [![Build Status](https://travis-ci.org/mapbox/mapnik-omnivore.svg?branch=master)](https://travis-ci.org/mapbox/mapnik-omnivore)
-
 
 Currently supports the following file types:
 - `.kml`
 - `.gpx`
 - `.geo.json`
-- `.csv`  (must be valid geo CSV, and can be the form of `.csv`, `.txt`, or `.tsv`)
-- `.shp`  (In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file)
+- `.csv` : must be valid geo CSV, and can be in the form of `.csv`, `.txt`, or `.tsv`
+- `.shp` : In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file
 
 
-# How to Use
+# Example
 
 ```
 var mapnikOmnivore = require('mapnik-omnivore'),
@@ -28,6 +28,7 @@ mapnikOmnivore.digest(file, function(err, metadata){
 	}
 });
 ```
+
 
 ### mapnikOmnivore.digest(filepath, callback)
 - filepath `required`
@@ -67,6 +68,12 @@ mapnikOmnivore.digest(file, function(err, metadata){
   layers: [ 'world_merc' ],
   dstype: 'shape',
   filetype: '.shp' }
+```
+
+## Install
+With npm:
+```
+npm install mapnik-omnivore
 ```
 
 
