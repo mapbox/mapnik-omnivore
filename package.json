@@ -1,26 +1,30 @@
 {
-    "name": "mapnik-omnivore",
-    "version": "1.1.1",
-    "description": "Node module that returns metadata of spatial files.",
-    "main": "index.js",
-    "keywords": ["mapbox", "mapnik"],
-    "dependencies": {
-        "srs": "~0.4.1",
-        "mapnik": "~1.4.4",
-        "sphericalmercator": "1.0.2"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/mapbox/mapnik-omnivore"
-    },
-    "engines": {
-        "node": "0.10.x"
-    },
-    "devDependencies": {
-        "mocha": "1.17.x"
-    },
-    "scripts": {
-        "test": "./node_modules/.bin/mocha"
-    },
-    "author": "Carol B. Hansen"
+  "name": "mapnik-omnivore",
+  "version": "1.1.1",
+  "description": "Node module that returns metadata of spatial files.",
+  "main": "index.js",
+  "keywords": [
+    "mapbox",
+    "mapnik"
+  ],
+  "dependencies": {
+    "srs": "~0.4.1",
+    "mapnik": "~1.4.6",
+    "sphericalmercator": "1.0.2",
+    "gdal": "0.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapbox/mapnik-omnivore"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {
+    "mocha": "1.17.x"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "Carol B. Hansen"
 }

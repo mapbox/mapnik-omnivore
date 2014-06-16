@@ -3,6 +3,7 @@ var fs = require('fs'),
     invalid = require('./lib/invalid'),
     processDatasource = require('./lib/datasourceProcessor'),
     mapnik = require('mapnik');
+
 // Register datasource plugins
 mapnik.register_default_input_plugins()
 var _options = {
@@ -56,7 +57,9 @@ function getFileType(file, callback) {
             var head = buffer.slice(0, 50).toString();
             //process as shapefile
             if (buffer.readUInt32BE(0) === 9994) return callback(null, '.shp');
-            // check for file type kml, gpx or geojson
+            //process as geotiff
+            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42) return callback(null, '.tif');
+            //check for file type kml, gpx or geojson
             else if (head.indexOf('\"type\":') !== -1) return callback(null, '.geo.json');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
