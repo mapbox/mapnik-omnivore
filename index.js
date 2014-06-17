@@ -30,7 +30,6 @@ function getMetadata(file, callback) {
     fs.stat(file, function(err, stats) {
         if (err) return callback(invalid('Error getting stats from file. File might not exist.'));
         var filesize = stats['size'];
-        if (filesize > 216066856) return callback(invalid('File is larger than 200MB. Too big to process.'));
         getFileType(file, function(err, filetype) {
             if (err) return callback(err);
             processDatasource.init(file, filesize, filetype, function(err, metadata) {
