@@ -8,7 +8,8 @@ var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
-var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));    
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));   
+var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));   
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
@@ -24,6 +25,29 @@ describe('[SHAPE] Getting center of extent', function() {
         var type = '.shp';
         var expectedCenter = [0, 12.048603815490733];
         var expectedExtent = [-180, -59.47306100000001, 180, 83.57026863098147];
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        assert.ok(result);
+        assert.ok(result.center);
+        assert.ok(result.extent);
+        assert.ok(typeof result.extent == 'object');
+        assert.ok(typeof result.center == 'object');
+        assert.deepEqual(result.center, expectedCenter);
+        assert.deepEqual(result.extent, expectedExtent);
+    });
+});
+describe('[TIF] Getting center of extent', function() {
+    it('should return expected values', function() {
+        var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
+        var tifFile = path.resolve('test/data/geotiff/sample.tif');
+        var ds = new mapnik.Datasource({
+            type: 'gdal',
+            file: tifFile,
+            layer: 'sample',
+            nodata: null
+        });
+        var type = '.tif';
+        var expectedCenter = [-110.32476292309875,44.56502238336985];
+        var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264 ];
         var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
         assert.ok(result);
         assert.ok(result.center);
@@ -145,6 +169,25 @@ describe('[SHAPE] Getting datasources', function() {
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
+            }
+            done();
+        });
+    });
+});
+describe('[TIF] Getting datasources', function() {
+    it('should return expected layers and json', function(done) {
+        var tifFile = path.resolve('test/data/geotiff/sample.tif');
+        var filesize = 794079;
+        var type = '.tif';
+        datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_sample_tif);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata));
             }
             done();
         });
@@ -317,6 +360,17 @@ describe('Getting projection ', function() {
             });
         });
     })(name, errorTests[name]);
+    it('should return an error due to invalid tif file', function(done) {
+        var file = path.resolve('test/data/errors/sampleError.tif');
+        var type = '.tif';
+        var expectedMessage = 'Invalid .TIF file. Error: Error opening dataset';
+        datasourceProcessor.projectionFromRaster(file, function(err, projection) {
+            assert.ok(err instanceof Error);
+            assert.equal(expectedMessage, err.message);
+            assert.equal('EINVALID', err.code);
+            done();
+        });
+    });
     it('should return the correct projection for a shapefile', function(done) {
         var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
         var type = '.shp';
