@@ -1,30 +1,27 @@
 {
-  "name": "mapnik-omnivore",
-  "version": "1.1.1",
-  "description": "Node module that returns metadata of spatial files.",
-  "main": "index.js",
-  "keywords": [
-    "mapbox",
-    "mapnik"
-  ],
-  "dependencies": {
-    "srs": "0.4.1",
-    "mapnik": "~1.4.7",
-    "sphericalmercator": "1.0.2",
-    "gdal": "https://github.com/naturalatlas/node-gdal/tarball/master"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mapbox/mapnik-omnivore"
-  },
-  "engines": {
-    "node": "0.10.x"
-  },
-  "devDependencies": {
-    "mocha": "1.17.x"
-  },
-  "scripts": {
-    "test": "./node_modules/.bin/mocha"
-  },
-  "author": "Carol B. Hansen"
+    "name": "mapnik-omnivore",
+    "version": "1.1.1",
+    "description": "Node module that returns metadata of spatial files.",
+    "main": "index.js",
+    "keywords": ["mapbox", "mapnik"],
+    "dependencies": {
+        "srs": "~0.4.3",
+        "mapnik": "~1.4.10",
+        "sphericalmercator": "1.0.2",
+        "gdal": "https://github.com/naturalatlas/node-gdal/tarball/master"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mapbox/mapnik-omnivore"
+    },
+    "engines": {
+        "node": "0.10.x"
+    },
+    "devDependencies": {
+        "mocha": "1.x"
+    },
+    "scripts": {
+        "test": "mocha -R spec"
+    },
+    "author": "Carol B. Hansen"
 }
