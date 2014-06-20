@@ -5,8 +5,8 @@
     "main": "index.js",
     "keywords": ["mapbox", "mapnik"],
     "dependencies": {
-        "srs": "~0.4.1",
-        "mapnik": "~1.4.4",
+        "srs": "~0.4.2",
+        "mapnik": "~1.4.10",
         "sphericalmercator": "1.0.2"
     },
     "repository": {
@@ -17,10 +17,10 @@
         "node": "0.10.x"
     },
     "devDependencies": {
-        "mocha": "1.17.x"
+        "mocha": "1.x"
     },
     "scripts": {
-        "test": "./node_modules/.bin/mocha"
+        "test": "mocha -R spec"
     },
     "author": "Carol B. Hansen"
 }
