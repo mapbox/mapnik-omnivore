@@ -5,7 +5,7 @@
     "main": "index.js",
     "keywords": ["mapbox", "mapnik"],
     "dependencies": {
-        "srs": "~0.4.2",
+        "srs": "~0.4.3",
         "mapnik": "~1.4.10",
         "sphericalmercator": "1.0.2"
     },
