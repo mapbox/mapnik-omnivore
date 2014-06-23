@@ -2,6 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     invalid = require('./lib/invalid'),
     processDatasource = require('./lib/datasourceProcessor'),
+    gdal = require('gdal'),
     mapnik = require('mapnik');
 
 // Register datasource plugins
@@ -55,24 +56,81 @@ function getFileType(file, callback) {
             if (err) return callback(err);
             var head = buffer.slice(0, 50).toString();
             //process as shapefile
-            if (buffer.readUInt32BE(0) === 9994) return callback(null, '.shp');
+            if (buffer.readUInt32BE(0) === 9994){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.shp');
+                });
+            }
             //process as geotiff
-            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42) return callback(null, '.tif');
+            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.tif');
+                });
+            }
             //process as kml, gpx, geojson, or vrt
-            else if (head.indexOf('\"type\":') !== -1) return callback(null, '.geo.json');
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
-            else if (head.indexOf('<VRTDataset') !== -1) return callback(null, '.vrt');
+            else if (head.indexOf('\"type\":') !== -1){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.geo.json');
+                });
+            }
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) {
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.kml');
+                });
+            }
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) {
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.gpx');
+                });
+            }
+            else if (head.indexOf('<VRTDataset') !== -1){
+                //verify vrt has valid source files
+                verifyVRT(file, function(err, valid){
+                    if(err) return callback(err);
+                    else if(valid) {
+                        //Close file
+                        fs.close(fd, function() {
+                            console.log('Done reading file');
+                            return callback(null, '.vrt');
+                        });
+                    }
+                });
+            }
             //process as CSV: should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
-            else if (isCSV(file)) return callback(null, '.csv');
+            else if (isCSV(file)){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.csv');
+                });
+            }
             else return callback(invalid('Incompatible filetype.'));
-            //Close file
-            fs.close(fd, function() {
-                console.log('Done reading file');
-            });
+            function closeAndReturn(type){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                });
+                return callback(null, type);
+            };
         });
     });
 };
+function verifyVRT(file, callback){
+    ds = gdal.open(file);
+    var filelist = ds.getFileList();
+    if(filelist.length === 1) return callback(invalid("VRT file does not reference existing source files."));
+    else return callback(null, true);
+}
 /**
  * Checks if tile is valid geoCSV
  * @param file (filepath)
