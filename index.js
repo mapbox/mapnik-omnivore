@@ -58,11 +58,12 @@ function getFileType(file, callback) {
             if (buffer.readUInt32BE(0) === 9994) return callback(null, '.shp');
             //process as geotiff
             else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42) return callback(null, '.tif');
-            //check for file type kml, gpx or geojson
+            //process as kml, gpx, geojson, or vrt
             else if (head.indexOf('\"type\":') !== -1) return callback(null, '.geo.json');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
-            //should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
+            else if (head.indexOf('<VRTDataset') !== -1) return callback(null, '.vrt');
+            //process as CSV: should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
             else if (isCSV(file)) return callback(null, '.csv');
             else return callback(invalid('Incompatible filetype.'));
             //Close file
