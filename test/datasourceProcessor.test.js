@@ -363,7 +363,7 @@ describe('Getting projection ', function() {
     it('should return an error due to invalid tif file', function(done) {
         var file = path.resolve('test/data/errors/sampleError.tif');
         var type = '.tif';
-        var expectedMessage = 'Invalid .TIF file. Error: Error opening dataset';
+        var expectedMessage = 'Invalid gdal source. Error: Error opening dataset';
         datasourceProcessor.projectionFromRaster(file, function(err, projection) {
             assert.ok(err instanceof Error);
             assert.equal(expectedMessage, err.message);
