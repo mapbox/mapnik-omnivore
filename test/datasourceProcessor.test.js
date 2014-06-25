@@ -55,6 +55,8 @@ describe('[TIF] Getting center of extent', function() {
         assert.ok(typeof result.extent == 'object');
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
+        console.log("result.extent in TIF test");
+        console.log(result.extent);
         assert.deepEqual(result.extent, expectedExtent);
     });
 });
