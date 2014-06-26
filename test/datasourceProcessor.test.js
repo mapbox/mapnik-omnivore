@@ -9,7 +9,8 @@ var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));   
-var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));   
+var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));     
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
@@ -42,12 +43,11 @@ describe('[TIF] Getting center of extent', function() {
         var ds = new mapnik.Datasource({
             type: 'gdal',
             file: tifFile,
-            layer: 'sample',
-            nodata: null
+            layer: 'sample'
         });
         var type = '.tif';
         var expectedCenter = [-110.32476292309875,44.56502238336985];
-        var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264 ];
+        var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264];
         var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
         assert.ok(result);
         assert.ok(result.center);
@@ -55,8 +55,30 @@ describe('[TIF] Getting center of extent', function() {
         assert.ok(typeof result.extent == 'object');
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
-        console.log("result.extent in TIF test");
-        console.log(result.extent);
+        assert.deepEqual(result.extent, expectedExtent);
+    });
+});
+describe('[VRT] Getting center of extent', function() {
+    it('should return expected values', function() {
+        var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
+        var vrtFile = path.resolve('test/data/vrt/sample.vrt');
+        var ds = new mapnik.Datasource({
+            type: 'gdal',
+            file: vrtFile,
+            layer: 'sample'
+        });
+        var type = '.vrt';
+        //This is the same TIF as in the test above...so why would center and extent be different?
+        //Does something happen differently between TIFs and VRTs in mapnik.ProjTransform?
+        var expectedCenter = [-110.32476292309875,44.56502238336985];
+        var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264];
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        assert.ok(result);
+        assert.ok(result.center);
+        assert.ok(result.extent);
+        assert.ok(typeof result.extent == 'object');
+        assert.ok(typeof result.center == 'object');
+        assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
     });
 });
@@ -195,6 +217,25 @@ describe('[TIF] Getting datasources', function() {
         });
     });
 });
+describe('[VRT] Getting datasources', function() {
+    it('should return expected layers and json', function(done) {
+        var vrtFile = path.resolve('test/data/vrt/sample.vrt');
+        var filesize = 1293;
+        var type = '.tif';
+        datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_sample_vrt);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata));
+            }
+            done();
+        });
+    });
+});
 describe('[CSV] Getting datasources', function() {
     it('should return expected layers and json', function(done) {
         var csvFile = path.resolve('test/data/csv/bbl_current_csv.csv');
@@ -303,6 +344,21 @@ describe('Setting min/max zoom', function() {
         var extent = [-77.11532282009873, 38.81041408561889, -76.90970655877031, 38.995615210318356];
         var bytes = 64244520;
         datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
+            assert.strictEqual(null, err);
+            assert.equal(minzoom, expectedMin);
+            assert.equal(maxzoom, expectedMax);
+            done();
+        });
+    });
+});
+describe('Setting min/max zoom for GDAL sources', function() {
+    it('should return expected values for min/maxzoom', function(done) {
+        var expectedMin = 0;
+        var expectedMax = 13;
+        var proj = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+        var center = [-110.32476292309875,44.56502238336985];
+        var pixelSize = [ 7.502071930146189, 7.502071930145942 ];
+        datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
             assert.strictEqual(null, err);
             assert.equal(minzoom, expectedMin);
             assert.equal(maxzoom, expectedMax);
