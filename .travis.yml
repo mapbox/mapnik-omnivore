@@ -7,6 +7,3 @@ before_script:
 - echo "$TRAVIS_BRANCH"
 - echo "$TRAVIS_COMMIT"
 - echo "$TRAVIS_REPO_SLUG"
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install libgdal1-dev
