@@ -420,7 +420,6 @@ describe('Getting projection ', function() {
     })(name, errorTests[name]);
     it('should return an error due to invalid tif file', function(done) {
         var file = path.resolve('test/data/errors/sampleError.tif');
-        var type = '.tif';
         var expectedMessage = 'Invalid gdal source. Error: Error opening dataset';
         datasourceProcessor.projectionFromRaster(file, function(err, projection) {
             assert.ok(err instanceof Error);
@@ -470,6 +469,16 @@ describe('Getting projection ', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
+            done();
+        });
+    });
+    it('should return an error for invalid VRT file due to nonexistent source files', function(done) {
+        var file = path.resolve('test/data/errors/sampleError.vrt');
+        var expectedMessage = 'Error getting statistics of band. 1 or more of the VRT file\'s relative sources may be missing';
+        datasourceProcessor.projectionFromRaster(file, function(err, projection) {
+            assert.ok(err instanceof Error);
+            assert.ok(err.message.indexOf(expectedMessage) !== -1);
+            assert.equal('EINVALID', err.code);
             done();
         });
     });
