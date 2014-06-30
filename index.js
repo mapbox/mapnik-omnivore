@@ -54,6 +54,7 @@ function getFileType(file, callback) {
         //Read file
         fs.read(fd, buf, 0, 50, null, function(err, bytesRead, buffer) {
             if (err) return callback(err);
+
             var head = buffer.slice(0, 50).toString();
             //process as shapefile
             if (buffer.readUInt32BE(0) === 9994){
@@ -69,6 +70,14 @@ function getFileType(file, callback) {
                 fs.close(fd, function() {
                     console.log('Done reading file');
                     return callback(null, '.tif');
+                });
+            }
+            //process as kml, gpx, topojson, geojson, or vrt
+            else if (head.indexOf('\"type\":\"Topology\"') !== -1){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.topojson');
                 });
             }
             //process as kml, gpx, geojson, or vrt
