@@ -11,7 +11,8 @@
   "dependencies": {
     "srs": "~0.4.3",
     "mapnik": "~1.4.10",
-    "sphericalmercator": "1.0.2"
+    "sphericalmercator": "1.0.2",
+    "gdal": "https://github.com/naturalatlas/node-gdal/tarball/master"
   },
   "repository": {
     "type": "git",
