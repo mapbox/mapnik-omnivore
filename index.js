@@ -71,7 +71,14 @@ function getFileType(file, callback) {
                     return callback(null, '.tif');
                 });
             }
-            //process as kml, gpx, geojson, or vrt
+            //process as kml, gpx, topojson, geojson, or vrt
+            else if (head.indexOf('\"type\":\"Topology\"') !== -1){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                    return callback(null, '.topojson');
+                });
+            }
             else if (head.indexOf('\"type\":') !== -1){
                 //Close file
                 fs.close(fd, function() {
