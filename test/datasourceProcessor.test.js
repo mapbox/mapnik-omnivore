@@ -11,7 +11,6 @@ var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fix
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));   
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
 var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));     
-var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
@@ -69,6 +68,8 @@ describe('[VRT] Getting center of extent', function() {
             layer: 'sample'
         });
         var type = '.vrt';
+        //This is the same TIF as in the test above...so why would center and extent be different?
+        //Does something happen differently between TIFs and VRTs in mapnik.ProjTransform?
         var expectedCenter = [-110.32476292309875,44.56502238336985];
         var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264];
         var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
@@ -141,29 +142,6 @@ describe('[GeoJson] Getting center of extent', function() {
         var ds = new mapnik.Datasource(options);
         var expectedCenter = [-77.01335, 38.89255];
         var expectedExtent = [-77.1174, 38.7912, -76.9093, 38.9939];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
-        assert.ok(result);
-        assert.ok(result.center);
-        assert.ok(result.extent);
-        assert.ok(typeof result.extent == 'object');
-        assert.ok(typeof result.center == 'object');
-        assert.deepEqual(result.center, expectedCenter);
-        assert.deepEqual(result.extent, expectedExtent);
-    });
-});
-describe('[TopoJson] Getting center of extent', function() {
-    it('should return expected values', function() {
-        var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-        var topoJsonFile = path.resolve('test/data/topojson/topo.json');
-        var type = '.topojson';
-        var options = {
-            type: 'ogr',
-            file: topoJsonFile,
-            layer_by_index: 0
-        };
-        var ds = new mapnik.Datasource(options);
-        var expectedCenter = [-81.705583, 41.480573];
-        var expectedExtent = [-81.705583,41.480573,-81.705583,41.480573];
         var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
         assert.ok(result);
         assert.ok(result.center);
@@ -310,25 +288,6 @@ describe('[GeoJson] Getting datasource', function() {
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata));
-            }
-            done();
-        });
-    });
-});
-describe('[TopoJson] Getting datasource', function() {
-    it('should return expected datasource and layer name', function(done) {
-        var topoJsonFile = path.resolve('test/data/topojson/topo.json');
-        var filesize = 332;
-        var type = '.topojson';
-        datasourceProcessor.init(topoJsonFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
-            assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_topo);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata));
             }
             done();
         });
