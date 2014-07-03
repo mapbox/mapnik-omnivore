@@ -95,7 +95,9 @@ function getFileType(file, callback) {
                     return callback(null, '.kml');
                 });
             }
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) {
+            //GPX spec doesn't require "<?xml" so took that out of validation
+            //http://www.topografix.com/GPX/1/1/
+            else if (head.indexOf('<gpx') !== -1) {
                 //Close file
                 fs.close(fd, function() {
                     console.log('Done reading file');

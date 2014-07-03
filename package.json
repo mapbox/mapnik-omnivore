@@ -1,27 +1,33 @@
 {
-    "name": "mapnik-omnivore",
-    "version": "1.1.1",
-    "description": "Node module that returns metadata of spatial files.",
-    "main": "index.js",
-    "keywords": ["mapbox", "mapnik", "geodata"],
-    "dependencies": {
-        "srs": "~0.4.3",
-        "mapnik": "~1.4.10",
-        "sphericalmercator": "1.0.2",
-        "gdal": "https://github.com/naturalatlas/node-gdal/tarball/master"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/mapbox/mapnik-omnivore"
-    },
-    "engines": {
-        "node": "0.10.x"
-    },
-    "devDependencies": {
-        "mocha": "1.x"
-    },
-    "scripts": {
-        "test": "mocha -R spec"
-    },
-    "author": "Carol B. Hansen"
+  "name": "mapnik-omnivore",
+  "version": "1.1.1",
+  "description": "Node module that returns metadata of spatial files.",
+  "main": "index.js",
+  "keywords": [
+    "mapbox",
+    "mapnik",
+    "geodata"
+  ],
+  "dependencies": {
+    "srs": "~0.4.3",
+    "mapnik": "~1.4.10",
+    "sphericalmercator": "1.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapbox/mapnik-omnivore"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {
+    "mocha": "1.x",
+    "coveralls": "~2.10.1",
+    "istanbul": "~0.2.14"
+  },
+  "scripts": {
+    "test": "mocha -R spec",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha && coveralls < ./coverage/lcov.info"
+  },
+  "author": "Carol B. Hansen"
 }
