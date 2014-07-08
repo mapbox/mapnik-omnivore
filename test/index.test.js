@@ -1,6 +1,7 @@
 var assert = require('assert'),
     path = require('path'),
     fs = require('fs'),
+    testData = path.dirname(require.resolve('mapnik-test-data')),
     mapnik_omnivore = require('../index.js');
 //json fixtures
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
@@ -13,7 +14,7 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
  */
 describe('[SHAPE] Getting datasources', function() {
     it('should return expected metadata', function(done) {
-        var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
+        var file = testData + '/data/shp/world_merc/world_merc.shp';
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
@@ -30,7 +31,7 @@ describe('[SHAPE] Getting datasources', function() {
 });
 describe('[CSV] Getting datasources', function() {
     it('should return expected metadata', function(done) {
-        var file = path.resolve('test/data/csv/bbl_current_csv.csv');
+        var file = testData + '/data/csv/bbl_current_csv.csv';
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
@@ -47,7 +48,7 @@ describe('[CSV] Getting datasources', function() {
 });
 describe('[KML] Getting datasources', function() {
     it('should return expected metadata', function(done) {
-        var file = path.resolve('test/data/kml/1week_earthquake.kml');
+        var file = testData + '/data/kml/1week_earthquake.kml';
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
@@ -64,7 +65,7 @@ describe('[KML] Getting datasources', function() {
 });
 describe('[GeoJson] Getting datasource', function() {
     it('should return expected datasource and layer name', function(done) {
-        var file = path.resolve('test/data/geojson/DC_polygon.geo.json');
+        var file = testData + '/data/geojson/DC_polygon.geo.json';
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
@@ -81,7 +82,7 @@ describe('[GeoJson] Getting datasource', function() {
 });
 describe('[GPX] Getting datasource', function() {
     it('should return expected datasource and layer name', function(done) {
-        var file = path.resolve('test/data/gpx/fells_loop.gpx');
+        var file = testData + '/data/gpx/fells_loop.gpx';
         var expectedLayers = ['waypoints', 'routes', 'tracks'];
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);

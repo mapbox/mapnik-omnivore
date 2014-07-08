@@ -2,7 +2,9 @@ var assert = require('assert'),
     path = require('path'),
     fs = require('fs'),
     mapnik = require('mapnik'),
+    testData = path.dirname(require.resolve('mapnik-test-data')),
     datasourceProcessor = require('../lib/datasourceProcessor.js');
+    console.log(testData);
 //json fixtures
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
@@ -15,7 +17,7 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
 describe('[SHAPE] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over';
-        var shapefile = path.resolve('test/data/zip/world_merc/world_merc.shp');
+        var shapefile = testData + '/data/shp/world_merc/world_merc.shp';
         var ds = new mapnik.Datasource({
             type: 'shape',
             file: shapefile,
@@ -37,7 +39,7 @@ describe('[SHAPE] Getting center of extent', function() {
 describe('[CSV] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-        var csvFile = path.resolve('test/data/csv/bbl_current_csv.csv');
+        var csvFile = testData + '/data/csv/bbl_current_csv.csv';
         var filetype = '.csv';
         var options = {
             type: 'csv',
@@ -61,7 +63,7 @@ describe('[CSV] Getting center of extent', function() {
 describe('[KML] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+init=epsg:4326';
-        var kmlFile = path.resolve('test/data/kml/1week_earthquake.kml');
+        var kmlFile = testData + '/data/kml/1week_earthquake.kml';
         var type = '.kml';
         var options = {
             type: 'ogr',
@@ -84,7 +86,7 @@ describe('[KML] Getting center of extent', function() {
 describe('[GeoJson] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-        var geoJsonFile = path.resolve('test/data/geojson/DC_polygon.geo.json');
+        var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var type = '.geo.json';
         var options = {
             type: 'ogr',
@@ -107,7 +109,7 @@ describe('[GeoJson] Getting center of extent', function() {
 describe('[GPX] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+init=epsg:4326';
-        var gpxFile = path.resolve('test/data/gpx/fells_loop.gpx');
+        var gpxFile = testData + '/data/gpx/fells_loop.gpx';
         var type = '.gpx';
         var options = {
             type: 'ogr',
@@ -133,7 +135,7 @@ describe('[GPX] Getting center of extent', function() {
  */
 describe('[SHAPE] Getting datasources', function() {
     it('should return expected layers and json', function(done) {
-        var shpFile = path.resolve('test/data/zip/world_merc/world_merc.shp');
+        var shpFile = testData + '/data/shp/world_merc/world_merc.shp';
         var filesize = 428328;
         var type = '.shp';
         datasourceProcessor.init(shpFile, filesize, type, function(err, metadata) {
@@ -152,7 +154,7 @@ describe('[SHAPE] Getting datasources', function() {
 });
 describe('[CSV] Getting datasources', function() {
     it('should return expected layers and json', function(done) {
-        var csvFile = path.resolve('test/data/csv/bbl_current_csv.csv');
+        var csvFile = testData + '/data/csv/bbl_current_csv.csv';
         var filesize = 1667;
         var type = '.csv';
         datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
@@ -171,7 +173,7 @@ describe('[CSV] Getting datasources', function() {
 });
 describe('[KML] Getting datasources', function() {
     it('should return expected layers and json', function(done) {
-        var kmlFile = path.resolve('test/data/kml/1week_earthquake.kml');
+        var kmlFile = testData + '/data/kml/1week_earthquake.kml';
         var filesize = 1082451;
         var type = '.kml';
         datasourceProcessor.init(kmlFile, filesize, type, function(err, metadata) {
@@ -190,7 +192,7 @@ describe('[KML] Getting datasources', function() {
 });
 describe('[GeoJson] Getting datasource', function() {
     it('should return expected datasource and layer name', function(done) {
-        var geoJsonFile = path.resolve('test/data/geojson/DC_polygon.geo.json');
+        var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var filesize = 367;
         var type = '.geo.json';
         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
@@ -209,7 +211,7 @@ describe('[GeoJson] Getting datasource', function() {
 });
 describe('[GPX] Getting datasource', function() {
     it('should return expected datasource and layer name', function(done) {
-        var gpxFile = path.resolve('test/data/gpx/fells_loop.gpx');
+        var gpxFile = testData + '/data/gpx/fells_loop.gpx';
         var filesize = 36815;
         var type = '.gpx';
         var expectedLayers = ['waypoints', 'routes', 'tracks'];
@@ -232,7 +234,7 @@ describe('[GPX] Getting datasource', function() {
  */
 describe('Setting layer configs', function() {
     it('should throw an error due to [0,0,0,0] extent', function(done) {
-        var invalidFile = path.resolve('test/data/kml/TIMS.kml');
+        var invalidFile = testData + '/data/kml/TIMS.kml';
         var filename = 'TIMS';
         var options = {
             type: 'ogr',
@@ -318,7 +320,7 @@ describe('Getting projection ', function() {
         });
     })(name, errorTests[name]);
     it('should return the correct projection for a shapefile', function(done) {
-        var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
+        var file = testData + '/data/shp/world_merc/world_merc.shp';
         var type = '.shp';
         var expectedProj = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over';
         datasourceProcessor.getProjection(file, type, function(err, projection) {
