@@ -72,13 +72,13 @@ function getFileType(file, callback) {
                 });
             }
             //process as kml, gpx, topojson, geojson, or vrt
-            else if (head.indexOf('\"type\":\"Topology\"') !== -1){
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.topojson');
-                });
-            }
+            // else if (head.indexOf('\"type\":\"Topology\"') !== -1){
+            //     //Close file
+            //     fs.close(fd, function() {
+            //         console.log('Done reading file');
+            //         return callback(null, '.topojson');
+            //     });
+            // }
             else if (head.indexOf('\"type\":') !== -1){
                 //Close file
                 fs.close(fd, function() {
@@ -93,9 +93,7 @@ function getFileType(file, callback) {
                     return callback(null, '.kml');
                 });
             }
-            //GPX spec doesn't require "<?xml" so took that out of validation
-            //http://www.topografix.com/GPX/1/1/
-            else if (head.indexOf('<gpx') !== -1) {
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) {
                 //Close file
                 fs.close(fd, function() {
                     console.log('Done reading file');
