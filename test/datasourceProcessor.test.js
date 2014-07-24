@@ -87,7 +87,7 @@ describe('[GeoJson] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
-        var type = '.geo.json';
+        var type = '.geojson';
         var options = {
             type: 'ogr',
             file: geoJsonFile,
@@ -194,7 +194,7 @@ describe('[GeoJson] Getting datasource', function() {
     it('should return expected datasource and layer name', function(done) {
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var filesize = 367;
-        var type = '.geo.json';
+        var type = '.geojson';
         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
@@ -332,7 +332,7 @@ describe('Getting projection ', function() {
     });
     it('should return the correct projection for geojson file', function(done) {
         var file = 'geojson_file';
-        var type = '.geo.json';
+        var type = '.geojson';
         var expectedProj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         datasourceProcessor.getProjection(file, type, function(err, projection) {
             if (err) return done(err);

@@ -56,7 +56,7 @@ function getFileType(file, callback) {
             //process as shapefile
             if (buffer.readUInt32BE(0) === 9994) return callback(null, '.shp');
             // check for file type kml, gpx or geojson
-            else if (head.trim().indexOf('{') == 0) return callback(null, '.geo.json');
+            else if (head.trim().indexOf('{') == 0) return callback(null, '.geojson');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
             else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
             //should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
