@@ -12,7 +12,7 @@
     "srs": "~0.4.3",
     "mapnik": "~1.4.10",
     "sphericalmercator": "1.0.2",
-    "gdal": "https://github.com/naturalatlas/node-gdal/archive/e51ee87f7f78d64a1028ba7f61d7f588d61b9061.tar.gz"
+    "gdal": "0.1.0"
   },
   "repository": {
     "type": "git",
