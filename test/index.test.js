@@ -126,7 +126,16 @@ describe('Getting filetype ', function() {
         mapnik_omnivore.getMetadata(file, function(err, configs) {
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
-            assert.equal(err.message, 'Error getting stats from file. File might not exist.');
+            assert.equal(err.message, 'Error getting reading file. File might not exist.');
+            done();
+        });
+    });
+});
+describe('Getting filetype', function() {
+    it('should return postgis when given connection parameters', function(done) {
+        var file = { dbname: 'test' };
+        mapnik_omnivore.getFileType(file, function(err, type) {
+            assert.equal(type, 'postgis');
             done();
         });
     });

@@ -26,25 +26,31 @@ function digest(file, callback) {
  */
 function getMetadata(file, callback) {
     var metadata = {};
-    //Get filsize from fs.stats
-    fs.stat(file, function(err, stats) {
-        if (err) return callback(invalid('Error getting stats from file. File might not exist.'));
-        var filesize = stats['size'];
-        getFileType(file, function(err, filetype) {
+    getFileType(file, function(err, filetype) {
+        if (err && err.code === 'ENOENT')
+            return callback(invalid('Error getting reading file. File might not exist.'));
+        if (err) return callback(err);
+        if (filetype === 'postgis')
+            return processDatasource.init(file, null, filetype, metadataReady);
+        fs.stat(file, function(err, stats) {
             if (err) return callback(err);
-            processDatasource.init(file, filesize, filetype, function(err, metadata) {
-                if (err) return callback(err);
-                return callback(null, metadata);
-            });
+            processDatasource.init(file, stats.size, filetype, metadataReady);
         });
     });
-};
+
+    function metadataReady(err, metadata) {
+        if (err) return callback(err);
+        callback(null, metadata);
+    }
+}
 /**
  * Validates filetype based on the file's contents
- * @param file (filepath)
+ * @param file (filepath or postgis connection parameters)
  * @returns (error, filetype);
  */
 function getFileType(file, callback) {
+    if (typeof file === 'object') return callback(null, 'postgis');
+
     //get file contents
     fs.open(file, 'r', function(err, fd) {
         if (err) return callback(err);
@@ -79,7 +85,7 @@ function isCSV(file) {
         type: 'csv',
         file: file
     };
-    // Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what 
+    // Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what
     // will be digesting it to obtain fields, extent, and center point
     try {
         var ds = new mapnik.Datasource(options);

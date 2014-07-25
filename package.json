@@ -9,9 +9,10 @@
     "geodata"
   ],
   "dependencies": {
-    "srs": "~0.4.3",
     "mapnik": "~1.4.10",
-    "sphericalmercator": "1.0.2"
+    "pg.js": "^3.4.1",
+    "sphericalmercator": "1.0.2",
+    "srs": "~0.4.3"
   },
   "repository": {
     "type": "git",
