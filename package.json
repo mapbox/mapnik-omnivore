@@ -1,6 +1,6 @@
 {
   "name": "mapnik-omnivore",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Node module that returns metadata of spatial files.",
   "main": "index.js",
   "keywords": [
@@ -25,7 +25,7 @@
     "mocha": "1.x",
     "coveralls": "~2.10.1",
     "istanbul": "~0.2.14",
-    "mapnik-test-data":"http://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.1-98e4e5f4d94979576d4fff22c8e447a3a5048302.tgz"
+    "mapnik-test-data": "http://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.3-fece0a9c546074a1479e9eae2333184029bb2279.tgz"
   },
   "scripts": {
     "test": "mocha -R spec",

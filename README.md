@@ -7,7 +7,7 @@ Version format follows [Semantic Version](http://semver.org/)
 Currently supports the following file types:
 - `.kml`
 - `.gpx`
-- `.geo.json`
+- `.geojson`
 - `.csv` : must be valid geo CSV, and can be in the form of `.csv`, `.txt`, or `.tsv`
 - `.shp` : In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file
 

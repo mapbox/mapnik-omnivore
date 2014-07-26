@@ -56,72 +56,25 @@ function getFileType(file, callback) {
             if (err) return callback(err);
             var head = buffer.slice(0, 50).toString();
             //process as shapefile
-            if (buffer.readUInt32BE(0) === 9994){
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.shp');
-                });
-            }
+            if (buffer.readUInt32BE(0) === 9994) closeAndReturn('.shp');
             //process as geotiff
-            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42){
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.tif');
-                });
-            }
+            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42) closeAndReturn('.tif');
             //process as kml, gpx, topojson, geojson, or vrt
-            // else if (head.indexOf('\"type\":\"Topology\"') !== -1){
-            //     //Close file
-            //     fs.close(fd, function() {
-            //         console.log('Done reading file');
-            //         return callback(null, '.topojson');
-            //     });
-            // }
-            else if (head.indexOf('\"type\":') !== -1){
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.geo.json');
-                });
-            }
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) {
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.kml');
-                });
-            }
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) {
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.gpx');
-                });
-            }
+            //else if (head.indexOf('\"type\":\"Topology\"') !== -1) closeAndReturn('.topojson');
+            else if (head.trim().indexOf('{') == 0) closeAndReturn('.geojson');
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) closeAndReturn('.kml');
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) closeAndReturn('.gpx');
             else if (head.indexOf('<VRTDataset') !== -1){
                 //verify vrt has valid source files
                 verifyVRT(file, function(err, valid){
                     if(err) return callback(err);
-                    else if(valid) {
-                        //Close file
-                        fs.close(fd, function() {
-                            console.log('Done reading file');
-                            return callback(null, '.vrt');
-                        });
-                    }
+                    else if(valid) closeAndReturn('.vrt');
                 });
             }
-            //process as CSV: should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
-            else if (isCSV(file)){
-                //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                    return callback(null, '.csv');
-                });
-            }
+            //should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
+            else if (isCSV(file)) closeAndReturn('.csv');
             else return callback(invalid('Incompatible filetype.'));
+            
             function closeAndReturn(type){
                 //Close file
                 fs.close(fd, function() {
