@@ -7,6 +7,7 @@ before_script:
 - echo "$TRAVIS_BRANCH"
 - echo "$TRAVIS_COMMIT"
 - echo "$TRAVIS_REPO_SLUG"
+- ./test/postgis-test-database.sh
 script:
 - npm test
 - npm run coverage

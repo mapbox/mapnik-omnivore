@@ -10,7 +10,8 @@ var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
-var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));    
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
+var expectedMetadata_postgis = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_postgis.json')));
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
@@ -229,6 +230,28 @@ describe('[GPX] Getting datasource', function() {
         });
     });
 });
+describe('[POSTGIS] Getting datasource', function() {
+    it('should return expected metadata', function(done) {
+        var params = {
+            user: 'postgres',
+            dbname: 'omnivoretest',
+            table: 'twocolumn',
+            geometry_field: 'geometryb'
+        };
+        datasourceProcessor.init(params, null, 'postgis', function(err, metadata) {
+            if (err) return done(err);
+            assert.deepEqual(metadata, expectedMetadata_postgis);
+            done();
+        });
+    });
+    it('should return an error if connection parameters are invalid', function(done) {
+        var params = { user: 'postgres', dbname: 'omnivoretest' };
+        datasourceProcessor.init(params, null, 'postgis', function(err, metadata) {
+            assert.equal(err.code, 'EINVALID');
+            done();
+        });
+    });
+});
 /**
  * Testing datasourceProcessor.setLayerConfigs
  */
@@ -360,6 +383,108 @@ describe('Getting projection ', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
+            done();
+        });
+    });
+    it('should return the correct projection for postgis table', function(done) {
+        var params = { user: 'postgres', dbname: 'omnivoretest', table: 'onecolumn4326' };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            if (err) return done(err);
+            var expectedProj = '+proj=longlat +datum=WGS84 +no_defs';
+            assert.equal(prj, expectedProj);
+            done();
+        });
+    });
+    it('should return the correct projection for postgis table with defined column', function(done) {
+        var params = {
+            user: 'postgres',
+            dbname: 'omnivoretest',
+            table: 'twocolumn',
+            geometry_field: 'geometryb'
+        };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            if (err) return done(err);
+            var expectedProj = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs';
+            assert.equal(prj, expectedProj);
+            done();
+        });
+    });
+    it('should return a projection for postgis table with multiple geom columns', function(done) {
+        var params = { user: 'postgres', dbname: 'omnivoretest', table: 'twocolumn' };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            if (err) return done(err);
+            var expectedProj = '+proj=longlat +datum=WGS84 +no_defs';
+            assert.equal(prj, expectedProj);
+            done();
+        });
+    });
+    it('should return the correct projection for defined postgis table and column', function(done) {
+        var params = {
+            user: 'postgres',
+            dbname: 'omnivoretest',
+            geometry_table: 'twocolumn',
+            geometry_field: 'geometrya'
+        };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            if (err) return done(err);
+            var expectedProj = '+proj=longlat +datum=WGS84 +no_defs';
+            assert.equal(prj, expectedProj);
+            done();
+        });
+    });
+    it('should return the correct projection given postgis query and geom info', function(done) {
+        var query = '(select geometrya, geometryb from nogeometry inner join twocolumn on nogeometry.fk = twocolumn.id) as data';
+        var params = {
+            user: 'postgres',
+            dbname: 'omnivoretest',
+            table: query,
+            geometry_table: 'twocolumn',
+            geometry_field: 'geometrya'
+        };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            if (err) return done(err);
+            var expectedProj = '+proj=longlat +datum=WGS84 +no_defs';
+            assert.equal(prj, expectedProj);
+            done();
+        });
+    });
+    it('should error on postgis query with bad table defined', function(done) {
+        var params = { user: 'postgres', table: 'bozo', dbname: 'omnivoretest' };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            assert.equal(err.code, 'EINVALID');
+            done();
+        });
+    });
+    it('should error if postgis connection parameters are invalid', function(done) {
+        var params = { user: 'bozo', table: 'bozotoo' };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            assert.equal(err.code, 'EINVALID');
+            done();
+        });
+    });
+    it('should error on postgis query where the geom table is not defined at all', function(done) {
+        var params = { user: 'postgres', dbname: 'omnivoretest' };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            assert.equal(err.code, 'EINVALID');
+            done();
+        });
+    });
+    it('should error on postgis table that has no geometry', function(done) {
+        var params = { user: 'postgres', dbname: 'omnivoretest', table: 'nogeometry' };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            assert.equal(err.code, 'EINVALID');
+            done();
+        });
+    });
+    it('should error if given only a postgis query without defining geom info', function(done) {
+        var query = '(select geometrya from nogeometry inner join twocolumn on nogeometry.fk = twocolumn.id) as data';
+        var params = {
+            user: 'postgres',
+            dbname: 'omnivoretest',
+            table: query
+        };
+        datasourceProcessor.getProjection(params, 'postgis', function(err, prj) {
+            assert.equal(err.code, 'EINVALID');
             done();
         });
     });
