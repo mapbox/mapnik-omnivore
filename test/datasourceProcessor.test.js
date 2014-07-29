@@ -4,13 +4,16 @@ var assert = require('assert'),
     mapnik = require('mapnik'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
     datasourceProcessor = require('../lib/datasourceProcessor.js');
-    console.log(testData);
+
 //json fixtures
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
-var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));    
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));   
+var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));     
+var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
@@ -34,6 +37,50 @@ describe('[SHAPE] Getting center of extent', function() {
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
+    });
+});
+describe('[TIF] Getting center of extent', function() {
+    it('should return expected values', function() {
+        var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
+        var tifFile = testData + '/data/geotiff/sample.tif';
+        var ds = new mapnik.Datasource({
+            type: 'gdal',
+            file: tifFile,
+            layer: 'sample'
+        });
+        var type = '.tif';
+        var expectedCenter = [-110.32476292309875,44.56502238336985];
+        var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264];
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        assert.ok(result);
+        assert.ok(result.center);
+        assert.ok(result.extent);
+        assert.ok(typeof result.extent == 'object');
+        assert.ok(typeof result.center == 'object');
+        assert.deepEqual(result.center, expectedCenter);
+        assert.ok(result.extent[0] > (expectedExtent[0] - 0.0001) && result.extent[0] < (expectedExtent[0] + 0.0001));
+    });
+});
+describe('[VRT] Getting center of extent', function() {
+    it('should return expected values', function() {
+        var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
+        var vrtFile = testData + '/data/vrt/sample.vrt';
+        var ds = new mapnik.Datasource({
+            type: 'gdal',
+            file: vrtFile,
+            layer: 'sample'
+        });
+        var type = '.vrt';
+        var expectedCenter = [-110.32476292309875,44.56502238336985];
+        var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264];
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        assert.ok(result);
+        assert.ok(result.center);
+        assert.ok(result.extent);
+        assert.ok(typeof result.extent == 'object');
+        assert.ok(typeof result.center == 'object');
+        assert.deepEqual(result.center, expectedCenter);
+        assert.ok(result.extent[0] > (expectedExtent[0] - 0.0001) && result.extent[0] < (expectedExtent[0] + 0.0001));
     });
 });
 describe('[CSV] Getting center of extent', function() {
@@ -106,6 +153,29 @@ describe('[GeoJson] Getting center of extent', function() {
         assert.deepEqual(result.extent, expectedExtent);
     });
 });
+// describe('[TopoJson] Getting center of extent', function() {
+//     it('should return expected values', function() {
+//         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+//         var topoJsonFile = testData + '/data/topojson/topo.json';
+//         var type = '.topojson';
+//         var options = {
+//             type: 'ogr',
+//             file: topoJsonFile,
+//             layer_by_index: 0
+//         };
+//         var ds = new mapnik.Datasource(options);
+//         var expectedCenter = [-81.705583, 41.480573];
+//         var expectedExtent = [-81.705583,41.480573,-81.705583,41.480573];
+//         var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+//         assert.ok(result);
+//         assert.ok(result.center);
+//         assert.ok(result.extent);
+//         assert.ok(typeof result.extent == 'object');
+//         assert.ok(typeof result.center == 'object');
+//         assert.deepEqual(result.center, expectedCenter);
+//         assert.deepEqual(result.extent, expectedExtent);
+//     });
+// });
 describe('[GPX] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+init=epsg:4326';
@@ -147,6 +217,44 @@ describe('[SHAPE] Getting datasources', function() {
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
+            }
+            done();
+        });
+    });
+});
+describe('[TIF] Getting datasources', function() {
+    it('should return expected layers and json', function(done) {
+        var tifFile = testData + '/data/geotiff/sample.tif';
+        var filesize = 794079;
+        var type = '.tif';
+        datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_sample_tif);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata));
+            }
+            done();
+        });
+    });
+});
+describe('[VRT] Getting datasources', function() {
+    it('should return expected layers and json', function(done) {
+        var vrtFile = testData + '/data/vrt/sample.vrt';
+        var filesize = 1293;
+        var type = '.tif';
+        datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_sample_vrt);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata));
             }
             done();
         });
@@ -209,6 +317,25 @@ describe('[GeoJson] Getting datasource', function() {
         });
     });
 });
+// describe('[TopoJson] Getting datasource', function() {
+//     it('should return expected datasource and layer name', function(done) {
+//         var topoJsonFile = path.resolve('test/data/topojson/topo.json');
+//         var filesize = 332;
+//         var type = '.topojson';
+//         datasourceProcessor.init(topoJsonFile, filesize, type, function(err, metadata) {
+//             if (err) return done(err);
+//             assert.ok(err === null);
+//             try {
+//                 assert.deepEqual(metadata, expectedMetadata_topo);
+//             } catch (err) {
+//                 console.log(err);
+//                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+//                 fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata));
+//             }
+//             done();
+//         });
+//     });
+// });
 describe('[GPX] Getting datasource', function() {
     it('should return expected datasource and layer name', function(done) {
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
@@ -260,6 +387,21 @@ describe('Setting min/max zoom', function() {
         var extent = [-77.11532282009873, 38.81041408561889, -76.90970655877031, 38.995615210318356];
         var bytes = 64244520;
         datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
+            assert.strictEqual(null, err);
+            assert.equal(minzoom, expectedMin);
+            assert.equal(maxzoom, expectedMax);
+            done();
+        });
+    });
+});
+describe('Setting min/max zoom for GDAL sources', function() {
+    it('should return expected values for min/maxzoom', function(done) {
+        var expectedMin = 0;
+        var expectedMax = 13;
+        var proj = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+        var center = [-110.32476292309875,44.56502238336985];
+        var pixelSize = [ 7.502071930146189, 7.502071930145942 ];
+        datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
             assert.strictEqual(null, err);
             assert.equal(minzoom, expectedMin);
             assert.equal(maxzoom, expectedMax);
@@ -319,6 +461,16 @@ describe('Getting projection ', function() {
             });
         });
     })(name, errorTests[name]);
+    it('should return an error due to invalid tif file', function(done) {
+        var file = path.resolve('test/data/errors/sampleError.tif');
+        var expectedMessage = 'Invalid gdal source. Error: Error opening dataset';
+        datasourceProcessor.projectionFromRaster(file, function(err, projection) {
+            assert.ok(err instanceof Error);
+            assert.equal(expectedMessage, err.message);
+            assert.equal('EINVALID', err.code);
+            done();
+        });
+    });
     it('should return the correct projection for a shapefile', function(done) {
         var file = testData + '/data/shp/world_merc/world_merc.shp';
         var type = '.shp';
@@ -363,4 +515,16 @@ describe('Getting projection ', function() {
             done();
         });
     });
+    it('should return an error for invalid VRT file due to nonexistent source files', function(done) {
+        var file = path.resolve('test/data/errors/sampleError.vrt');
+        var expectedMessage = 'Error getting statistics of band. 1 or more of the VRT file\'s relative sources may be missing';
+        datasourceProcessor.projectionFromRaster(file, function(err, projection) {
+            assert.ok(err instanceof Error);
+            assert.ok(err.message.indexOf(expectedMessage) !== -1);
+            assert.equal('EINVALID', err.code);
+            done();
+        });
+    });
 });
+
+

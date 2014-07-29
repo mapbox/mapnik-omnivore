@@ -2,7 +2,9 @@ var fs = require('fs'),
     path = require('path'),
     invalid = require('./lib/invalid'),
     processDatasource = require('./lib/datasourceProcessor'),
+    gdal = require('gdal'),
     mapnik = require('mapnik');
+
 // Register datasource plugins
 mapnik.register_default_input_plugins()
 var _options = {
@@ -54,21 +56,41 @@ function getFileType(file, callback) {
             if (err) return callback(err);
             var head = buffer.slice(0, 50).toString();
             //process as shapefile
-            if (buffer.readUInt32BE(0) === 9994) return callback(null, '.shp');
-            // check for file type kml, gpx or geojson
-            else if (head.trim().indexOf('{') == 0) return callback(null, '.geojson');
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) return callback(null, '.kml');
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) return callback(null, '.gpx');
+            if (buffer.readUInt32BE(0) === 9994) closeAndReturn('.shp');
+            //process as geotiff
+            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && buffer[2] === 42) closeAndReturn('.tif');
+            //process as kml, gpx, topojson, geojson, or vrt
+            //else if (head.indexOf('\"type\":\"Topology\"') !== -1) closeAndReturn('.topojson');
+            else if (head.trim().indexOf('{') == 0) closeAndReturn('.geojson');
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) closeAndReturn('.kml');
+            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) closeAndReturn('.gpx');
+            else if (head.indexOf('<VRTDataset') !== -1){
+                //verify vrt has valid source files
+                verifyVRT(file, function(err, valid){
+                    if(err) return callback(err);
+                    else if(valid) closeAndReturn('.vrt');
+                });
+            }
             //should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
-            else if (isCSV(file)) return callback(null, '.csv');
+            else if (isCSV(file)) closeAndReturn('.csv');
             else return callback(invalid('Incompatible filetype.'));
-            //Close file
-            fs.close(fd, function() {
-                console.log('Done reading file');
-            });
+            
+            function closeAndReturn(type){
+                //Close file
+                fs.close(fd, function() {
+                    console.log('Done reading file');
+                });
+                return callback(null, type);
+            };
         });
     });
 };
+function verifyVRT(file, callback){
+    ds = gdal.open(file);
+    var filelist = ds.getFileList();
+    if(filelist.length === 1) return callback(invalid("VRT file does not reference existing source files."));
+    else return callback(null, true);
+}
 /**
  * Checks if tile is valid geoCSV
  * @param file (filepath)
