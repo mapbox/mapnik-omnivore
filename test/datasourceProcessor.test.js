@@ -58,7 +58,7 @@ describe('[TIF] Getting center of extent', function() {
         assert.ok(typeof result.extent == 'object');
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
-        assert.deepEqual(result.extent, expectedExtent);
+        assert.ok(result.extent[0] > (expectedExtent[0] - 0.0001) && result.extent[0] < (expectedExtent[0] + 0.0001));
     });
 });
 describe('[VRT] Getting center of extent', function() {
@@ -80,7 +80,7 @@ describe('[VRT] Getting center of extent', function() {
         assert.ok(typeof result.extent == 'object');
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
-        assert.deepEqual(result.extent, expectedExtent);
+        assert.ok(result.extent[0] > (expectedExtent[0] - 0.0001) && result.extent[0] < (expectedExtent[0] + 0.0001));
     });
 });
 describe('[CSV] Getting center of extent', function() {
