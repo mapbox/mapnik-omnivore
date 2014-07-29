@@ -8,6 +8,8 @@ Currently supports the following file types:
 - `.kml`
 - `.gpx`
 - `.geojson`
+- `.tif`
+- `.vrt` : raster files listed in the VRT file must be in the same directory as the VRT file
 - `.csv` : must be valid geo CSV, and can be in the form of `.csv`, `.txt`, or `.tsv`
 - `.shp` : In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file
 
@@ -69,6 +71,36 @@ mapnikOmnivore.digest(file, function(err, metadata){
   dstype: 'shape',
   filetype: '.shp' }
 ```
+
+Raster files will include a `raster` object:
+```
+ metadata:
+{ filesize: 1494,
+  projection: '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+  raster: 
+   { pixelSize: [ 7.502071930146189, 7.502071930145942 ],
+     bandCount: 1,
+     bands: [ [Object] ],
+     nodata: null,
+     origin: [ -1134675.2952829634, 2485710.4658232867 ],
+     width: 984,
+     height: 804,
+     units: { linear: [Object], angular: [Object] } },
+  filename: 'sample',
+  center: [ -110.32476292309875, 44.56502238336985 ],
+  extent: 
+   [ -110.3650933429331,
+     44.53327824851143,
+     -110.28443250326441,
+     44.596766518228264 ],
+  minzoom: 0,
+  maxzoom: 13,
+  dstype: 'gdal',
+  filetype: '.vrt',
+  layers: [ 'sample' ] }
+
+```
+
 
 ## Install
 With npm:
