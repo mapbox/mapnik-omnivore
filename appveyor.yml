@@ -19,7 +19,7 @@ install:
   - node -e "console.log(process.version)"
   - node -e "console.log(process.arch)"
   - npm --version
-  - ps: ./postgis-test-database.ps1
+  - ps: . ./postgis-test-database.ps1
   - npm install
   - npm test
 
