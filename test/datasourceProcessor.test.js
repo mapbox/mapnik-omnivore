@@ -14,6 +14,9 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
 var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));     
 var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
+
+var UPDATE = process.env.UPDATE;
+
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
@@ -210,115 +213,191 @@ describe('[GPX] Getting center of extent', function() {
  * Testing datasourceProcessor.init
  */
 describe('[SHAPE] Getting datasources', function() {
+    before(function(done) {
+        var shpFile = testData + '/data/shp/world_merc/world_merc.shp';
+        var filesize = 428328;
+        var type = '.shp';
+        //Overwrites metadata json file if output does not match
+        datasourceProcessor.init(shpFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_world_merc);
+            done();
+        });
+    });
+    this.timeout(20000);
     it('should return expected layers and json', function(done) {
+        if (UPDATE) expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
         var shpFile = testData + '/data/shp/world_merc/world_merc.shp';
         var filesize = 428328;
         var type = '.shp';
         datasourceProcessor.init(shpFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_world_merc);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
-            }
+            assert.deepEqual(metadata, expectedMetadata_world_merc);
             done();
         });
     });
 });
 describe('[TIF] Getting datasources', function() {
-    it('should return expected layers and json', function(done) {
+    before(function(done) {
         var tifFile = testData + '/data/geotiff/sample.tif';
         var filesize = 794079;
         var type = '.tif';
+        //Overwrites metadata json file if output does not match
         datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_sample_tif);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata));
-            }
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_sample_tif);
+            done();
+        });
+    });
+    this.timeout(20000);
+    it('should return expected layers and json', function(done) {
+        if (UPDATE) expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+        var tifFile = testData + '/data/geotiff/sample.tif';
+        var filesize = 794079;
+        var type = '.tif';
+        var trunc_6 = function(val) {
+            return Number(val.toFixed(6));
+        }
+
+        datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+
+            //Round extent values to avoid floating point discrepancies in Travis
+            metadata.extent[0] = trunc_6(metadata.extent[0]);
+            metadata.extent[1] = trunc_6(metadata.extent[1]);
+            metadata.extent[2] = trunc_6(metadata.extent[2]);
+            metadata.extent[3] = trunc_6(metadata.extent[3]);
+            expectedMetadata_sample_tif.extent[0] = trunc_6(expectedMetadata_sample_tif.extent[0]);
+            expectedMetadata_sample_tif.extent[1] = trunc_6(expectedMetadata_sample_tif.extent[1]);
+            expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
+            expectedMetadata_sample_tif.extent[3] = trunc_6(expectedMetadata_sample_tif.extent[3]);
+
+            assert.deepEqual(metadata, expectedMetadata_sample_tif);
+            assert.deepEqual(err, null);
             done();
         });
     });
 });
 describe('[VRT] Getting datasources', function() {
-    it('should return expected layers and json', function(done) {
+    before(function(done) {
         var vrtFile = testData + '/data/vrt/sample.vrt';
         var filesize = 1293;
-        var type = '.tif';
+        var type = '.vrt';
+        //Overwrites metadata json file if output does not match
         datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_sample_vrt);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata));
-            }
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_sample_vrt);
+            done();
+        });
+    });
+    this.timeout(20000);
+    it('should return expected layers and json', function(done) {
+        if (UPDATE) expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
+        var vrtFile = testData + '/data/vrt/sample.vrt';
+        var filesize = 1293;
+        var type = '.vrt';
+        var trunc_6 = function(val) {
+            return Number(val.toFixed(6));
+        }
+
+        datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+
+            //Round extent values to avoid floating point discrepancies in Travis
+            metadata.extent[0] = trunc_6(metadata.extent[0]);
+            metadata.extent[1] = trunc_6(metadata.extent[1]);
+            metadata.extent[2] = trunc_6(metadata.extent[2]);
+            metadata.extent[3] = trunc_6(metadata.extent[3]);
+            expectedMetadata_sample_vrt.extent[0] = trunc_6(expectedMetadata_sample_vrt.extent[0]);
+            expectedMetadata_sample_vrt.extent[1] = trunc_6(expectedMetadata_sample_vrt.extent[1]);
+            expectedMetadata_sample_vrt.extent[2] = trunc_6(expectedMetadata_sample_vrt.extent[2]);
+            expectedMetadata_sample_vrt.extent[3] = trunc_6(expectedMetadata_sample_vrt.extent[3]);
+
+            assert.deepEqual(metadata, expectedMetadata_sample_vrt);
+            assert.deepEqual(err, null);
             done();
         });
     });
 });
 describe('[CSV] Getting datasources', function() {
+    before(function(done) {
+        var csvFile = testData + '/data/csv/bbl_current_csv.csv';
+        var filesize = 1667;
+        var type = '.csv';
+        //Overwrites metadata json file if output does not match
+        datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_bbl_csv);
+            done();
+        });
+    });
+    this.timeout(20000);
     it('should return expected layers and json', function(done) {
+        if (UPDATE) expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
         var csvFile = testData + '/data/csv/bbl_current_csv.csv';
         var filesize = 1667;
         var type = '.csv';
         datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_bbl_csv);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
-            }
+            assert.deepEqual(metadata, expectedMetadata_bbl_csv);
             done();
         });
     });
 });
 describe('[KML] Getting datasources', function() {
+    before(function(done) {
+        var kmlFile = testData + '/data/kml/1week_earthquake.kml';
+        var filesize = 1082451;
+        var type = '.kml';
+        //Overwrites metadata json file if output does not match
+        datasourceProcessor.init(kmlFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
+            done();
+        });
+    });
     it('should return expected layers and json', function(done) {
+        if (UPDATE) expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
         var kmlFile = testData + '/data/kml/1week_earthquake.kml';
         var filesize = 1082451;
         var type = '.kml';
         datasourceProcessor.init(kmlFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata));
-            }
+            assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
             done();
         });
     });
 });
 describe('[GeoJson] Getting datasource', function() {
+    before(function(done) {
+        var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
+        var filesize = 367;
+        var type = '.geojson';
+        //Overwrites metadata json file if output does not match
+        datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_DC_polygon);
+            done();
+        });
+    });
     it('should return expected datasource and layer name', function(done) {
+        if (UPDATE) expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var filesize = 367;
         var type = '.geojson';
         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_DC_polygon);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata));
-            }
+            assert.deepEqual(metadata, expectedMetadata_DC_polygon);
             done();
         });
     });
@@ -343,21 +422,27 @@ describe('[GeoJson] Getting datasource', function() {
 //     });
 // });
 describe('[GPX] Getting datasource', function() {
-    it('should return expected datasource and layer name', function(done) {
+    before(function(done) {
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
         var filesize = 36815;
         var type = '.gpx';
-        var expectedLayers = ['waypoints', 'routes', 'tracks'];
+        //Overwrites metadata json file if output does not match
+        datasourceProcessor.init(gpxFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata));
+            assert.deepEqual(metadata, expectedMetadata_fells_loop);
+            done();
+        });
+    });
+    it('should return expected datasource and layer name', function(done) {
+        if (UPDATE) expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
+        var gpxFile = testData + '/data/gpx/fells_loop.gpx';
+        var filesize = 36815;
+        var type = '.gpx';
         datasourceProcessor.init(gpxFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
             assert.ok(err === null);
-            try {
-                assert.deepEqual(metadata, expectedMetadata_fells_loop);
-            } catch (err) {
-                console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-                fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata));
-            }
+            assert.deepEqual(metadata, expectedMetadata_fells_loop);
             done();
         });
     });
