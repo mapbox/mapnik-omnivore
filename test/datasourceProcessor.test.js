@@ -473,7 +473,7 @@ describe('Setting layer configs', function() {
  */
 describe('Setting min/max zoom', function() {
     it('should return expected values for min/maxzoom', function(done) {
-        var expectedMin = 12;
+        var expectedMin = 14;
         var expectedMax = 16;
         var extent = [-77.11532282009873, 38.81041408561889, -76.90970655877031, 38.995615210318356];
         var bytes = 64244520;
