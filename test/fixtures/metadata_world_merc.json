@@ -1,1 +1,55 @@
-{"filesize":428328,"projection":"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over","filename":"world_merc","center":[0,12.048603815490733],"extent":[-180,-59.47306100000001,180,83.57026863098147],"json":{"vector_layers":[{"id":"world_merc","description":"","minzoom":0,"maxzoom":22,"fields":{"FIPS":"String","ISO2":"String","ISO3":"String","UN":"Number","NAME":"String","AREA":"Number","POP2005":"Number","REGION":"Number","SUBREGION":"Number","LON":"Number","LAT":"Number"}}]},"minzoom":0,"maxzoom":5,"layers":["world_merc"],"dstype":"shape","filetype":".shp"}
+{
+  "filesize": 428328,
+  "projection": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "filename": "world_merc",
+  "center": [
+    0,
+    12.048603815490733
+  ],
+  "extent": [
+    -180,
+    -59.47306100000001,
+    180,
+    83.57026863098147
+  ],
+  "json": {
+    "vector_layers": [
+      {
+        "id": "world_merc",
+        "description": "",
+        "fields": {
+          "FIPS": "String",
+          "ISO2": "String",
+          "ISO3": "String",
+          "UN": "Number",
+          "NAME": "String",
+          "AREA": "Number",
+          "POP2005": "Number",
+          "REGION": "Number",
+          "SUBREGION": "Number",
+          "LON": "Number",
+          "LAT": "Number"
+        },
+        "minzoom": 0,
+        "maxzoom": 5,
+        "extent": [
+          -180,
+          -59.47306100000001,
+          180,
+          83.57026863098147
+        ],
+        "center": [
+          0,
+          12.048603815490733
+        ]
+      }
+    ]
+  },
+  "minzoom": 0,
+  "maxzoom": 5,
+  "layers": [
+    "world_merc"
+  ],
+  "dstype": "shape",
+  "filetype": ".shp"
+}
