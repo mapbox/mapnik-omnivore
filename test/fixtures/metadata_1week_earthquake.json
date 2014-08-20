@@ -17,62 +17,62 @@
       {
         "id": "Magnitude_6",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "Name": "String",
           "Description": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "Magnitude_5",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "Name": "String",
           "Description": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "Magnitude_4",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "Name": "String",
           "Description": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "Magnitude_3",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "Name": "String",
           "Description": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "Magnitude_2",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "Name": "String",
           "Description": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "Magnitude_1",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "Name": "String",
           "Description": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       }
     ]
   },

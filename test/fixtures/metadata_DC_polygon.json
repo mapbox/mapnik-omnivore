@@ -17,13 +17,13 @@
       {
         "id": "OGRGeoJSON",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "kind": "String",
           "name": "String",
           "state": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       }
     ]
   },

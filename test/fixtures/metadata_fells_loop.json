@@ -17,6 +17,8 @@
       {
         "id": "waypoints",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "name": "String",
           "cmt": "String",
@@ -30,13 +32,13 @@
           "link2_type": "String",
           "number": "Number",
           "type": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "routes",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "name": "String",
           "cmt": "String",
@@ -50,13 +52,13 @@
           "link2_type": "String",
           "number": "Number",
           "type": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       },
       {
         "id": "route_points",
         "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
         "fields": {
           "name": "String",
           "cmt": "String",
@@ -70,9 +72,7 @@
           "link2_type": "String",
           "number": "Number",
           "type": "String"
-        },
-        "minzoom": 0,
-        "maxzoom": 22
+        }
       }
     ]
   },
