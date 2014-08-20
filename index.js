@@ -77,9 +77,7 @@ function getFileType(file, callback) {
             
             function closeAndReturn(type){
                 //Close file
-                fs.close(fd, function() {
-                    console.log('Done reading file');
-                });
+                fs.close(fd, function() {});
                 return callback(null, type);
             };
         });

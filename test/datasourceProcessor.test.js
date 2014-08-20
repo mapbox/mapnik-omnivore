@@ -222,6 +222,7 @@ describe('[SHAPE] Getting datasources', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_world_merc);
+            
             done();
         });
     });
@@ -356,6 +357,7 @@ describe('[CSV] Getting datasources', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
+
             done();
         });
     });
@@ -383,6 +385,7 @@ describe('[KML] Getting datasources', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
+
             done();
         });
     });
@@ -409,6 +412,7 @@ describe('[GeoJson] Getting datasource', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
+
             done();
         });
     });
@@ -454,6 +458,7 @@ describe('[GPX] Getting datasource', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_fells_loop);
+            
             done();
         });
     });
@@ -471,7 +476,7 @@ describe('[GPX] Getting datasource', function() {
     });
 });
 /**
- * Testing datasourceProcessor.setLayerConfigs
+ * Testing datasourceProcessor.getDatasource
  */
 describe('Setting layer configs', function() {
     it('should throw an error due to [0,0,0,0] extent', function(done) {
@@ -482,11 +487,11 @@ describe('Setting layer configs', function() {
             file: invalidFile
         };
         var layers = ['Tornado Tracks and Icons'];
-        datasourceProcessor.setLayerConfigs(invalidFile, layers, filename, function(err, json, ds) {
+        datasourceProcessor.getDatasource(options, layers, function(err, ds) {
             assert.ok(err);
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
-            assert.equal(0, err.message.indexOf('Error creating Mapnik Datasource for file:'));
+            assert.equal(0, err.message.indexOf('Invalid extent in datasource'));
             done();
         });
     });

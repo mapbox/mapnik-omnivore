@@ -17,8 +17,6 @@
       {
         "id": "world_merc",
         "description": "",
-        "minzoom": 0,
-        "maxzoom": 22,
         "fields": {
           "FIPS": "String",
           "ISO2": "String",
@@ -31,7 +29,9 @@
           "SUBREGION": "Number",
           "LON": "Number",
           "LAT": "Number"
-        }
+        },
+        "minzoom": 0,
+        "maxzoom": 22
       }
     ]
   },

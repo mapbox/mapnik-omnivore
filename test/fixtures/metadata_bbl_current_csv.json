@@ -17,8 +17,6 @@
       {
         "id": "bbl_current_csv",
         "description": "",
-        "minzoom": 0,
-        "maxzoom": 22,
         "fields": {
           "BBL_LICENSE_FACT_ID": "Number",
           "LICENSESTATUS": "String",
@@ -49,7 +47,9 @@
           "HOTSPOT2005NAME": "String",
           "HOTSPOT2004NAME": "String",
           "BUSINESSIMPROVEMENTDISTRICT": "String"
-        }
+        },
+        "minzoom": 0,
+        "maxzoom": 22
       }
     ]
   },
