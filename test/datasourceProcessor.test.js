@@ -491,7 +491,7 @@ describe('Setting layer configs', function() {
             assert.ok(err);
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
-            assert.equal(0, err.message.indexOf('Invalid extent in datasource'));
+            assert.equal(0, err.message.indexOf('Source appears to have no features data.'));
             done();
         });
     });
