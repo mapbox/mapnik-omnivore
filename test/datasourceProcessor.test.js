@@ -275,6 +275,17 @@ describe('[TIF] Getting datasources', function() {
             expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
             expectedMetadata_sample_tif.extent[3] = trunc_6(expectedMetadata_sample_tif.extent[3]);
 
+            //Round band mean/std_dev values
+            var bands_meta = metadata.raster.bands;
+            bands_meta.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+            var bands_expected = expectedMetadata_sample_tif.raster.bands;
+            bands_expected.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
             assert.deepEqual(metadata, expectedMetadata_sample_tif);
             assert.deepEqual(err, null);
             done();
@@ -316,6 +327,18 @@ describe('[VRT] Getting datasources', function() {
             expectedMetadata_sample_vrt.extent[1] = trunc_6(expectedMetadata_sample_vrt.extent[1]);
             expectedMetadata_sample_vrt.extent[2] = trunc_6(expectedMetadata_sample_vrt.extent[2]);
             expectedMetadata_sample_vrt.extent[3] = trunc_6(expectedMetadata_sample_vrt.extent[3]);
+
+            //Round band mean/std_dev values
+            var bands_meta = metadata.raster.bands;
+            bands_meta.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+            var bands_expected = expectedMetadata_sample_vrt.raster.bands;
+            bands_expected.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
 
             assert.deepEqual(metadata, expectedMetadata_sample_vrt);
             assert.deepEqual(err, null);
