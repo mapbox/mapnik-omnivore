@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "srs": "~0.4.3",
-    "mapnik": "~1.4.10",
+    "mapnik": "~1.4.13",
     "sphericalmercator": "1.0.2",
     "gdal": "0.1.2"
   },
@@ -24,7 +24,7 @@
   "devDependencies": {
     "mocha": "1.x",
     "coveralls": "~2.10.1",
-    "istanbul": "~0.2.14",
+    "istanbul": "~0.3.0",
     "mapnik-test-data": "http://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.3-fece0a9c546074a1479e9eae2333184029bb2279.tgz"
   },
   "scripts": {

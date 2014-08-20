@@ -1,1 +1,63 @@
-{"filesize":1667,"projection":"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs","filename":"bbl_current_csv","center":[-77.0481382917019,38.93765872502635],"extent":[-77.0925920175155,38.9142786070481,-77.0036845658883,38.9610388430046],"json":{"vector_layers":[{"id":"bbl_current_csv","description":"","minzoom":0,"maxzoom":22,"fields":{"BBL_LICENSE_FACT_ID":"Number","LICENSESTATUS":"String","LICENSECATEGORY":"String","CUST_NUM":"Number","TRADE_NAME":"String","LICENSE_START_DATE":"String","LICENSE_EXPIRATION_DATE":"String","LICENSE_ISSUE_DATE":"String","AGENT_PHONE":"String","LASTMODIFIEDDATE":"String","CITY":"String","STATE":"String","SITEADDRESS":"String","LATITUDE":"Number","LONGITUDE":"Number","ZIPCODE":"Number","MARADDRESSREPOSITORYID":"Number","DCSTATADDRESSKEY":"Number","DCSTATLOCATIONKEY":"Number","WARD":"Number","ANC":"String","SMD":"String","DISTRICT":"String","PSA":"Number","NEIGHBORHOODCLUSTER":"Number","HOTSPOT2006NAME":"String","HOTSPOT2005NAME":"String","HOTSPOT2004NAME":"String","BUSINESSIMPROVEMENTDISTRICT":"String"}}]},"minzoom":0,"maxzoom":11,"layers":["bbl_current_csv"],"dstype":"csv","filetype":".csv"}
+{
+  "filesize": 1667,
+  "projection": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+  "filename": "bbl_current_csv",
+  "center": [
+    -77.0481382917019,
+    38.93765872502635
+  ],
+  "extent": [
+    -77.0925920175155,
+    38.9142786070481,
+    -77.0036845658883,
+    38.9610388430046
+  ],
+  "json": {
+    "vector_layers": [
+      {
+        "id": "bbl_current_csv",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "BBL_LICENSE_FACT_ID": "Number",
+          "LICENSESTATUS": "String",
+          "LICENSECATEGORY": "String",
+          "CUST_NUM": "Number",
+          "TRADE_NAME": "String",
+          "LICENSE_START_DATE": "String",
+          "LICENSE_EXPIRATION_DATE": "String",
+          "LICENSE_ISSUE_DATE": "String",
+          "AGENT_PHONE": "String",
+          "LASTMODIFIEDDATE": "String",
+          "CITY": "String",
+          "STATE": "String",
+          "SITEADDRESS": "String",
+          "LATITUDE": "Number",
+          "LONGITUDE": "Number",
+          "ZIPCODE": "Number",
+          "MARADDRESSREPOSITORYID": "Number",
+          "DCSTATADDRESSKEY": "Number",
+          "DCSTATLOCATIONKEY": "Number",
+          "WARD": "Number",
+          "ANC": "String",
+          "SMD": "String",
+          "DISTRICT": "String",
+          "PSA": "Number",
+          "NEIGHBORHOODCLUSTER": "Number",
+          "HOTSPOT2006NAME": "String",
+          "HOTSPOT2005NAME": "String",
+          "HOTSPOT2004NAME": "String",
+          "BUSINESSIMPROVEMENTDISTRICT": "String"
+        }
+      }
+    ]
+  },
+  "minzoom": 0,
+  "maxzoom": 11,
+  "layers": [
+    "bbl_current_csv"
+  ],
+  "dstype": "csv",
+  "filetype": ".csv"
+}

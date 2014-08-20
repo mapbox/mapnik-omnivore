@@ -220,8 +220,9 @@ describe('[SHAPE] Getting datasources', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(shpFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_world_merc);
+            
             done();
         });
     });
@@ -247,7 +248,7 @@ describe('[TIF] Getting datasources', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata, null, 2));
             if (UPDATE) assert.deepEqual(metadata, expectedMetadata_sample_tif);
             done();
         });
@@ -275,6 +276,17 @@ describe('[TIF] Getting datasources', function() {
             expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
             expectedMetadata_sample_tif.extent[3] = trunc_6(expectedMetadata_sample_tif.extent[3]);
 
+            //Round band mean/std_dev values
+            var bands_meta = metadata.raster.bands;
+            bands_meta.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+            var bands_expected = expectedMetadata_sample_tif.raster.bands;
+            bands_expected.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
             assert.deepEqual(metadata, expectedMetadata_sample_tif);
             assert.deepEqual(err, null);
             done();
@@ -289,7 +301,7 @@ describe('[VRT] Getting datasources', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata, null, 2));
             if (UPDATE) assert.deepEqual(metadata, expectedMetadata_sample_vrt);
             done();
         });
@@ -317,6 +329,18 @@ describe('[VRT] Getting datasources', function() {
             expectedMetadata_sample_vrt.extent[2] = trunc_6(expectedMetadata_sample_vrt.extent[2]);
             expectedMetadata_sample_vrt.extent[3] = trunc_6(expectedMetadata_sample_vrt.extent[3]);
 
+            //Round band mean/std_dev values
+            var bands_meta = metadata.raster.bands;
+            bands_meta.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+            var bands_expected = expectedMetadata_sample_vrt.raster.bands;
+            bands_expected.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+
             assert.deepEqual(metadata, expectedMetadata_sample_vrt);
             assert.deepEqual(err, null);
             done();
@@ -331,8 +355,9 @@ describe('[CSV] Getting datasources', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
+
             done();
         });
     });
@@ -358,8 +383,9 @@ describe('[KML] Getting datasources', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(kmlFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
+
             done();
         });
     });
@@ -384,8 +410,9 @@ describe('[GeoJson] Getting datasource', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
+
             done();
         });
     });
@@ -415,7 +442,7 @@ describe('[GeoJson] Getting datasource', function() {
 //             } catch (err) {
 //                 console.log(err);
 //                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-//                 fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata));
+//                 fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata, null, 2));
 //             }
 //             done();
 //         });
@@ -429,8 +456,9 @@ describe('[GPX] Getting datasource', function() {
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(gpxFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
-            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata));
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_fells_loop);
+            
             done();
         });
     });
@@ -448,7 +476,7 @@ describe('[GPX] Getting datasource', function() {
     });
 });
 /**
- * Testing datasourceProcessor.setLayerConfigs
+ * Testing datasourceProcessor.getDatasource
  */
 describe('Setting layer configs', function() {
     it('should throw an error due to [0,0,0,0] extent', function(done) {
@@ -459,11 +487,11 @@ describe('Setting layer configs', function() {
             file: invalidFile
         };
         var layers = ['Tornado Tracks and Icons'];
-        datasourceProcessor.setLayerConfigs(invalidFile, layers, filename, function(err, json, ds) {
+        datasourceProcessor.getDatasource(options, layers, function(err, ds) {
             assert.ok(err);
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
-            assert.equal(0, err.message.indexOf('Error creating Mapnik Datasource for file:'));
+            assert.equal(0, err.message.indexOf('Source appears to have no features data.'));
             done();
         });
     });
