@@ -1,1 +1,158 @@
-{"filesize":36815,"projection":"+init=epsg:4326","filename":"fells_loop","center":[-71.1139805,42.44903],"extent":[-71.122845,42.43095,-71.105116,42.46711],"json":{"vector_layers":[{"id":"waypoints","description":"","minzoom":0,"maxzoom":22,"fields":{"ele":"Number","time":"Object","magvar":"Number","geoidheight":"Number","name":"String","cmt":"String","desc":"String","src":"String","url":"String","urlname":"String","sym":"String","type":"String","fix":"String","sat":"Number","hdop":"Number","vdop":"Number","pdop":"Number","ageofdgpsdata":"Number","dgpsid":"Number"}},{"id":"routes","description":"","minzoom":0,"maxzoom":22,"fields":{"name":"String","cmt":"String","desc":"String","src":"String","link1_href":"String","link1_text":"String","link1_type":"String","link2_href":"String","link2_text":"String","link2_type":"String","number":"Number","type":"String"}},{"id":"tracks","description":"","minzoom":0,"maxzoom":22,"fields":{"name":"String","cmt":"String","desc":"String","src":"String","link1_href":"String","link1_text":"String","link1_type":"String","link2_href":"String","link2_text":"String","link2_type":"String","number":"Number","type":"String"}},{"id":"route_points","description":"","minzoom":0,"maxzoom":22,"fields":{"route_fid":"Number","route_point_id":"Number","ele":"Number","time":"Object","magvar":"Number","geoidheight":"Number","name":"String","cmt":"String","desc":"String","src":"String","url":"String","urlname":"String","sym":"String","type":"String","fix":"String","sat":"Number","hdop":"Number","vdop":"Number","pdop":"Number","ageofdgpsdata":"Number","dgpsid":"Number"}},{"id":"track_points","description":"","minzoom":0,"maxzoom":22,"fields":{"track_fid":"Number","track_seg_id":"Number","track_seg_point_id":"Number","ele":"Number","time":"Object","course":"Number","speed":"Number","magvar":"Number","geoidheight":"Number","name":"String","cmt":"String","desc":"String","src":"String","url":"String","urlname":"String","sym":"String","type":"String","fix":"String","sat":"Number","hdop":"Number","vdop":"Number","pdop":"Number","ageofdgpsdata":"Number","dgpsid":"Number"}}]},"minzoom":0,"maxzoom":16,"layers":["waypoints","routes","tracks","route_points","track_points"],"dstype":"ogr","filetype":".gpx"}
+{
+  "filesize": 36815,
+  "projection": "+init=epsg:4326",
+  "filename": "fells_loop",
+  "center": [
+    -71.1139805,
+    42.44903
+  ],
+  "extent": [
+    -71.122845,
+    42.43095,
+    -71.105116,
+    42.46711
+  ],
+  "json": {
+    "vector_layers": [
+      {
+        "id": "waypoints",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "ele": "Number",
+          "time": "Object",
+          "magvar": "Number",
+          "geoidheight": "Number",
+          "name": "String",
+          "cmt": "String",
+          "desc": "String",
+          "src": "String",
+          "url": "String",
+          "urlname": "String",
+          "sym": "String",
+          "type": "String",
+          "fix": "String",
+          "sat": "Number",
+          "hdop": "Number",
+          "vdop": "Number",
+          "pdop": "Number",
+          "ageofdgpsdata": "Number",
+          "dgpsid": "Number"
+        }
+      },
+      {
+        "id": "routes",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "name": "String",
+          "cmt": "String",
+          "desc": "String",
+          "src": "String",
+          "link1_href": "String",
+          "link1_text": "String",
+          "link1_type": "String",
+          "link2_href": "String",
+          "link2_text": "String",
+          "link2_type": "String",
+          "number": "Number",
+          "type": "String"
+        }
+      },
+      {
+        "id": "tracks",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "name": "String",
+          "cmt": "String",
+          "desc": "String",
+          "src": "String",
+          "link1_href": "String",
+          "link1_text": "String",
+          "link1_type": "String",
+          "link2_href": "String",
+          "link2_text": "String",
+          "link2_type": "String",
+          "number": "Number",
+          "type": "String"
+        }
+      },
+      {
+        "id": "route_points",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "route_fid": "Number",
+          "route_point_id": "Number",
+          "ele": "Number",
+          "time": "Object",
+          "magvar": "Number",
+          "geoidheight": "Number",
+          "name": "String",
+          "cmt": "String",
+          "desc": "String",
+          "src": "String",
+          "url": "String",
+          "urlname": "String",
+          "sym": "String",
+          "type": "String",
+          "fix": "String",
+          "sat": "Number",
+          "hdop": "Number",
+          "vdop": "Number",
+          "pdop": "Number",
+          "ageofdgpsdata": "Number",
+          "dgpsid": "Number"
+        }
+      },
+      {
+        "id": "track_points",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "track_fid": "Number",
+          "track_seg_id": "Number",
+          "track_seg_point_id": "Number",
+          "ele": "Number",
+          "time": "Object",
+          "course": "Number",
+          "speed": "Number",
+          "magvar": "Number",
+          "geoidheight": "Number",
+          "name": "String",
+          "cmt": "String",
+          "desc": "String",
+          "src": "String",
+          "url": "String",
+          "urlname": "String",
+          "sym": "String",
+          "type": "String",
+          "fix": "String",
+          "sat": "Number",
+          "hdop": "Number",
+          "vdop": "Number",
+          "pdop": "Number",
+          "ageofdgpsdata": "Number",
+          "dgpsid": "Number"
+        }
+      }
+    ]
+  },
+  "minzoom": 0,
+  "maxzoom": 16,
+  "layers": [
+    "waypoints",
+    "routes",
+    "tracks",
+    "route_points",
+    "track_points"
+  ],
+  "dstype": "ogr",
+  "filetype": ".gpx"
+}
