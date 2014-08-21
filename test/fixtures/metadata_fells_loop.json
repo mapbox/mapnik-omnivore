@@ -32,7 +32,17 @@
           "link2_type": "String",
           "number": "Number",
           "type": "String"
-        }
+        },
+        "center": [
+          -71.1139805,
+          42.44903
+        ],
+        "extent": [
+          -71.122845,
+          42.43095,
+          -71.105116,
+          42.46711
+        ]
       },
       {
         "id": "routes",
@@ -52,7 +62,17 @@
           "link2_type": "String",
           "number": "Number",
           "type": "String"
-        }
+        },
+        "center": [
+          -71.1139805,
+          42.44903
+        ],
+        "extent": [
+          -71.122845,
+          42.43095,
+          -71.105116,
+          42.46711
+        ]
       },
       {
         "id": "route_points",
@@ -72,7 +92,17 @@
           "link2_type": "String",
           "number": "Number",
           "type": "String"
-        }
+        },
+        "center": [
+          -71.1139805,
+          42.44903
+        ],
+        "extent": [
+          -71.122845,
+          42.43095,
+          -71.105116,
+          42.46711
+        ]
       }
     ]
   },
