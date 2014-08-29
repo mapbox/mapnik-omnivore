@@ -515,8 +515,8 @@ describe('Setting min/max zoom', function() {
 });
 describe('Setting min/max zoom for GDAL sources', function() {
     it('should return expected values for min/maxzoom', function(done) {
-        var expectedMin = 7;
-        var expectedMax = 13;
+        var expectedMin = 8;
+        var expectedMax = 14;
         var proj = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
         var center = [-110.32476292309875,44.56502238336985];
         var pixelSize = [ 7.502071930146189, 7.502071930145942 ];

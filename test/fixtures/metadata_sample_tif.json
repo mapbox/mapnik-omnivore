@@ -59,8 +59,8 @@
     -110.28443250326441,
     44.596766518228264
   ],
-  "minzoom": 7,
-  "maxzoom": 13,
+  "minzoom": 8,
+  "maxzoom": 14,
   "dstype": "gdal",
   "filetype": ".tif",
   "layers": [
