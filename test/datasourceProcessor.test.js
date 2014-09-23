@@ -502,7 +502,7 @@ describe('Setting layer configs', function() {
 describe('Setting min/max zoom', function() {
     it('should return expected values for min/maxzoom', function(done) {
         var expectedMin = 14;
-        var expectedMax = 16;
+        var expectedMax = 19;
         var extent = [-77.11532282009873, 38.81041408561889, -76.90970655877031, 38.995615210318356];
         var bytes = 64244520;
         datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
@@ -582,7 +582,7 @@ describe('Getting projection ', function() {
     })(name, errorTests[name]);
     it('should return an error due to invalid tif file', function(done) {
         var file = path.resolve('test/data/errors/sampleError.tif');
-        var expectedMessage = 'Invalid gdal source. Error: Error opening dataset';
+        var expectedMessage = 'Invalid gdal source. Error opening dataset';
         datasourceProcessor.projectionFromRaster(file, function(err, projection) {
             assert.ok(err instanceof Error);
             assert.equal(expectedMessage, err.message);
