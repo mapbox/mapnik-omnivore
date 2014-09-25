@@ -29,10 +29,9 @@ describe('[SHAPE] Getting center of extent', function() {
             file: shapefile,
             layer: 'world_merc'
         });
-        var type = '.shp';
         var expectedCenter = [0, 12.048603815490733];
         var expectedExtent = [-180, -59.47306100000001, 180, 83.57026863098147];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
@@ -51,10 +50,9 @@ describe('[TIF] Getting center of extent', function() {
             file: tifFile,
             layer: 'sample'
         });
-        var type = '.tif';
         var expectedCenter = [-110.32476292309875,44.56502238336985];
         var expectedExtent = [-110.3650933429331,44.53327824851143,-110.28443250326441,44.596766518228264];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
@@ -96,7 +94,6 @@ describe('[CSV] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         var csvFile = testData + '/data/csv/bbl_current_csv.csv';
-        var filetype = '.csv';
         var options = {
             type: 'csv',
             file: csvFile,
@@ -106,7 +103,7 @@ describe('[CSV] Getting center of extent', function() {
         var ds = new mapnik.Datasource(options);
         var expectedCenter = [-77.0481382917019, 38.93765872502635];
         var expectedExtent = [-77.0925920175155,38.9142786070481,-77.0036845658883,38.9610388430046];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, filetype);
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
@@ -120,7 +117,6 @@ describe('[KML] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+init=epsg:4326';
         var kmlFile = testData + '/data/kml/1week_earthquake.kml';
-        var type = '.kml';
         var options = {
             type: 'ogr',
             file: kmlFile,
@@ -129,7 +125,7 @@ describe('[KML] Getting center of extent', function() {
         var ds = new mapnik.Datasource(options);
         var expectedCenter = [-110.13325, 42.5407];
         var expectedExtent = [-155.8387, 17.7682, -64.4278, 67.3132];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
@@ -143,7 +139,6 @@ describe('[GeoJson] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
-        var type = '.geojson';
         var options = {
             type: 'ogr',
             file: geoJsonFile,
@@ -152,7 +147,7 @@ describe('[GeoJson] Getting center of extent', function() {
         var ds = new mapnik.Datasource(options);
         var expectedCenter = [-77.01335, 38.89255];
         var expectedExtent = [-77.1174, 38.7912, -76.9093, 38.9939];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
@@ -189,7 +184,6 @@ describe('[GPX] Getting center of extent', function() {
     it('should return expected values', function() {
         var proj = '+init=epsg:4326';
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
-        var type = '.gpx';
         var options = {
             type: 'ogr',
             file: gpxFile,
@@ -198,7 +192,7 @@ describe('[GPX] Getting center of extent', function() {
         var ds = new mapnik.Datasource(options);
         var expectedCenter = [-71.1147875, 42.434853000000004];
         var expectedExtent = [-71.126602, 42.401051, -71.102973, 42.468655];
-        var result = datasourceProcessor.getCenterAndExtent(ds, proj, type);
+        var result = datasourceProcessor.getCenterAndExtent(ds, proj);
         assert.ok(result);
         assert.ok(result.center);
         assert.ok(result.extent);
