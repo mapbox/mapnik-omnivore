@@ -111,5 +111,6 @@ function isCSV(file) {
 module.exports = {
     digest: digest,
     getFileType: getFileType,
-    getMetadata: getMetadata
+    getMetadata: getMetadata,
+    getCenterAndExtent: processDatasource.getCenterAndExtent
 };
