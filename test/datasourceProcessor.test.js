@@ -423,25 +423,25 @@ describe('[GeoJson] Getting datasource', function() {
         });
     });
 });
-// describe('[TopoJson] Getting datasource', function() {
-//     it('should return expected datasource and layer name', function(done) {
-//         var topoJsonFile = path.resolve('test/data/topojson/topo.json');
-//         var filesize = 332;
-//         var type = '.topojson';
-//         datasourceProcessor.init(topoJsonFile, filesize, type, function(err, metadata) {
-//             if (err) return done(err);
-//             assert.ok(err === null);
-//             try {
-//                 assert.deepEqual(metadata, expectedMetadata_topo);
-//             } catch (err) {
-//                 console.log(err);
-//                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-//                 fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata, null, 2));
-//             }
-//             done();
-//         });
-//     });
-// });
+describe('[TopoJson] Getting datasource', function() {
+    it('should return expected datasource and layer name', function(done) {
+        var topoJsonFile = testData + '/data/topojson/topo.json';
+        var filesize = 332;
+        var type = '.geojson';
+        datasourceProcessor.init(topoJsonFile, filesize, type, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_topo);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata, null, 2));
+            }
+            done();
+        });
+    });
+});
 describe('[GPX] Getting datasource', function() {
     before(function(done) {
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
