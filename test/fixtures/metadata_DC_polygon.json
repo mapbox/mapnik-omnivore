@@ -13,11 +13,25 @@
     38.9939
   ],
   "json": {
-    "vector_layers": []
+    "vector_layers": [
+      {
+        "id": "OGRGeoJSON",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "kind": "String",
+          "name": "String",
+          "state": "String"
+        }
+      }
+    ]
   },
   "minzoom": 0,
   "maxzoom": 6,
-  "layers": [],
+  "layers": [
+    "OGRGeoJSON"
+  ],
   "dstype": "ogr",
   "filetype": ".geojson"
 }
