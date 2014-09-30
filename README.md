@@ -5,9 +5,9 @@ Version format follows [Semantic Version](http://semver.org/)
 [![Build Status](https://travis-ci.org/mapbox/mapnik-omnivore.svg?branch=master)](https://travis-ci.org/mapbox/mapnik-omnivore) [![Coverage Status](https://coveralls.io/repos/mapbox/mapnik-omnivore/badge.png)](https://coveralls.io/r/mapbox/mapnik-omnivore)
 
 Currently supports the following file types:
+- geojson/topojson
 - `.kml`
 - `.gpx`
-- `.geojson`
 - `.tif`
 - `.vrt` : raster files listed in the VRT file must be in the same directory as the VRT file
 - `.csv` : must be valid geo CSV, and can be in the form of `.csv`, `.txt`, or `.tsv`
