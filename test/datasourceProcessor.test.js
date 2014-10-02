@@ -255,7 +255,7 @@ describe('[TIF] Getting datasources', function() {
         var type = '.tif';
         var trunc_6 = function(val) {
             return Number(val.toFixed(6));
-        }
+        };
 
         datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
@@ -308,7 +308,7 @@ describe('[VRT] Getting datasources', function() {
         var type = '.vrt';
         var trunc_6 = function(val) {
             return Number(val.toFixed(6));
-        }
+        };
 
         datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
             if (err) return done(err);
@@ -435,7 +435,7 @@ describe('[TopoJson] Getting datasource', function() {
                 assert.deepEqual(metadata, expectedMetadata_topo);
             } catch (err) {
                 console.log(err);
-                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                console.log('Expected mapnik-omnivore metadata has changed. Writing new metadata to file.');
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata, null, 2));
             }
             done();
@@ -475,13 +475,12 @@ describe('[GPX] Getting datasource', function() {
 describe('Setting layer configs', function() {
     it('should throw an error due to [0,0,0,0] extent', function(done) {
         var invalidFile = testData + '/data/kml/TIMS.kml';
-        var filename = 'TIMS';
         var options = {
             type: 'ogr',
             file: invalidFile
         };
         var layers = ['Tornado Tracks and Icons'];
-        datasourceProcessor.getDatasource(options, layers, function(err, ds) {
+        datasourceProcessor.getDatasource(options, layers, function(err) {
             assert.ok(err);
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
@@ -511,7 +510,7 @@ describe('Setting min/max zoom for GDAL sources', function() {
     it('should return expected values for min/maxzoom', function(done) {
         var expectedMin = 8;
         var expectedMax = 14;
-        var proj = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+        var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
         var center = [-110.32476292309875,44.56502238336985];
         var pixelSize = [ 7.502071930146189, 7.502071930145942 ];
         datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
@@ -526,7 +525,7 @@ describe('Setting extent to zero', function() {
     it('should return an error', function(done) {
         var extent = [0, 0, 0, 0];
         var bytes = 1234;
-        datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
+        datasourceProcessor.getMinMaxZoom(bytes, extent, function(err) {
             assert.ok(err);
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
@@ -539,7 +538,7 @@ describe('Setting extent to zero', function() {
     it('should return an error because of invalid bytes', function(done) {
         var extent = [1, 2, 3, 4];
         var bytes = -1;
-        datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
+        datasourceProcessor.getMinMaxZoom(bytes, extent, function(err) {
             assert.ok(err);
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
@@ -566,7 +565,7 @@ describe('Getting projection ', function() {
     };
     for (var name in errorTests)(function(name, test) {
         it(test.desc, function(done) {
-            datasourceProcessor.getProjection(path.resolve('test/data/' + name), test.type, function(err, projection) {
+            datasourceProcessor.getProjection(path.resolve('test/data/' + name), test.type, function(err) {
                 assert.ok(err instanceof Error);
                 if (test.message) assert.equal(test.message, err.message);
                 assert.equal('EINVALID', err.code);
@@ -577,7 +576,7 @@ describe('Getting projection ', function() {
     it('should return an error due to invalid tif file', function(done) {
         var file = path.resolve('test/data/errors/sampleError.tif');
         var expectedMessage = 'Invalid gdal source. Error opening dataset';
-        datasourceProcessor.projectionFromRaster(file, function(err, projection) {
+        datasourceProcessor.projectionFromRaster(file, function(err) {
             assert.ok(err instanceof Error);
             assert.equal(expectedMessage, err.message);
             assert.equal('EINVALID', err.code);
@@ -631,7 +630,7 @@ describe('Getting projection ', function() {
     it('should return an error for invalid VRT file due to nonexistent source files', function(done) {
         var file = path.resolve('test/data/errors/sampleError.vrt');
         var expectedMessage = 'Error getting statistics of band. 1 or more of the VRT file\'s relative sources may be missing';
-        datasourceProcessor.projectionFromRaster(file, function(err, projection) {
+        datasourceProcessor.projectionFromRaster(file, function(err) {
             assert.ok(err instanceof Error);
             assert.ok(err.message.indexOf(expectedMessage) !== -1);
             assert.equal('EINVALID', err.code);
