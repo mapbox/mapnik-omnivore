@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "srs": "~0.4.3",
-    "mapnik": "https://github.com/mapnik/node-mapnik/archive/master.tar.gz",
+    "mapnik": "3.0.x",
     "sphericalmercator": "1.0.2",
     "gdal": "0.2.0"
   },
