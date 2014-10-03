@@ -58,7 +58,8 @@ describe('[TIF] Getting center of extent', function() {
         assert.ok(result.extent);
         assert.ok(typeof result.extent == 'object');
         assert.ok(typeof result.center == 'object');
-        assert.deepEqual(result.center, expectedCenter);
+        assert.ok(result.center[0] > (expectedCenter[0] - 0.0001) && result.center[0] < (expectedCenter[0] + 0.0001));
+        assert.ok(result.center[1] > (expectedCenter[1] - 0.0001) && result.center[1] < (expectedCenter[1] + 0.0001));
         assert.ok(result.extent[0] > (expectedExtent[0] - 0.0001) && result.extent[0] < (expectedExtent[0] + 0.0001));
         assert.ok(result.extent[1] > (expectedExtent[1] - 0.0001) && result.extent[1] < (expectedExtent[1] + 0.0001));
         assert.ok(result.extent[2] > (expectedExtent[2] - 0.0001) && result.extent[2] < (expectedExtent[2] + 0.0001));
@@ -83,7 +84,8 @@ describe('[VRT] Getting center of extent', function() {
         assert.ok(result.extent);
         assert.ok(typeof result.extent == 'object');
         assert.ok(typeof result.center == 'object');
-        assert.deepEqual(result.center, expectedCenter);
+        assert.ok(result.center[0] > (expectedCenter[0] - 0.0001) && result.center[0] < (expectedCenter[0] + 0.0001));
+        assert.ok(result.center[1] > (expectedCenter[1] - 0.0001) && result.center[1] < (expectedCenter[1] + 0.0001));
         assert.ok(result.extent[0] > (expectedExtent[0] - 0.0001) && result.extent[0] < (expectedExtent[0] + 0.0001));
         assert.ok(result.extent[1] > (expectedExtent[1] - 0.0001) && result.extent[1] < (expectedExtent[1] + 0.0001));
         assert.ok(result.extent[2] > (expectedExtent[2] - 0.0001) && result.extent[2] < (expectedExtent[2] + 0.0001));
