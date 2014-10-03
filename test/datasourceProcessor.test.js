@@ -263,10 +263,14 @@ describe('[TIF] Getting datasources', function() {
             if (err) return done(err);
 
             //Round extent values to avoid floating point discrepancies in Travis
+            metadata.center[0] = trunc_6(metadata.center[0]);
+            metadata.center[1] = trunc_6(metadata.center[1]);
             metadata.extent[0] = trunc_6(metadata.extent[0]);
             metadata.extent[1] = trunc_6(metadata.extent[1]);
             metadata.extent[2] = trunc_6(metadata.extent[2]);
             metadata.extent[3] = trunc_6(metadata.extent[3]);
+            expectedMetadata_sample_tif.center[0] = trunc_6(expectedMetadata_sample_tif.center[0]);
+            expectedMetadata_sample_tif.center[1] = trunc_6(expectedMetadata_sample_tif.center[1]);
             expectedMetadata_sample_tif.extent[0] = trunc_6(expectedMetadata_sample_tif.extent[0]);
             expectedMetadata_sample_tif.extent[1] = trunc_6(expectedMetadata_sample_tif.extent[1]);
             expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
@@ -316,10 +320,14 @@ describe('[VRT] Getting datasources', function() {
             if (err) return done(err);
 
             //Round extent values to avoid floating point discrepancies in Travis
+            metadata.center[0] = trunc_6(metadata.center[0]);
+            metadata.center[1] = trunc_6(metadata.center[1]);
             metadata.extent[0] = trunc_6(metadata.extent[0]);
             metadata.extent[1] = trunc_6(metadata.extent[1]);
             metadata.extent[2] = trunc_6(metadata.extent[2]);
             metadata.extent[3] = trunc_6(metadata.extent[3]);
+            expectedMetadata_sample_vrt.center[0] = trunc_6(expectedMetadata_sample_vrt.center[0]);
+            expectedMetadata_sample_vrt.center[1] = trunc_6(expectedMetadata_sample_vrt.center[1]);
             expectedMetadata_sample_vrt.extent[0] = trunc_6(expectedMetadata_sample_vrt.extent[0]);
             expectedMetadata_sample_vrt.extent[1] = trunc_6(expectedMetadata_sample_vrt.extent[1]);
             expectedMetadata_sample_vrt.extent[2] = trunc_6(expectedMetadata_sample_vrt.extent[2]);
