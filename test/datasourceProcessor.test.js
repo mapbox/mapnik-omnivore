@@ -1,4 +1,4 @@
-var assert = require('assert'),
+var tape = require('tape'),
     path = require('path'),
     fs = require('fs'),
     mapnik = require('mapnik'),
@@ -20,8 +20,7 @@ var UPDATE = process.env.UPDATE;
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
-describe('[SHAPE] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[SHAPE] Getting center of extent', function(assert) {
         var proj = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over';
         var shapefile = testData + '/data/shp/world_merc/world_merc.shp';
         var ds = new mapnik.Datasource({
@@ -39,10 +38,9 @@ describe('[SHAPE] Getting center of extent', function() {
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
+        assert.end();
     });
-});
-describe('[TIF] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[TIF] Getting center of extent', function(assert) {
         var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
         var tifFile = testData + '/data/geotiff/sample.tif';
         var ds = new mapnik.Datasource({
@@ -63,10 +61,9 @@ describe('[TIF] Getting center of extent', function() {
         assert.ok(result.extent[1] > (expectedExtent[1] - 0.0001) && result.extent[1] < (expectedExtent[1] + 0.0001));
         assert.ok(result.extent[2] > (expectedExtent[2] - 0.0001) && result.extent[2] < (expectedExtent[2] + 0.0001));
         assert.ok(result.extent[3] > (expectedExtent[3] - 0.0001) && result.extent[3] < (expectedExtent[3] + 0.0001));
+        assert.end();
     });
-});
-describe('[VRT] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[VRT] Getting center of extent', function(assert) {
         var proj = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
         var vrtFile = testData + '/data/vrt/sample.vrt';
         var ds = new mapnik.Datasource({
@@ -88,10 +85,9 @@ describe('[VRT] Getting center of extent', function() {
         assert.ok(result.extent[1] > (expectedExtent[1] - 0.0001) && result.extent[1] < (expectedExtent[1] + 0.0001));
         assert.ok(result.extent[2] > (expectedExtent[2] - 0.0001) && result.extent[2] < (expectedExtent[2] + 0.0001));
         assert.ok(result.extent[3] > (expectedExtent[3] - 0.0001) && result.extent[3] < (expectedExtent[3] + 0.0001));
+        assert.end();
     });
-});
-describe('[CSV] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[CSV] Getting center of extent', function(assert) {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         var csvFile = testData + '/data/csv/bbl_current_csv.csv';
         var options = {
@@ -111,10 +107,9 @@ describe('[CSV] Getting center of extent', function() {
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
+        assert.end();
     });
-});
-describe('[KML] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[KML] Getting center of extent', function(assert) {
         var proj = '+init=epsg:4326';
         var kmlFile = testData + '/data/kml/1week_earthquake.kml';
         var options = {
@@ -133,10 +128,9 @@ describe('[KML] Getting center of extent', function() {
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
+        assert.end();
     });
-});
-describe('[GeoJson] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[GeoJson] Getting center of extent', function(assert) {
         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var options = {
@@ -155,10 +149,10 @@ describe('[GeoJson] Getting center of extent', function() {
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
+        assert.end();
     });
-});
 // describe('[TopoJson] Getting center of extent', function() {
-//     it('should return expected values', function() {
+//     tape('should return expected values', function() {
 //         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 //         var topoJsonFile = testData + '/data/topojson/topo.json';
 //         var type = '.topojson';
@@ -180,8 +174,7 @@ describe('[GeoJson] Getting center of extent', function() {
 //         assert.deepEqual(result.extent, expectedExtent);
 //     });
 // });
-describe('[GPX] Getting center of extent', function() {
-    it('should return expected values', function() {
+    tape('[GPX] Getting center of extent', function(assert) {
         var proj = '+init=epsg:4326';
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
         var options = {
@@ -200,14 +193,13 @@ describe('[GPX] Getting center of extent', function() {
         assert.ok(typeof result.center == 'object');
         assert.deepEqual(result.center, expectedCenter);
         assert.deepEqual(result.extent, expectedExtent);
+        assert.end();
     });
-});
 
 /**
  * Testing datasourceProcessor.init
  */
-describe('[SHAPE] Getting datasources', function() {
-    before(function(done) {
+    tape('[SHAPE] Setup', function(assert) {
         var shpFile = testData + '/data/shp/world_merc/world_merc.shp';
         var filesize = 428328;
         var type = '.shp';
@@ -217,11 +209,10 @@ describe('[SHAPE] Getting datasources', function() {
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_world_merc);
             
-            done();
+            assert.end();
         });
     });
-    this.timeout(20000);
-    it('should return expected layers and json', function(done) {
+    tape('[SHAPE] Getting datasources: should return expected layers and json', function(assert) {
         if (UPDATE) expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
         var shpFile = testData + '/data/shp/world_merc/world_merc.shp';
         var filesize = 428328;
@@ -230,12 +221,10 @@ describe('[SHAPE] Getting datasources', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_world_merc);
-            done();
+            assert.end();
         });
     });
-});
-describe('[TIF] Getting datasources', function() {
-    before(function(done) {
+    tape('[TIF] Setup', function(assert) {
         var tifFile = testData + '/data/geotiff/sample.tif';
         var filesize = 794079;
         var type = '.tif';
@@ -244,11 +233,10 @@ describe('[TIF] Getting datasources', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata, null, 2));
             if (UPDATE) assert.deepEqual(metadata, expectedMetadata_sample_tif);
-            done();
+            assert.end();
         });
     });
-    this.timeout(20000);
-    it('should return expected layers and json', function(done) {
+    tape('[TIF] Getting datasources: should return expected layers and json', function(assert) {
         if (UPDATE) expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
         var tifFile = testData + '/data/geotiff/sample.tif';
         var filesize = 794079;
@@ -283,12 +271,10 @@ describe('[TIF] Getting datasources', function() {
             });
             assert.deepEqual(metadata, expectedMetadata_sample_tif);
             assert.deepEqual(err, null);
-            done();
+            assert.end();
         });
     });
-});
-describe('[VRT] Getting datasources', function() {
-    before(function(done) {
+    tape('[VRT] Setup', function(assert) {
         var vrtFile = testData + '/data/vrt/sample.vrt';
         var filesize = 1293;
         var type = '.vrt';
@@ -297,11 +283,10 @@ describe('[VRT] Getting datasources', function() {
             if (err) return done(err);
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata, null, 2));
             if (UPDATE) assert.deepEqual(metadata, expectedMetadata_sample_vrt);
-            done();
+            assert.end();
         });
     });
-    this.timeout(20000);
-    it('should return expected layers and json', function(done) {
+    tape('[VRT] Getting datasources: should return expected layers and json', function(assert) {
         if (UPDATE) expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
         var vrtFile = testData + '/data/vrt/sample.vrt';
         var filesize = 1293;
@@ -337,12 +322,10 @@ describe('[VRT] Getting datasources', function() {
 
             assert.deepEqual(metadata, expectedMetadata_sample_vrt);
             assert.deepEqual(err, null);
-            done();
+            assert.end();
         });
     });
-});
-describe('[CSV] Getting datasources', function() {
-    before(function(done) {
+    tape('[CSV] Setup', function(assert) {
         var csvFile = testData + '/data/csv/bbl_current_csv.csv';
         var filesize = 1667;
         var type = '.csv';
@@ -352,11 +335,10 @@ describe('[CSV] Getting datasources', function() {
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
 
-            done();
+            assert.end();
         });
     });
-    this.timeout(20000);
-    it('should return expected layers and json', function(done) {
+    tape('[CSV] Getting datasources: should return expected layers and json', function(assert) {
         if (UPDATE) expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
         var csvFile = testData + '/data/csv/bbl_current_csv.csv';
         var filesize = 1667;
@@ -365,12 +347,10 @@ describe('[CSV] Getting datasources', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
-            done();
+            assert.end();
         });
     });
-});
-describe('[KML] Getting datasources', function() {
-    before(function(done) {
+    tape('[KML] Setup', function(assert) {
         var kmlFile = testData + '/data/kml/1week_earthquake.kml';
         var filesize = 1082451;
         var type = '.kml';
@@ -380,10 +360,10 @@ describe('[KML] Getting datasources', function() {
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
 
-            done();
+            assert.end();
         });
     });
-    it('should return expected layers and json', function(done) {
+    tape('[KML] Getting datasources: should return expected layers and json', function(assert) {
         if (UPDATE) expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
         var kmlFile = testData + '/data/kml/1week_earthquake.kml';
         var filesize = 1082451;
@@ -392,12 +372,10 @@ describe('[KML] Getting datasources', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
-            done();
+            assert.end();
         });
     });
-});
-describe('[GeoJson] Getting datasource', function() {
-    before(function(done) {
+    tape('[GeoJson] Setup', function(assert) {
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var filesize = 367;
         var type = '.geojson';
@@ -407,10 +385,10 @@ describe('[GeoJson] Getting datasource', function() {
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
 
-            done();
+            assert.end();
         });
     });
-    it('should return expected datasource and layer name', function(done) {
+    tape('[GeoJson] Getting datasource: should return expected datasource and layer name', function(assert) {
         if (UPDATE) expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
         var filesize = 367;
@@ -419,12 +397,10 @@ describe('[GeoJson] Getting datasource', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
-            done();
+            assert.end();
         });
     });
-});
-describe('[TopoJson] Getting datasource', function() {
-    it('should return expected datasource and layer name', function(done) {
+    tape('[TopoJson] Getting datasource: should return expected datasource and layer name', function(assert) {
         var topoJsonFile = testData + '/data/topojson/topo.json';
         var filesize = 332;
         var type = '.geojson';
@@ -438,12 +414,10 @@ describe('[TopoJson] Getting datasource', function() {
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata, null, 2));
             }
-            done();
+            assert.end();
         });
     });
-});
-describe('[GPX] Getting datasource', function() {
-    before(function(done) {
+    tape('[GPX] Getting datasource', function(assert) {
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
         var filesize = 36815;
         var type = '.gpx';
@@ -453,10 +427,10 @@ describe('[GPX] Getting datasource', function() {
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_fells_loop);
             
-            done();
+            assert.end();
         });
     });
-    it('should return expected datasource and layer name', function(done) {
+    tape('[GPX] Getting datasource: should return expected datasource and layer name', function(assert) {
         if (UPDATE) expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
         var gpxFile = testData + '/data/gpx/fells_loop.gpx';
         var filesize = 36815;
@@ -465,15 +439,13 @@ describe('[GPX] Getting datasource', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_fells_loop);
-            done();
+            assert.end();
         });
     });
-});
 /**
  * Testing datasourceProcessor.getDatasource
  */
-describe('Setting layer configs', function() {
-    it('should throw an error due to [0,0,0,0] extent', function(done) {
+    tape('Setting layer configs: should throw an error due to [0,0,0,0] extent', function(assert) {
         var invalidFile = testData + '/data/kml/TIMS.kml';
         var filename = 'TIMS';
         var options = {
@@ -486,15 +458,13 @@ describe('Setting layer configs', function() {
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
             assert.equal(0, err.message.indexOf('Source appears to have no features data.'));
-            done();
+            assert.end();
         });
     });
-});
 /**
  * Testing datasourceProcessor.getMinMaxZoom
  */
-describe('Setting min/max zoom', function() {
-    it('should return expected values for min/maxzoom', function(done) {
+    tape('Setting min/max zoom: should return expected values for min/maxzoom', function(assert) {
         var expectedMin = 14;
         var expectedMax = 19;
         var extent = [-77.11532282009873, 38.81041408561889, -76.90970655877031, 38.995615210318356];
@@ -503,12 +473,10 @@ describe('Setting min/max zoom', function() {
             assert.strictEqual(null, err);
             assert.equal(minzoom, expectedMin);
             assert.equal(maxzoom, expectedMax);
-            done();
+            assert.end();
         });
     });
-});
-describe('Setting min/max zoom for GDAL sources', function() {
-    it('should return expected values for min/maxzoom', function(done) {
+    tape('Setting min/max zoom for GDAL sources: should return expected values for min/maxzoom', function(assert) {
         var expectedMin = 8;
         var expectedMax = 14;
         var proj = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
@@ -518,12 +486,10 @@ describe('Setting min/max zoom for GDAL sources', function() {
             assert.strictEqual(null, err);
             assert.equal(minzoom, expectedMin);
             assert.equal(maxzoom, expectedMax);
-            done();
+            assert.end();
         });
     });
-});
-describe('Setting extent to zero', function() {
-    it('should return an error', function(done) {
+    tape('Setting extent to zero: should return an error', function(assert) {
         var extent = [0, 0, 0, 0];
         var bytes = 1234;
         datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
@@ -531,12 +497,10 @@ describe('Setting extent to zero', function() {
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
             assert.equal(err.message, 'Error calculating min/max zoom: Bounds invalid');
-            done();
+            assert.end();
         });
     });
-});
-describe('Setting extent to zero', function() {
-    it('should return an error because of invalid bytes', function(done) {
+    tape('Setting extent to zero: should return an error because of invalid bytes', function(assert) {
         var extent = [1, 2, 3, 4];
         var bytes = -1;
         datasourceProcessor.getMinMaxZoom(bytes, extent, function(err, minzoom, maxzoom) {
@@ -544,14 +508,13 @@ describe('Setting extent to zero', function() {
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
             assert.equal(err.message, 'Error calculating min/max zoom: Total bytes less than or equal to zero');
-            done();
+            assert.end();
         });
     });
-});
 /**
  * Testing datasourceProcessor.getProjection
  */
-describe('Getting projection ', function() {
+(function() {
     var errorTests = {
         'errors/invalidProjection.prj': {
             message: 'Invalid projection file.',
@@ -565,26 +528,26 @@ describe('Getting projection ', function() {
         }
     };
     for (var name in errorTests)(function(name, test) {
-        it(test.desc, function(done) {
+        tape(test.desc, function(assert) {
             datasourceProcessor.getProjection(path.resolve('test/data/' + name), test.type, function(err, projection) {
                 assert.ok(err instanceof Error);
                 if (test.message) assert.equal(test.message, err.message);
                 assert.equal('EINVALID', err.code);
-                done();
+                assert.end();
             });
         });
     })(name, errorTests[name]);
-    it('should return an error due to invalid tif file', function(done) {
+    tape('should return an error due to invalid tif file', function(assert) {
         var file = path.resolve('test/data/errors/sampleError.tif');
         var expectedMessage = 'Invalid gdal source. Error opening dataset';
         datasourceProcessor.projectionFromRaster(file, function(err, projection) {
             assert.ok(err instanceof Error);
             assert.equal(expectedMessage, err.message);
             assert.equal('EINVALID', err.code);
-            done();
+            assert.end();
         });
     });
-    it('should return the correct projection for a shapefile', function(done) {
+    tape('should return the correct projection for a shapefile', function(assert) {
         var file = testData + '/data/shp/world_merc/world_merc.shp';
         var type = '.shp';
         var expectedProj = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over';
@@ -592,10 +555,10 @@ describe('Getting projection ', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
-            done();
+            assert.end();
         });
     });
-    it('should return the correct projection for geojson file', function(done) {
+    tape('should return the correct projection for geojson file', function(assert) {
         var file = 'geojson_file';
         var type = '.geojson';
         var expectedProj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
@@ -603,10 +566,10 @@ describe('Getting projection ', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
-            done();
+            assert.end();
         });
     });
-    it('should return the correct projection for gpx file', function(done) {
+    tape('should return the correct projection for gpx file', function(assert) {
         var file = 'gpx_file';
         var type = '.gpx';
         var expectedProj = '+init=epsg:4326';
@@ -614,10 +577,10 @@ describe('Getting projection ', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
-            done();
+            assert.end();
         });
     });
-    it('should return the correct projection for kml file', function(done) {
+    tape('should return the correct projection for kml file', function(assert) {
         var file = 'kml_file';
         var type = '.kml';
         var expectedProj = '+init=epsg:4326';
@@ -625,19 +588,19 @@ describe('Getting projection ', function() {
             if (err) return done(err);
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
-            done();
+            assert.end();
         });
     });
-    it('should return an error for invalid VRT file due to nonexistent source files', function(done) {
+    tape('should return an error for invalid VRT file due to nonexistent source files', function(assert) {
         var file = path.resolve('test/data/errors/sampleError.vrt');
         var expectedMessage = 'Error getting statistics of band. 1 or more of the VRT file\'s relative sources may be missing';
         datasourceProcessor.projectionFromRaster(file, function(err, projection) {
             assert.ok(err instanceof Error);
             assert.ok(err.message.indexOf(expectedMessage) !== -1);
             assert.equal('EINVALID', err.code);
-            done();
+            assert.end();
         });
     });
-});
+})();
 
 

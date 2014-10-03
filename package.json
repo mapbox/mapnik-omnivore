@@ -22,7 +22,7 @@
     "node": "0.10.x"
   },
   "devDependencies": {
-    "mocha": "1.x",
+    "tape": "3.0.x",
     "coveralls": "~2.11.1",
     "istanbul": "~0.3.0",
     "mapnik-test-data": "http://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.3-fece0a9c546074a1479e9eae2333184029bb2279.tgz"
