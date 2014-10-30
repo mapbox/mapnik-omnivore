@@ -97,7 +97,8 @@ function verifyVRT(file, callback){
 function isCSV(file) {
     var options = {
         type: 'csv',
-        file: file
+        file: file,
+        row_limit: 100
     };
     // Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what 
     // will be digesting it to obtain fields, extent, and center point
