@@ -17,6 +17,9 @@ var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtur
 
 var UPDATE = process.env.UPDATE;
 
+var test = mapnik.Logger.getSeverity();
+console.log(test);
+
 /**
  * Testing datasourceProcessor.getCenterAndExtent
  */
