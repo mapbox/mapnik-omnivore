@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "srs": "~0.4.3",
-    "mapnik": "3.0.x",
+    "mapnik": "3.1.x",
     "sphericalmercator": "1.0.2",
     "gdal": "0.2.0"
   },
