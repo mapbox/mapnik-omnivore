@@ -10,9 +10,9 @@
   ],
   "dependencies": {
     "srs": "~0.4.5",
-    "mapnik": "~3.1.0",
+    "mapnik": "~3.1.1",
     "sphericalmercator": "~1.0.2",
-    "gdal": "~0.3.0"
+    "gdal": "~0.3.1"
   },
   "repository": {
     "type": "git",
