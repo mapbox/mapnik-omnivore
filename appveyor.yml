@@ -2,15 +2,16 @@ environment:
   matrix:
     - nodejs_version: 0.10
       msvs_toolset: 12
+      platform: x64
     - nodejs_version: 0.10.33
       msvs_toolset: 14
+      platform: x64
     - nodejs_version: 0.11
       msvs_toolset: 12
+      platform: x64
     - nodejs_version: 0.11.14
       msvs_toolset: 14
-
-platform:
-  - x64
+      platform: x64
 
 install:
   # add local node to path (since we install it for msvs_toolset == 14)
