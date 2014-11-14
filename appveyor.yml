@@ -3,11 +3,11 @@ environment:
     - nodejs_version: 0.10
       msvs_toolset: 12
       platform: x64
-    - nodejs_version: 0.10.33
-      msvs_toolset: 14
-      platform: x64
     - nodejs_version: 0.11
       msvs_toolset: 12
+      platform: x64
+    - nodejs_version: 0.10.33
+      msvs_toolset: 14
       platform: x64
     - nodejs_version: 0.11.14
       msvs_toolset: 14
@@ -19,12 +19,13 @@ install:
   - SET ARCHPATH=
   - if %platform% == x64 (SET ARCHPATH=x64/)
   - if "%msvs_toolset%" == "12" powershell Install-Product node $env:nodejs_version $env:platform
+  - if "%msvs_toolset%" == "14" powershell Write-Output "fetching https://mapbox.s3.amazonaws.com/node-cpp11/v$env:nodejs_version/${env:ARCHPATH}node.exe"
   - if "%msvs_toolset%" == "14" powershell Start-FileDownload "https://mapbox.s3.amazonaws.com/node-cpp11/v$env:nodejs_version/${env:ARCHPATH}node.exe"
   - powershell Write-Output "https://mapbox.s3.amazonaws.com/node-cpp11/vcredist_$env:platform.exe"
   - powershell Start-FileDownload "https://mapbox.s3.amazonaws.com/node-cpp11/vcredist_$env:platform.exe"
   - .\vcredist_%platform%.exe /q /norestart
   - node -v
-  - node -e "console.log(process.argv,process.execPath)"
+  - node -e "console.log(process.argv,process.execPath,process.arch)"
   - npm -v
   - if "%msvs_toolset%" == "12" npm install --fallback-to-build=false
   - if "%msvs_toolset%" == "14" npm install --fallback-to-build=false --toolset=v140
