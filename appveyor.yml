@@ -3,15 +3,10 @@ environment:
     - nodejs_version: 0.10
       msvs_toolset: 12
       platform: x64
-    - nodejs_version: 0.11
-      msvs_toolset: 12
-      platform: x64
     - nodejs_version: 0.10.33
       msvs_toolset: 14
       platform: x64
-    - nodejs_version: 0.11.14
-      msvs_toolset: 14
-      platform: x64
+    # node v0.11.x broken by https://github.com/joyent/node/issues/8527
 
 install:
   # find and remove default node.exe to avoid conflicts
@@ -34,6 +29,10 @@ install:
   - npm -v
   - if "%msvs_toolset%" == "12" npm install --fallback-to-build=false
   - if "%msvs_toolset%" == "14" npm install --fallback-to-build=false --toolset=v140
+  - node -e "console.log(require('mapnik').settings.env.PROJ_LIB)" > PROJ_LIB.txt
+  - SET /p PROJ_LIB=<PROJ_LIB.txt
+  - node -e "console.log(require('mapnik').settings.env.GDAL_DATA)" > GDAL_DATA.txt
+  - SET /p GDAL_DATA=<GDAL_DATA.txt
   - npm test
 
 build: OFF
