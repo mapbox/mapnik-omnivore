@@ -1,0 +1,8 @@
+.gitignore
+.npmignore
+node_modules
+npm-debug.log
+test
+.DS_Store
+.travis.yml
+appveyor.yml
