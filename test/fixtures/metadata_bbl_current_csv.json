@@ -49,7 +49,17 @@
           "HOTSPOT2005NAME": "String",
           "HOTSPOT2004NAME": "String",
           "BUSINESSIMPROVEMENTDISTRICT": "String"
-        }
+        },
+        "center": [
+          -77.0481382917019,
+          38.93765872502635
+        ],
+        "extent": [
+          -77.0925920175155,
+          38.9142786070481,
+          -77.0036845658883,
+          38.9610388430046
+        ]
       }
     ]
   },

@@ -22,7 +22,17 @@
         "fields": {
           "Name": "String",
           "Description": "String"
-        }
+        },
+        "center": [
+          -110.13325,
+          42.5407
+        ],
+        "extent": [
+          -155.8387,
+          17.7682,
+          -64.4278,
+          67.3132
+        ]
       },
       {
         "id": "Magnitude_5",
@@ -32,7 +42,17 @@
         "fields": {
           "Name": "String",
           "Description": "String"
-        }
+        },
+        "center": [
+          -110.13325,
+          42.5407
+        ],
+        "extent": [
+          -155.8387,
+          17.7682,
+          -64.4278,
+          67.3132
+        ]
       },
       {
         "id": "Magnitude_4",
@@ -42,7 +62,17 @@
         "fields": {
           "Name": "String",
           "Description": "String"
-        }
+        },
+        "center": [
+          -110.13325,
+          42.5407
+        ],
+        "extent": [
+          -155.8387,
+          17.7682,
+          -64.4278,
+          67.3132
+        ]
       },
       {
         "id": "Magnitude_3",
@@ -52,7 +82,17 @@
         "fields": {
           "Name": "String",
           "Description": "String"
-        }
+        },
+        "center": [
+          -110.13325,
+          42.5407
+        ],
+        "extent": [
+          -155.8387,
+          17.7682,
+          -64.4278,
+          67.3132
+        ]
       },
       {
         "id": "Magnitude_2",
@@ -62,7 +102,17 @@
         "fields": {
           "Name": "String",
           "Description": "String"
-        }
+        },
+        "center": [
+          -110.13325,
+          42.5407
+        ],
+        "extent": [
+          -155.8387,
+          17.7682,
+          -64.4278,
+          67.3132
+        ]
       },
       {
         "id": "Magnitude_1",
@@ -72,7 +122,17 @@
         "fields": {
           "Name": "String",
           "Description": "String"
-        }
+        },
+        "center": [
+          -110.13325,
+          42.5407
+        ],
+        "extent": [
+          -155.8387,
+          17.7682,
+          -64.4278,
+          67.3132
+        ]
       }
     ]
   },
