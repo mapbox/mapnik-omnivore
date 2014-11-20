@@ -5,6 +5,9 @@ environment:
       platform: x64
     - nodejs_version: 0.10.33
       msvs_toolset: 14
+      platform: x86
+    - nodejs_version: 0.10.33
+      msvs_toolset: 14
       platform: x64
     # node v0.11.x broken by https://github.com/joyent/node/issues/8527
 
