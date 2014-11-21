@@ -1,19 +1,25 @@
+
 language: node_js
+
 node_js:
 - '0.10'
+
 os:
 - linux
 - osx
+
 before_install:
 - platform=$(uname -s | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/")
  # upgrade libstdc++ to support C++11
 - if [[ ${platform} == 'linux' ]]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;sudo apt-get update -y;sudo apt-get install -y libstdc++6; fi;
+
 before_script:
 - echo "$TRAVIS_SECURE_ENV_VARS"
 - echo "$TRAVIS_PULL_REQUEST"
 - echo "$TRAVIS_BRANCH"
 - echo "$TRAVIS_COMMIT"
 - echo "$TRAVIS_REPO_SLUG"
+
 script:
 - npm test
 - npm run coverage
