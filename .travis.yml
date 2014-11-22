@@ -10,14 +10,17 @@ env:
     - NODE_VERSION="0.10"
     - NODE_VERSION="0.11.14"
 
-install:
+before_install:
  # upgrade libstdc++ to support C++11
-- if [[ $(uname -s) == 'Linux' ]]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;sudo apt-get update -y;sudo apt-get install -y libstdc++6; fi;
-- rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
-- source ~/.nvm/nvm.sh
-- nvm install $NODE_VERSION
-- nvm use $NODE_VERSION
+ - if [[ $(uname -s) == 'Linux' ]]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;sudo apt-get update -y;sudo apt-get install -y libstdc++6; fi;
+ - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
+ - source ~/.nvm/nvm.sh
+ - nvm install $NODE_VERSION
+ - nvm use $NODE_VERSION
+
+install:
+ - npm install
 
 script:
-- npm test
-- npm run coverage
+ - npm test
+ - npm run coverage
