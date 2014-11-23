@@ -3,7 +3,7 @@ var tape = require('tape'),
     fs = require('fs'),
     mapnik = require('mapnik'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
-    datasourceProcessor = require('../lib/datasourceProcessor.js');
+    datasourceProcessor = require('../lib/datasource-processor.js');
 
 //json fixtures
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
