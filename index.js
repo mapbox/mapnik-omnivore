@@ -1,7 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     invalid = require('./lib/invalid'),
-    processDatasource = require('./lib/datasourceProcessor'),
+    processDatasource = require('./lib/datasource-processor'),
     gdal = require('gdal'),
     mapnik = require('mapnik');
 
