@@ -611,6 +611,16 @@ var UPDATE = process.env.UPDATE;
             assert.end();
         });
     });
+    tape('should handle undefined proj4 property', function(assert) {
+        var file = path.resolve('test/data/errors/undefinedproj4.prj');
+        var expectedMessage = 'Undefined proj4 string';
+        datasourceProcessor.projectionFromShape(file, function(err, proj) {
+            assert.ok(err instanceof Error);
+            assert.ok(err.message.indexOf(expectedMessage) !== -1);
+            assert.equal('EINVALID', err.code);
+            assert.end();
+        });
+    });
 })();
 
 
