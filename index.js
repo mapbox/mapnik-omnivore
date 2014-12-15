@@ -53,11 +53,11 @@ function getFileType(file, callback) {
     //get file contents
     fs.open(file, 'r', function(err, fd) {
         if (err) return callback(err);
-        var buf = new Buffer(50);
+        var buf = new Buffer(100);
         //Read file
-        fs.read(fd, buf, 0, 50, null, function(err, bytesRead, buffer) {
+        fs.read(fd, buf, 0, 100, null, function(err, bytesRead, buffer) {
             if (err) return callback(err);
-            var head = buffer.slice(0, 50).toString();
+            var head = buffer.slice(0, 100).toString();
             //process as shapefile
             if (buffer.readUInt32BE(0) === 9994) closeAndReturn('.shp');
             //process as geotiff
