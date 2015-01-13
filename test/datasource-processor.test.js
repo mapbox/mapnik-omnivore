@@ -502,11 +502,12 @@ var UPDATE = process.env.UPDATE;
     
     tape('Setting min/max zoom for Landsat 8 source: should not exceed z12', function(assert) {
       
-      var expectedMin = 7;
+      var expectedMin = 6;
       var expectedMax = 12;
       
-      var proj = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs"
-      var center = [-11051283.891899999231100,6354992.874090000055730];
+      var proj = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
+      
+      var center = [-98.78906931331828, 49.15195306095049]; // 115-175-9
       var pixelSize = [30.000000000000000,-30.000000000000000];
       
       datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
