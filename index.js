@@ -61,7 +61,7 @@ function getFileType(file, callback) {
             //process as shapefile
             if (buffer.readUInt32BE(0) === 9994) closeAndReturn('.shp');
             //process as geotiff
-            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && ((buffer[2] === 42) || buffer[3] === 42)) closeAndReturn('.tif');
+            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && ((buffer[2] === 42) || buffer[3] === 42 || buffer[2] === 43)) closeAndReturn('.tif');
             //process as kml, gpx, topojson, geojson, or vrt
             //else if (head.indexOf('\"type\":\"Topology\"') !== -1) closeAndReturn('.topojson');
             else if (head.trim().indexOf('{') == 0) closeAndReturn('.geojson');
