@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+var omnivore = require('..');
+var path = require('path');
+
+var filepath = path.resolve(__dirname, process.argv[2]);
+
+omnivore.digest(filepath, function(err, metadata) {
+  if (err) throw err;
+  console.log(JSON.stringify(metadata, null, 2));
+});
