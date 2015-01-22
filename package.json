@@ -31,5 +31,8 @@
     "test": "tape test/*.js",
     "coverage": "istanbul cover tape test/*.test.js && coveralls < ./coverage/lcov.info"
   },
+  "bin": {
+    "digest": "bin/digest"
+  },
   "author": "Carol B. Hansen"
 }
