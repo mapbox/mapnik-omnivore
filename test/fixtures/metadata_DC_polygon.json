@@ -32,6 +32,6 @@
   "layers": [
     "OGRGeoJSON"
   ],
-  "dstype": "ogr",
+  "dstype": "geojson",
   "filetype": ".geojson"
 }
