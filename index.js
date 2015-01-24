@@ -31,7 +31,7 @@ function digest(file, callback) {
  */
 function getMetadata(file, callback) {
     var metadata = {};
-    //Get filsize from fs.stats
+    //Get filesize from fs.stats
     fs.stat(file, function(err, stats) {
         if (err) return callback(invalid('Error getting stats from file. File might not exist.'));
         var filesize = stats['size'];

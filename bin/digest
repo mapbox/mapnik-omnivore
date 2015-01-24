@@ -3,7 +3,12 @@
 var omnivore = require('..');
 var path = require('path');
 
-var filepath = path.resolve(__dirname, process.argv[2]);
+if (!process.argv[2]) {
+    console.log('Please provide the path to geodata');
+    process.exit(1);
+}
+
+var filepath = process.argv[2];
 
 omnivore.digest(filepath, function(err, metadata) {
   if (err) throw err;
