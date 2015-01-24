@@ -1,0 +1,33 @@
+{
+  "filesize": 428328,
+  "projection": "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs",
+  "filename": "multipoint",
+  "center": [
+    -75.16024141355962,
+    39.95769202781635
+  ],
+  "extent": [
+    -75.16026089315217,
+    39.9576802349116,
+    -75.16022193396708,
+    39.9577038207211
+  ],
+  "json": {
+    "vector_layers": [
+      {
+        "id": "multipoint",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {}
+      }
+    ]
+  },
+  "minzoom": 0,
+  "maxzoom": 22,
+  "layers": [
+    "multipoint"
+  ],
+  "dstype": "ogr",
+  "filetype": ".gdb"
+}

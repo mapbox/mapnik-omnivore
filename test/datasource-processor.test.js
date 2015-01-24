@@ -14,6 +14,7 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
 var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
 var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
+var expectedMetadata_filegdb = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_filegdb.json')));
 
 var UPDATE = process.env.UPDATE;
 
@@ -201,6 +202,23 @@ var UPDATE = process.env.UPDATE;
 /**
  * Testing datasourceProcessor.init
  */
+    tape('[FILEGDB] Setup', function(assert) {
+        var gdbFile = testData + '/data/filegdb/multipoint.gdb';
+        var filesize = 428328; // N/A since it is a directory!
+        var type = '.gdb';
+        //Overwrites metadata json file if output does not match
+        datasourceProcessor.init(gdbFile, filesize, type, function(err, metadata) {
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
+            if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_filegdb.json'), JSON.stringify(metadata, null, 2));
+            assert.deepEqual(metadata, expectedMetadata_filegdb);
+
+            assert.end();
+        });
+    });
+
     tape('[SHAPE] Setup', function(assert) {
         var shpFile = testData + '/data/shp/world_merc/world_merc.shp';
         var filesize = 428328;
