@@ -21,15 +21,8 @@ var modules = [GeoJSON, Raster];
  * @param file (filepath)
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
-function digest(file, callback) {
-    var buffer;
-    try {
-        buffer = fs.readFileSync(file);
-    } catch(err) {
-        return callback(invalid(err));
-    }
-    
-    sniffer.sniff(buffer, function(err, filetype) {
+module.exports.digest = function(file, callback) {    
+    sniffer.quaff(file, function(err, filetype) {
         if (err) return callback(err);  
         getMetadata(file, filetype, function(err, metadata) {
             if (err) return callback(err);
@@ -45,11 +38,6 @@ function digest(file, callback) {
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
 function getMetadata(file, filetype, callback) {
-    //Get filesize from fs.stats
-    fs.stat(file, function(err, stats) {
-        if (err) return callback(invalid(err));
-        
-        var filesize = stats['size'];
         var type = modules.filter(function(module) { 
             return module.validFileType === filetype; 
         });
@@ -64,8 +52,15 @@ function getMetadata(file, filetype, callback) {
         // Build metadata object for source asynchronously
         var q = queue(1);
         var metadata = {};
-        metadata.filesize = filesize;
         metadata.filetype = '.' + filetype;
+
+        q.defer(function(next) {
+            fs.stat(file, function(err, stats) {
+                if (err) return callback(invalid(err));
+                metadata.filesize = stats['size'];
+                next();
+            });
+        })
 
         q.defer(function(next) {
             source.getCenter(function(err, center) {
@@ -130,7 +125,6 @@ function getMetadata(file, filetype, callback) {
             console.log("all done!");
             callback(err, metadata);
         });
-    });
 };
 
 
