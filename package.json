@@ -12,7 +12,9 @@
     "srs": "~0.4.5",
     "mapnik": "~3.1.2",
     "sphericalmercator": "~1.0.2",
-    "gdal": "0.3.1"
+    "gdal": "0.3.1",
+    "mapbox-file-sniff": "0.0.9",
+    "queue-async": "1.0.7"
   },
   "repository": {
     "type": "git",
