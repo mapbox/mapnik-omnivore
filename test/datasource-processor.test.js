@@ -132,27 +132,6 @@
 //         assert.deepEqual(result.extent, expectedExtent);
 //         assert.end();
 //     });
-//     tape('[GeoJson] Getting center of extent', function(assert) {
-//         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-//         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
-//         var options = {
-//             type: 'ogr',
-//             file: geoJsonFile,
-//             layer_by_index: 0
-//         };
-//         var ds = new mapnik.Datasource(options);
-//         var expectedCenter = [-77.01335, 38.89255];
-//         var expectedExtent = [-77.1174, 38.7912, -76.9093, 38.9939];
-//         var result = datasourceProcessor.getCenterAndExtent(ds, proj);
-//         assert.ok(result);
-//         assert.ok(result.center);
-//         assert.ok(result.extent);
-//         assert.ok(typeof result.extent == 'object');
-//         assert.ok(typeof result.center == 'object');
-//         assert.deepEqual(result.center, expectedCenter);
-//         assert.deepEqual(result.extent, expectedExtent);
-//         assert.end();
-//     });
 // // describe('[TopoJson] Getting center of extent', function() {
 // //     tape('should return expected values', function() {
 // //         var proj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
@@ -412,37 +391,6 @@
 //             }
 //             assert.ok(err === null);
 //             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
-//             assert.end();
-//         });
-//     });
-//     tape('[GeoJson] Setup', function(assert) {
-//         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
-//         var filesize = 367;
-//         var type = '.geojson';
-//         //Overwrites metadata json file if output does not match
-//         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
-//             if (err) {
-//                 assert.ifError(err, 'should not error');
-//                 return assert.end();
-//             }
-//             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
-//             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
-
-//             assert.end();
-//         });
-//     });
-//     tape('[GeoJson] Getting datasource: should return expected datasource and layer name', function(assert) {
-//         if (UPDATE) expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
-//         var geoJsonFile = testData + '/data/geojson/DC_polygon.geo.json';
-//         var filesize = 367;
-//         var type = '.geojson';
-//         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
-//             if (err) {
-//                 assert.ifError(err, 'should not error');
-//                 return assert.end();
-//             }
-//             assert.ok(err === null);
-//             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
 //             assert.end();
 //         });
 //     });

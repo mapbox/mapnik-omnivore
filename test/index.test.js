@@ -9,6 +9,8 @@ var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
+var UPDATE = process.env.UPDATE;
+
 /**
  * Testing mapnik-omnivore.digest
  */
@@ -57,7 +59,8 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
     //         assert.end();
     //     });
     // });
-    tape('[GeoJson] Getting datasource: should return expected datasource and layer name', function(assert) {
+    tape('[GeoJson] digest function should return expected metadata', function(assert) {
+        if (UPDATE) expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
         var file = testData + '/data/geojson/DC_polygon.geo.json';
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) return done(err);

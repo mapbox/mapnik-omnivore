@@ -5,10 +5,6 @@ var tape = require('tape'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
     GeoJSON = require('../lib/geojson.js');
 
-var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
-
-var UPDATE = process.env.UPDATE;
-
 /**
  * Testing GeoJSON functions
  */
