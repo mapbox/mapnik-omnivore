@@ -563,6 +563,25 @@ var UPDATE = process.env.UPDATE;
       });
 
     });
+    
+    tape('Setting min/max zoom for a WSG84 source: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 0;
+      var expectedMax = 0;
+      
+      var proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+      
+      var center = [75.937499999962156,36.597889133105191];
+      var pixelSize = [0.012824370005926,-0.012824370005926];
+      
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+      
+    });
 
     tape('Setting extent to zero: should return an error', function(assert) {
         var extent = [0, 0, 0, 0];
