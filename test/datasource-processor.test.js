@@ -566,8 +566,8 @@ var UPDATE = process.env.UPDATE;
     
     tape('Setting min/max zoom for a WSG84 source: should give reasonable zoom levels', function(assert) {
       
-      var expectedMin = 0;
-      var expectedMax = 0;
+      var expectedMin = 1;
+      var expectedMax = 7;
       
       var proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
       
