@@ -141,17 +141,18 @@ tape('[GeoJson] Get layers', function(assert) {
 
 tape('[GeoJson] Get zooms', function(assert) {
     var file = testData + '/data/geojson/DC_polygon.geo.json';
-    var expectedZooms = [0, 6];
+    var expectedMinzoom = 0;
+    var expectedMaxzoom = 6;
     
     var source = new GeoJSON(file);
-    source.getZooms(function(err, zooms) {
+    source.getZooms(function(err, minzoom, maxzoom) {
       if (err) {
         assert.ifError(err, 'should not error');
         return assert.end();
       }
       assert.ok(err === null);
-      assert.ok(typeof zooms === 'object');
-      assert.deepEqual(zooms, expectedZooms);
+      assert.deepEqual(minzoom, expectedMinzoom);
+      assert.deepEqual(maxzoom, expectedMaxzoom);
       assert.end();
     });
 });

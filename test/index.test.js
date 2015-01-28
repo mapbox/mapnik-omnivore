@@ -113,8 +113,8 @@ var UPDATE = process.env.UPDATE;
         var file = 'doesnt/exist.shp';
         mapnik_omnivore.digest(file, function(err, result) {
             assert.ok(err instanceof Error);
-            assert.equal('EINVALID', err.code);
-            assert.equal(err.message, 'open \'doesnt/exist.shp\'');
+            assert.equal('ENOENT', err.code);
+            assert.equal(err.message, 'ENOENT, open \'doesnt/exist.shp\'');
             assert.end();
         });
     });

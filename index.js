@@ -1,7 +1,6 @@
 var fs = require('fs'),
     path = require('path'),
     invalid = require('./lib/invalid'),
-    processDatasource = require('./lib/datasource-processor'),
     gdal = require('gdal'),
     mapnik = require('mapnik'),
     sniffer = require('mapbox-file-sniff'),
@@ -79,10 +78,10 @@ function getMetadata(file, filetype, callback) {
         });
 
         q.defer(function(next) {
-            source.getZooms(function(err, zooms) {
+            source.getZooms(function(err, minzoom, maxzoom) {
                 if (err) return next(err);
-                metadata.minzoom = zooms[0];
-                metadata.maxzoom = zooms[1];
+                metadata.minzoom = minzoom;
+                metadata.maxzoom = maxzoom;
                 next();
             });
         });
