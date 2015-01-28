@@ -97,8 +97,8 @@ function getMetadata(file, filetype, callback) {
         q.defer(function(next) {
             source.getDetails(function(err, details) {
                 if (err) return next(err);
-                var detailsProperty = source.details;
-                metadata[detailsProperty] = details;
+                var detailsName = source.detailsName;
+                metadata[detailsName] = details;
                 next();
             });
         });

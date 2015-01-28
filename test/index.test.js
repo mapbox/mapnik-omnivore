@@ -9,6 +9,8 @@ var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
+var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+
 var UPDATE = process.env.UPDATE;
 
 /**
@@ -71,6 +73,55 @@ var UPDATE = process.env.UPDATE;
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
+            }
+            assert.end();
+        });
+    });
+    tape('[TIFF] digest function should return expected metadata', function(assert) {
+        if (UPDATE) expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+        
+        var file = testData + '/data/geotiff/sample.tif';
+        
+        var trunc_6 = function(val) {
+            return Number(val.toFixed(6));
+        };
+
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+
+            //Round extent values to avoid floating point discrepancies in Travis
+            metadata.center[0] = trunc_6(metadata.center[0]);
+            metadata.center[1] = trunc_6(metadata.center[1]);
+            metadata.extent[0] = trunc_6(metadata.extent[0]);
+            metadata.extent[1] = trunc_6(metadata.extent[1]);
+            metadata.extent[2] = trunc_6(metadata.extent[2]);
+            metadata.extent[3] = trunc_6(metadata.extent[3]);
+            expectedMetadata_sample_tif.center[0] = trunc_6(expectedMetadata_sample_tif.center[0]);
+            expectedMetadata_sample_tif.center[1] = trunc_6(expectedMetadata_sample_tif.center[1]);
+            expectedMetadata_sample_tif.extent[0] = trunc_6(expectedMetadata_sample_tif.extent[0]);
+            expectedMetadata_sample_tif.extent[1] = trunc_6(expectedMetadata_sample_tif.extent[1]);
+            expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
+            expectedMetadata_sample_tif.extent[3] = trunc_6(expectedMetadata_sample_tif.extent[3]);
+
+            //Round band mean/std_dev values
+            var bands_meta = metadata.raster.bands;
+            bands_meta.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+            var bands_expected = expectedMetadata_sample_tif.raster.bands;
+            bands_expected.forEach(function(b) {
+                b.stats.mean = trunc_6(b.stats.mean);
+                b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+
+            try {
+                assert.deepEqual(metadata, expectedMetadata_sample_tif);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata, null, 2));
             }
             assert.end();
         });
