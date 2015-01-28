@@ -6,14 +6,15 @@ var fs = require('fs'),
     sniffer = require('mapbox-file-sniff'),
     queue = require('queue-async'),
     GeoJSON = require('./lib/geojson'),
-    Raster = require('./lib/raster');
+    Raster = require('./lib/raster'),
+    Shape = require('./lib/shape');
 
 // Register datasource plugins
 mapnik.register_default_input_plugins()
 // silence mapnik logs
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
 
-var modules = [GeoJSON, Raster];
+var modules = [GeoJSON, Raster, Shape];
 
 /**
  * Initializes the module

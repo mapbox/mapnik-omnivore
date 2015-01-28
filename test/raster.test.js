@@ -205,7 +205,7 @@ tape('[Raster] Get layers', function(assert) {
     });
 });
 
-tape('[GeoJson] Get zooms', function(assert) {
+tape('[Raster] Get zooms', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedMinzoom = 9;
     var expectedMaxzoom = 15;
