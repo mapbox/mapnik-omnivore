@@ -563,6 +563,62 @@ var UPDATE = process.env.UPDATE;
       });
 
     });
+    
+    tape('Setting min/max zoom for a WSG84 source: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 1;
+      var expectedMax = 7;
+      
+      var proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+      
+      var center = [75.937499999962156,36.597889133105191];
+      var pixelSize = [0.012824370005926,-0.012824370005926];
+      
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+      
+    });
+    
+    tape('Setting min/max zoom for a web mercator at high latitude: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 6;
+      var expectedMax = 12;
+      
+      var proj = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
+      var center = [-19.069369983626977, 64.20657956243323];
+      var pixelSize = [68.882691928635296,-68.882691928635296];
+      
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+      
+    });
+    
+    
+    tape('Setting min/max zoom for a WSG84 at high latitude: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 6;
+      var expectedMax = 12;
+      
+      var proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+      var center = [-21.785521252969779,65.381874163753935];
+      var pixelSize = [0.000477920574001,-0.000477920574001];
+      
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+      
+    });
 
     tape('Setting extent to zero: should return an error', function(assert) {
         var extent = [0, 0, 0, 0];
