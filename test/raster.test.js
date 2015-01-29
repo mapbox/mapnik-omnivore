@@ -5,6 +5,8 @@ var tape = require('tape'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
     Raster = require('../lib/raster.js');
 
+var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+
 /**
  * Testing Raster functions
  */
@@ -18,7 +20,7 @@ tape('[Raster] Setting up constructor', function(assert) {
       "height": 804,
       "pixelSize": [
         7.502071930146189,
-        7.502071930145942
+        -7.502071930145942
       ],
       "origin": [
         -1134675.2952829634,
@@ -114,53 +116,7 @@ tape('[Raster] Get details', function(assert) {
         return Number(val.toFixed(6));
     };
 
-    var expectedDetails = {
-      "pixelSize": [
-        7.502071930146189,
-        7.502071930145942
-      ],
-      "bandCount": 1,
-      "bands": [
-        {
-          "stats": {
-            "min": 0,
-            "max": 100,
-            "mean": 29.725628716175223,
-            "std_dev": 36.98885954363488
-          },
-          "scale": 1,
-          "unitType": "",
-          "rasterDatatype": "Byte",
-          "categoryNames": [],
-          "hasArbitraryOverviews": false,
-          "overviews": {},
-          "nodata": null,
-          "id": 1,
-          "blockSize": {
-            "x": 984,
-            "y": 8
-          },
-          "color": "Gray"
-        }
-      ],
-      "nodata": null,
-      "origin": [
-        -1134675.2952829634,
-        2485710.4658232867
-      ],
-      "width": 984,
-      "height": 804,
-      "units": {
-        "linear": {
-          "value": 1,
-          "units": "Meter"
-        },
-        "angular": {
-          "value": 0.0174532925199433,
-          "units": "degree"
-        }
-      }
-    };
+    var expectedDetails = expectedMetadata_sample_tif.raster;
     
     var source = new Raster(file);
     source.getDetails(function(err, details) {
@@ -171,17 +127,28 @@ tape('[Raster] Get details', function(assert) {
 
       assert.ok(err === null);
 
-      //Round band mean/std_dev values for slight differences from Travis
+      //Round pixelsize and band mean/std_dev values for slight differences from Travis
       var bands_meta = details.bands;
       bands_meta.forEach(function(b) {
         b.stats.mean = trunc_6(b.stats.mean);
         b.stats.std_dev = trunc_6(b.stats.std_dev);
       });
+      
       var bands_expected = expectedDetails.bands;
       bands_expected.forEach(function(b) {
         b.stats.mean = trunc_6(b.stats.mean);
         b.stats.std_dev = trunc_6(b.stats.std_dev);
       });
+      
+      // var expectedPixelSize = expectedDetails.pixelSize;
+      // expectedPixelSize.forEach(function(index) {
+      //   index = trunc_6(index);
+      // });
+
+      // var pixelSize_returned = details.pixelSize;
+      // pixelSize_returned.forEach(function(index) {
+      //   index = trunc_6(index);
+      // });
 
       assert.deepEqual(details, expectedDetails);
       assert.end();

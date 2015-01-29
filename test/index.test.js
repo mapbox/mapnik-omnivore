@@ -104,17 +104,29 @@ var UPDATE = process.env.UPDATE;
             expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
             expectedMetadata_sample_tif.extent[3] = trunc_6(expectedMetadata_sample_tif.extent[3]);
 
-            //Round band mean/std_dev values
+            //Round pixelsize and band mean/std_dev values for slight differences in Travis
             var bands_meta = metadata.raster.bands;
             bands_meta.forEach(function(b) {
-                b.stats.mean = trunc_6(b.stats.mean);
-                b.stats.std_dev = trunc_6(b.stats.std_dev);
+              b.stats.mean = trunc_6(b.stats.mean);
+              b.stats.std_dev = trunc_6(b.stats.std_dev);
             });
+
             var bands_expected = expectedMetadata_sample_tif.raster.bands;
             bands_expected.forEach(function(b) {
-                b.stats.mean = trunc_6(b.stats.mean);
-                b.stats.std_dev = trunc_6(b.stats.std_dev);
+              b.stats.mean = trunc_6(b.stats.mean);
+              b.stats.std_dev = trunc_6(b.stats.std_dev);
             });
+      
+            // var pixelSize_meta = metadata.raster.pixelSize;
+            // pixelSize_meta.forEach(function(index) {
+            //   pixelSize_meta[index] = trunc_6(pixelSize_meta[index]);
+            // });
+
+            // var pixelSize_expected = expectedMetadata_sample_tif.raster.pixelSize;
+            // pixelSize_expected.forEach(function(index) {
+            //   pixelSize_expected[index] = trunc_6(pixelSize_expected[index]);
+            // });
+
 
             try {
                 assert.deepEqual(metadata, expectedMetadata_sample_tif);
