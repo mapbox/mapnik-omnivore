@@ -3,6 +3,7 @@ var tape = require('tape'),
     fs = require('fs'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
     mapnik_omnivore = require('../index.js');
+
 //json fixtures
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
@@ -16,21 +17,21 @@ var UPDATE = process.env.UPDATE;
 /**
  * Testing mapnik-omnivore.digest
  */
-    // tape('[SHAPE] Getting datasources: should return expected metadata', function(assert) {
-    //     var file = testData + '/data/shp/world_merc/world_merc.shp';
-    //     mapnik_omnivore.digest(file, function(err, metadata) {
-    //         if (err) return done(err);
-    //         assert.ok(err === null);
-    //         try {
-    //             assert.deepEqual(metadata, expectedMetadata_world_merc);
-    //         } catch (err) {
-    //             console.log(err);
-    //             console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-    //             fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
-    //         }
-    //         assert.end();
-    //     });
-    // });
+    tape('[SHAPE] Getting datasources: should return expected metadata', function(assert) {
+        var file = testData + '/data/shp/world_merc/world_merc.shp';
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) return done(err);
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_world_merc);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata));
+            }
+            assert.end();
+        });
+    });
     // tape('[CSV] Getting datasources: should return expected metadata', function(assert) {
     //     var file = testData + '/data/csv/bbl_current_csv.csv';
     //     mapnik_omnivore.digest(file, function(err, metadata) {
@@ -77,7 +78,7 @@ var UPDATE = process.env.UPDATE;
             assert.end();
         });
     });
-    tape('[TIFF] digest function should return expected metadata', function(assert) {
+    tape('[RASTER] digest function should return expected metadata', function(assert) {
         if (UPDATE) expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
         
         var file = testData + '/data/geotiff/sample.tif';
@@ -117,16 +118,13 @@ var UPDATE = process.env.UPDATE;
               b.stats.std_dev = trunc_6(b.stats.std_dev);
             });
       
-            // var pixelSize_meta = metadata.raster.pixelSize;
-            // pixelSize_meta.forEach(function(index) {
-            //   pixelSize_meta[index] = trunc_6(pixelSize_meta[index]);
-            // });
+            var pixelSize_meta = metadata.raster.pixelSize;
+            pixelSize_meta[0] = trunc_6(pixelSize_meta[0]);
+            pixelSize_meta[1] = trunc_6(pixelSize_meta[1]);
 
-            // var pixelSize_expected = expectedMetadata_sample_tif.raster.pixelSize;
-            // pixelSize_expected.forEach(function(index) {
-            //   pixelSize_expected[index] = trunc_6(pixelSize_expected[index]);
-            // });
-
+            var pixelSize_expected = expectedMetadata_sample_tif.raster.pixelSize;
+            pixelSize_expected[0] = trunc_6(pixelSize_expected[0]);
+            pixelSize_expected[1] = trunc_6(pixelSize_expected[1]);
 
             try {
                 assert.deepEqual(metadata, expectedMetadata_sample_tif);

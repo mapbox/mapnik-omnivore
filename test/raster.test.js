@@ -10,7 +10,7 @@ var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/
 /**
  * Testing Raster functions
  */
-tape('[Raster] Setting up constructor', function(assert) {
+tape('[RASTER] Setting up constructor', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
 
     var expectedFilename = 'sample';
@@ -41,7 +41,7 @@ tape('[Raster] Setting up constructor', function(assert) {
     assert.end();
 });
 
-tape('[Raster] Get filename', function(assert) {
+tape('[RASTER] Get filename', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedFilename = 'sample';
     
@@ -58,7 +58,7 @@ tape('[Raster] Get filename', function(assert) {
 });
 
 
-tape('[Raster] Get projection', function(assert) {
+tape('[RASTER] Get projection', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedProjection = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs';
     
@@ -74,7 +74,7 @@ tape('[Raster] Get projection', function(assert) {
     });
 });
 
-tape('[Raster] Get center', function(assert) {
+tape('[RASTER] Get center', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedCenter = [ -110.32476292309875, 44.56502238336985 ];
     
@@ -91,7 +91,7 @@ tape('[Raster] Get center', function(assert) {
     });
 });
 
-tape('[Raster] Get extent', function(assert) {
+tape('[RASTER] Get extent', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedExtent = [ -110.3650933429331, 44.53327824851143, -110.28443250326441, 44.596766518228264];
     
@@ -110,7 +110,7 @@ tape('[Raster] Get extent', function(assert) {
     });
 });
 
-tape('[Raster] Get details', function(assert) {
+tape('[RASTER] Get details', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var trunc_6 = function(val) {
         return Number(val.toFixed(6));
@@ -125,8 +125,6 @@ tape('[Raster] Get details', function(assert) {
         return assert.end();
       }
 
-      assert.ok(err === null);
-
       //Round pixelsize and band mean/std_dev values for slight differences from Travis
       var bands_meta = details.bands;
       bands_meta.forEach(function(b) {
@@ -140,22 +138,21 @@ tape('[Raster] Get details', function(assert) {
         b.stats.std_dev = trunc_6(b.stats.std_dev);
       });
       
-      // var expectedPixelSize = expectedDetails.pixelSize;
-      // expectedPixelSize.forEach(function(index) {
-      //   index = trunc_6(index);
-      // });
+      var expectedPixelSize = expectedDetails.pixelSize;
+      expectedPixelSize[0] = trunc_6(expectedPixelSize[0]);
+      expectedPixelSize[1] = trunc_6(expectedPixelSize[1]);
 
-      // var pixelSize_returned = details.pixelSize;
-      // pixelSize_returned.forEach(function(index) {
-      //   index = trunc_6(index);
-      // });
+      var pixelSize_returned = details.pixelSize;
+      pixelSize_returned[0] = trunc_6(pixelSize_returned[0]);
+      pixelSize_returned[1] = trunc_6(pixelSize_returned[1]);
 
+      assert.ok(err === null);
       assert.deepEqual(details, expectedDetails);
       assert.end();
     });
 });
 
-tape('[Raster] Get layers', function(assert) {
+tape('[RASTER] Get layers', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedLayers = [ 'sample' ];
     
@@ -172,7 +169,7 @@ tape('[Raster] Get layers', function(assert) {
     });
 });
 
-tape('[Raster] Get zooms', function(assert) {
+tape('[RASTER] Get zooms', function(assert) {
     var file = testData + '/data/geotiff/sample.tif';
     var expectedMinzoom = 9;
     var expectedMaxzoom = 15;
@@ -189,8 +186,3 @@ tape('[Raster] Get zooms', function(assert) {
       assert.end();
     });
 });
-
-
-
-
-
