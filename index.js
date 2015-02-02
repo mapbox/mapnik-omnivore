@@ -5,30 +5,30 @@ var fs = require('fs'),
     mapnik = require('mapnik'),
     sniffer = require('mapbox-file-sniff'),
     queue = require('queue-async'),
-    GeoJSON = require('./lib/geojson'),
-    Raster = require('./lib/raster'),
-    Shape = require('./lib/shape');
+    modules = [
+      require('./lib/geojson'),
+      require('./lib/raster'),
+      require('./lib/shape')
+    ];
 
 // Register datasource plugins
 mapnik.register_default_input_plugins()
 // silence mapnik logs
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
 
-var modules = [GeoJSON, Raster, Shape];
-
 /**
  * Initializes the module
  * @param file (filepath)
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
-module.exports.digest = function(file, callback) { 
-    sniffer.quaff(file, function(err, filetype) {
-        if (err) return callback(err);
-        getMetadata(file, filetype, function(err, metadata) {
-            if (err) return callback(err);
-            return callback(null, metadata);
-        });
+module.exports.digest = function(file, callback) {
+  sniffer.quaff(file, function(err, filetype) {
+    if (err) return callback(err);
+    getMetadata(file, filetype, function(err, metadata) {
+      if (err) return callback(err);
+      return callback(null, metadata);
     });
+  });
 };
 
 /**
@@ -37,97 +37,96 @@ module.exports.digest = function(file, callback) {
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
 function getMetadata(file, filetype, callback) {
-        var type = modules.filter(function(module) { 
-            return module.validFileType === filetype; 
-        });
-        
-        // Instantiate new object, based on datatype
-        try { 
-            var source = new type[0](file); 
-        } catch (err) { 
-            return callback(invalid('Error creating Mapnik Datasource: ' + err.message)) 
-        }
-        
-        // Build metadata object for source asynchronously
-        var q = queue(1);
-        var metadata = {};
-        metadata.filetype = '.' + filetype;
-        metadata.dstype = source.dstype;
+  var type = modules.filter(function(module) {
+        return module.validFileType === filetype;
+      }),
+      q = queue(1),
+      metadata = {},
+      source;
 
-        q.defer(function(next) {
-            fs.stat(file, function(err, stats) {
-                if (err) return callback(invalid(err));
-                metadata.filesize = stats['size'];
-                next();
-            });
-        });
+  // Instantiate new object, based on datatype
+  try {
+    source = new type[0](file);
+  } catch (err) {
+    return callback(invalid('Error creating Mapnik Datasource: ' + err.message));
+  }
 
-        q.defer(function(next) {
-            source.getCenter(function(err, center) {
-                if (err) return next(err);
-                metadata.center = center;
-                next();
-            });
-        });
+  // Build metadata object for source asynchronously
+  metadata.filetype = '.' + filetype;
+  metadata.dstype = source.dstype;
 
-        q.defer(function(next) {
-            source.getExtent(function(err, extent) {
-                if (err) return next(err);
-                metadata.extent = extent;
-                next();
-            });
-        });
+  q.defer(function(next) {
+    fs.stat(file, function(err, stats) {
+      if (err) return callback(invalid(err));
+      metadata.filesize = stats.size;
+      next();
+    });
+  });
 
-        q.defer(function(next) {
-            source.getZooms(function(err, minzoom, maxzoom) {
-                if (err) return next(err);
-                metadata.minzoom = minzoom;
-                metadata.maxzoom = maxzoom;
-                next();
-            });
-        });
+  q.defer(function(next) {
+    source.getCenter(function(err, center) {
+      if (err) return next(err);
+      metadata.center = center;
+      next();
+    });
+  });
 
-        q.defer(function(next) {
-            source.getProjection(function(err, projection) {
-                if (err) return next(err);
-                metadata.projection = projection;
-                next();
-            });
-        });
+  q.defer(function(next) {
+    source.getExtent(function(err, extent) {
+      if (err) return next(err);
+      metadata.extent = extent;
+      next();
+    });
+  });
 
-        q.defer(function(next) {
-            source.getDetails(function(err, details) {
-                if (err) return next(err);
-                var detailsName = source.detailsName;
-                metadata[detailsName] = details;
-                next();
-            });
-        });
+  q.defer(function(next) {
+    source.getZooms(function(err, minzoom, maxzoom) {
+      if (err) return next(err);
+      metadata.minzoom = minzoom;
+      metadata.maxzoom = maxzoom;
+      next();
+    });
+  });
 
-        q.defer(function(next) {
-            source.getFilename(function(err, filename) {
-                if (err) return next(err);
-                metadata.filename = filename;
-                next();
-            });
-        });
+  q.defer(function(next) {
+    source.getProjection(function(err, projection) {
+      if (err) return next(err);
+      metadata.projection = projection;
+      next();
+    });
+  });
 
-        q.defer(function(next) {
-            source.getLayers(function(err, layers) {
-                if (err) return next(err);
-                metadata.layers = layers;
-                next();
-            });
-        });
+  q.defer(function(next) {
+    source.getDetails(function(err, details) {
+      if (err) return next(err);
+      var detailsName = source.detailsName;
+      metadata[detailsName] = details;
+      next();
+    });
+  });
 
-        q.await(function(err) {
-            if (err) return callback(invalid(err));
-            console.log("all done!");
-            callback(err, metadata);
-        });
-};
+  q.defer(function(next) {
+    source.getFilename(function(err, filename) {
+      if (err) return next(err);
+      metadata.filename = filename;
+      next();
+    });
+  });
 
+  q.defer(function(next) {
+    source.getLayers(function(err, layers) {
+      if (err) return next(err);
+      metadata.layers = layers;
+      next();
+    });
+  });
 
+  q.await(function(err) {
+    if (err) return callback(invalid(err));
+    console.log('all done!');
+    callback(err, metadata);
+  });
+}
 
 // TODOs
 // - Does filesniffer verify VRT, CSV, topojson?
