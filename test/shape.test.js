@@ -11,29 +11,13 @@ var tape = require('tape'),
  */
 tape('[SHAPE] Setting up constructor', function(assert) {
   var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedFilename = 'world_merc',
+      expectedBasename = 'world_merc',
       result = new Shape(file);
 
   assert.ok(result);
-  assert.ok(result.filename);
-  assert.deepEqual(result.filename, expectedFilename);
+  assert.ok(result.basename);
+  assert.deepEqual(result.basename, expectedBasename);
   assert.end();
-});
-
-tape('[SHAPE] Get filename', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedFilename = 'world_merc',
-      source = new Shape(file);
-
-  source.getFilename(function(err, filename) {
-    if (err) {
-      assert.ifError(err, 'should not error');
-      return assert.end();
-    }
-    assert.ok(err === null);
-    assert.deepEqual(filename, expectedFilename);
-    assert.end();
-  });
 });
 
 tape('[SHAPE] Get center', function(assert) {

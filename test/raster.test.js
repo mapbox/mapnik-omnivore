@@ -11,7 +11,7 @@ var tape = require('tape'),
  */
 tape('[RASTER] Setting up constructor', function(assert) {
   var file = testData + '/data/geotiff/sample.tif',
-      expectedFilename = 'sample',
+      expectedBasename = 'sample',
       expectedProjection = '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
       expectedDetails = {
         width: 984,
@@ -28,30 +28,14 @@ tape('[RASTER] Setting up constructor', function(assert) {
       result = new Raster(file);
 
   assert.ok(result);
-  assert.ok(result.filename);
+  assert.ok(result.basename);
   assert.ok(result.details);
   assert.ok(result.projection);
   assert.ok(typeof result.details == 'object');
-  assert.deepEqual(result.filename, expectedFilename);
+  assert.deepEqual(result.basename, expectedBasename);
   assert.deepEqual(result.projection, expectedProjection);
   assert.deepEqual(result.details, expectedDetails);
   assert.end();
-});
-
-tape('[RASTER] Get filename', function(assert) {
-  var file = testData + '/data/geotiff/sample.tif',
-      expectedFilename = 'sample',
-      source = new Raster(file);
-
-  source.getFilename(function(err, filename) {
-    if (err) {
-      assert.ifError(err, 'should not error');
-      return assert.end();
-    }
-    assert.ok(err === null);
-    assert.deepEqual(filename, expectedFilename);
-    assert.end();
-  });
 });
 
 tape('[RASTER] Get projection', function(assert) {

@@ -1,7 +1,7 @@
 {
   "filesize": 367,
   "projection": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-  "filename": "DC_polygon",
+  "filename": "DC_polygon.geo",
   "center": [
     -77.01335,
     38.89255

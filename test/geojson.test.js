@@ -26,22 +26,6 @@ tape('[GeoJson] Setting up constructor', function(assert) {
   assert.end();
 });
 
-tape('[GeoJson] Get filename', function(assert) {
-  var file = testData + '/data/geojson/DC_polygon.geo.json',
-      expectedFilename = 'DC_polygon',
-      source = new GeoJSON(file);
-
-  source.getFilename(function(err, filename) {
-    if (err) {
-      assert.ifError(err, 'should not error');
-      return assert.end();
-    }
-    assert.ok(err === null);
-    assert.deepEqual(filename, expectedFilename);
-    assert.end();
-  });
-});
-
 tape('[GeoJson] Get projection', function(assert) {
   var file = testData + '/data/geojson/DC_polygon.geo.json',
       expectedProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs',
