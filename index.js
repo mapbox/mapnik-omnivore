@@ -1,7 +1,5 @@
 var fs = require('fs'),
-    path = require('path'),
     invalid = require('./lib/invalid'),
-    gdal = require('gdal'),
     mapnik = require('mapnik'),
     sniffer = require('mapbox-file-sniff'),
     queue = require('queue-async'),
@@ -12,7 +10,7 @@ var fs = require('fs'),
     ];
 
 // Register datasource plugins
-mapnik.register_default_input_plugins()
+mapnik.register_default_input_plugins();
 // silence mapnik logs
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
 
