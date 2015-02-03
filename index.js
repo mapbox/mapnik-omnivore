@@ -1,4 +1,5 @@
 var fs = require('fs'),
+    path = require('path'),
     invalid = require('./lib/invalid'),
     mapnik = require('mapnik'),
     sniffer = require('mapbox-file-sniff'),
@@ -38,8 +39,10 @@ function getMetadata(file, filetype, callback) {
   var type = modules.filter(function(module) {
         return module.validFileType === filetype;
       }),
+      metadata = {
+        filename: path.basename(file, path.extname(file))
+      },
       q = queue(1),
-      metadata = {},
       source;
 
   // Instantiate new object, based on datatype
@@ -99,14 +102,6 @@ function getMetadata(file, filetype, callback) {
       if (err) return next(err);
       var detailsName = source.detailsName;
       metadata[detailsName] = details;
-      next();
-    });
-  });
-
-  q.defer(function(next) {
-    source.getFilename(function(err, filename) {
-      if (err) return next(err);
-      metadata.filename = filename;
       next();
     });
   });
