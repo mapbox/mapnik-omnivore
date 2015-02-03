@@ -6,7 +6,7 @@ var test = require('tape'),
 function closeEnough(assert, found, expected, message) {
   found =  Math.floor(found * Math.pow(10, 6)) / Math.pow(10, 6);
   expected =  Math.floor(expected * Math.pow(10, 6)) / Math.pow(10, 6);
-  assert.equal(found, expected, message)
+  assert.equal(found, expected, message);
 }
 
 test('[KML] Constructor error on malformed kml', function(assert) {
@@ -104,4 +104,72 @@ test('[KML] getCenter: kml file with no layers', function(assert) {
     assert.notOk(center, 'no center returned');
     assert.end();
   });
+});
+
+test('[KML] getProjection: kml file with layers', function(assert) {
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
+      kml = new Kml(fixture),
+      expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+
+  kml.getProjection(function(err, projection) {
+    assert.ifError(err, 'no error');
+    assert.equal(projection, expected, 'expected projection');
+    assert.end();
+  });
+});
+
+test('[KML] getProjection: kml file with no layers', function(assert) {
+  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
+      kml = new Kml(fixture);
+  kml.getProjection(function(err, projection) {
+    assert.ok(err, 'expected error');
+    assert.notOk(projection, 'no projection returned');
+    assert.end();
+  });
+});
+
+test('[KML] getDetails: kml file with layers', function(assert) {
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
+      kml = new Kml(fixture),
+      expected = [
+        'Magnitude 6',
+        'Magnitude 5',
+        'Magnitude 4',
+        'Magnitude 3',
+        'Magnitude 2',
+        'Magnitude 1'
+      ].reduce(function(memo, layername) {
+        memo.vector_layers.push({
+          id: layername.replace(' ', '_'),
+          description: '',
+          minzoom: 0,
+          maxzoom: 22,
+          fields: {
+            Name: 'String',
+            Description: 'String'
+          }
+        });
+        return memo;
+      }, { vector_layers: [] });
+
+  kml.getDetails(function(err, details) {
+    assert.ifError(err, 'no error');
+    assert.deepEqual(details, expected, 'expected details');
+    assert.end();
+  });
+});
+
+test('[KML] getDetails: kml file with no layers', function(assert) {
+  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
+      kml = new Kml(fixture);
+  kml.getDetails(function(err, details) {
+    assert.ok(err, 'expected error');
+    assert.notOk(details, 'no details returned');
+    assert.end();
+  });
+});
+
+test('[KML] getDetails: kml file has unsupported field type', function(assert) {
+  // TODO: this
+  assert.end();
 });
