@@ -8,7 +8,8 @@ var fs = require('fs'),
       require('./lib/geojson'),
       require('./lib/raster'),
       require('./lib/shape'),
-      require('./lib/ogr')
+      require('./lib/ogr'),
+      require('./lib/topojson')
     ];
 
 // Register datasource plugins
@@ -121,11 +122,6 @@ function getMetadata(file, filetype, callback) {
 
   q.await(function(err) {
     if (err) return callback(invalid(err));
-    console.log('all done!');
     callback(err, metadata);
   });
 }
-
-// TODOs
-// - Does filesniffer verify VRT, CSV, topojson?
-// -

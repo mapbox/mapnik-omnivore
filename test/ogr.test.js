@@ -30,7 +30,7 @@ test('[KML] Constructor success on valid kml', function(assert) {
   assert.end();
 });
 
-test('[GPX] Constructor success on valid kml', function(assert) {
+test('[GPX] Constructor success on valid gpx', function(assert) {
   var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
       ogr = new Ogr(fixture);
   assert.ok(ogr instanceof Ogr, 'creates a Ogr instance');

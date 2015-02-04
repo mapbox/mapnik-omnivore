@@ -10,10 +10,10 @@
   ],
   "dependencies": {
     "srs": "~0.4.5",
-    "mapnik": "~3.1.2",
+    "mapnik": "~3.1.4",
     "sphericalmercator": "~1.0.2",
     "gdal": "0.3.1",
-    "mapbox-file-sniff": "0.1.0",
+    "mapbox-file-sniff": "0.2.0",
     "queue-async": "1.0.7"
   },
   "repository": {

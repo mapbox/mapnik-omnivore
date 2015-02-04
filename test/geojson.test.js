@@ -12,7 +12,7 @@ tape('[GeoJson] Setting up constructor', function(assert) {
   var file = testData + '/data/geojson/DC_polygon.geo.json',
       expectedCenter = [-77.01335, 38.89255],
       expectedExtent = [-77.1174, 38.7912, -76.9093, 38.9939],
-      expectedLayers = ['OGRGeoJSON'],
+      expectedLayers = ['DC_polygon.geo'],
       result = new GeoJSON(file);
 
   assert.ok(result);
@@ -79,7 +79,7 @@ tape('[GeoJson] Get details', function(assert) {
       expectedDetails = {
         vector_layers: [
           {
-            id: 'OGRGeoJSON',
+            id: 'DC_polygon.geo',
             description: '',
             minzoom: 0,
             maxzoom: 22,
@@ -106,7 +106,7 @@ tape('[GeoJson] Get details', function(assert) {
 
 tape('[GeoJson] Get layers', function(assert) {
   var file = testData + '/data/geojson/DC_polygon.geo.json',
-      expectedLayers = ['OGRGeoJSON'],
+      expectedLayers = ['DC_polygon.geo'],
       source = new GeoJSON(file);
 
   source.getLayers(function(err, layers) {

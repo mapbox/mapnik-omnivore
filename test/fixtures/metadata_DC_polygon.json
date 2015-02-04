@@ -15,7 +15,7 @@
   "json": {
     "vector_layers": [
       {
-        "id": "OGRGeoJSON",
+        "id": "DC_polygon.geo",
         "description": "",
         "minzoom": 0,
         "maxzoom": 22,
@@ -30,7 +30,7 @@
   "minzoom": 0,
   "maxzoom": 6,
   "layers": [
-    "OGRGeoJSON"
+    "DC_polygon.geo"
   ],
   "dstype": "geojson",
   "filetype": ".geojson"

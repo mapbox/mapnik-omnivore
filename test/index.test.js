@@ -11,6 +11,7 @@ var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 var UPDATE = process.env.UPDATE;
 
@@ -51,6 +52,7 @@ var UPDATE = process.env.UPDATE;
     //     });
     // });
     tape('[KML] Getting datasources: should return expected metadata', function(assert) {
+        if (UPDATE) expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
         var file = testData + '/data/kml/1week_earthquake.kml';
         mapnik_omnivore.digest(file, function(err, metadata) {
             if (err) {
@@ -83,6 +85,25 @@ var UPDATE = process.env.UPDATE;
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
+            }
+            assert.end();
+        });
+    });
+    tape('[TopoJson] digest function should return expected metadata', function(assert) {
+        if (UPDATE) expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
+        var file = testData + '/data/topojson/topo.json';
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_topo);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_topo.json'), JSON.stringify(metadata, null, 2));
             }
             assert.end();
         });
