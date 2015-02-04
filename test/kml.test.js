@@ -145,8 +145,8 @@ test('[KML] getDetails: kml file with layers', function(assert) {
           minzoom: 0,
           maxzoom: 22,
           fields: {
-            Name: 'String',
-            Description: 'String'
+            Name: 'a string',
+            Description: 'a string'
           }
         });
         return memo;
