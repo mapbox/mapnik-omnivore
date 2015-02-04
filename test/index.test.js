@@ -148,22 +148,25 @@ var UPDATE = process.env.UPDATE;
             assert.end();
         });
     });
-    // tape('[GPX] Getting datasource: should return expected datasource and layer name', function(assert) {
-    //     var file = testData + '/data/gpx/fells_loop.gpx';
-    //     var expectedLayers = ['waypoints', 'routes', 'tracks'];
-    //     mapnik_omnivore.digest(file, function(err, metadata) {
-    //         if (err) return done(err);
-    //         assert.ok(err === null);
-    //         try {
-    //             assert.deepEqual(metadata, expectedMetadata_fells_loop);
-    //         } catch (err) {
-    //             console.log(err);
-    //             console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-    //             fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata));
-    //         }
-    //         assert.end();
-    //     });
-    // });
+    tape('[GPX] Getting datasource: should return expected datasource and layer name', function(assert) {
+        var file = testData + '/data/gpx/fells_loop.gpx';
+        var expectedLayers = ['waypoints', 'routes', 'route_points'];
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_fells_loop);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata));
+            }
+            assert.end();
+        });
+    });
     tape('Getting filetype: should return an error due to incompatible file', function(assert) {
         var file = path.resolve('test/data/errors/incompatible.txt');
         mapnik_omnivore.digest(file, function(err, result) {
