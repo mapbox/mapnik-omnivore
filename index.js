@@ -37,7 +37,10 @@ module.exports.digest = function(file, callback) {
  */
 function getMetadata(file, filetype, callback) {
   var type = modules.filter(function(module) {
-        return module.validFileType === filetype;
+        var done = module.validFileType.some(function(t) {
+          return t === filetype;
+        });
+        if (done) return module;
       }),
       metadata = {
         filename: path.basename(file, path.extname(file))

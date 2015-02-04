@@ -20,7 +20,10 @@ var UPDATE = process.env.UPDATE;
     tape('[SHAPE] Getting datasources: should return expected metadata', function(assert) {
         var file = testData + '/data/shp/world_merc/world_merc.shp';
         mapnik_omnivore.digest(file, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
             assert.ok(err === null);
             try {
                 assert.deepEqual(metadata, expectedMetadata_world_merc);
@@ -66,7 +69,10 @@ var UPDATE = process.env.UPDATE;
         if (UPDATE) expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
         var file = testData + '/data/geojson/DC_polygon.geo.json';
         mapnik_omnivore.digest(file, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
             assert.ok(err === null);
             try {
                 assert.deepEqual(metadata, expectedMetadata_DC_polygon);
@@ -88,7 +94,10 @@ var UPDATE = process.env.UPDATE;
         };
 
         mapnik_omnivore.digest(file, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
             assert.ok(err === null);
 
             //Round extent values to avoid floating point discrepancies in Travis
