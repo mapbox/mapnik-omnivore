@@ -13,6 +13,7 @@ var fs = require('fs'),
 
 // Register datasource plugins
 mapnik.register_default_input_plugins();
+
 // silence mapnik logs
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
 
