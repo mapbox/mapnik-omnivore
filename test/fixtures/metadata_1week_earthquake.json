@@ -1,16 +1,16 @@
 {
   "filesize": 1082451,
-  "projection": "+init=epsg:4326",
+  "projection": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
   "filename": "1week_earthquake",
   "center": [
-    -110.13325,
-    42.5407
+    -0.0995500000000078, 
+    6.350449999999995
   ],
   "extent": [
-    -155.8387,
-    17.7682,
-    -64.4278,
-    67.3132
+     -179.28269999999998, 
+     -56.1221, 
+     179.08359999999996, 
+     68.823
   ],
   "json": {
     "vector_layers": [
@@ -20,8 +20,8 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "Name": "String",
-          "Description": "String"
+          "Name": "a string",
+          "Description": "a string"
         }
       },
       {
@@ -30,8 +30,8 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "Name": "String",
-          "Description": "String"
+          "Name": "a string",
+          "Description": "a string"
         }
       },
       {
@@ -40,8 +40,8 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "Name": "String",
-          "Description": "String"
+          "Name": "a string",
+          "Description": "a string"
         }
       },
       {
@@ -50,8 +50,8 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "Name": "String",
-          "Description": "String"
+          "Name": "a string",
+          "Description": "a string"
         }
       },
       {
@@ -60,8 +60,8 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "Name": "String",
-          "Description": "String"
+          "Name": "a string",
+          "Description": "a string"
         }
       },
       {
@@ -70,14 +70,14 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "Name": "String",
-          "Description": "String"
+          "Name": "a string",
+          "Description": "a string"
         }
       }
     ]
   },
-  "minzoom": 1,
-  "maxzoom": 8,
+  "minzoom": 0,
+  "maxzoom": 6,
   "layers": [
     "Magnitude 6",
     "Magnitude 5",

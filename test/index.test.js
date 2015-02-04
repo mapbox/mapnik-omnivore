@@ -50,21 +50,24 @@ var UPDATE = process.env.UPDATE;
     //         assert.end();
     //     });
     // });
-    // tape('[KML] Getting datasources: should return expected metadata', function(assert) {
-    //     var file = testData + '/data/kml/1week_earthquake.kml';
-    //     mapnik_omnivore.digest(file, function(err, metadata) {
-    //         if (err) return done(err);
-    //         assert.ok(err === null);
-    //         try {
-    //             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
-    //         } catch (err) {
-    //             console.log(err);
-    //             console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-    //             fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata));
-    //         }
-    //         assert.end();
-    //     });
-    // });
+    tape('[KML] Getting datasources: should return expected metadata', function(assert) {
+        var file = testData + '/data/kml/1week_earthquake.kml';
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata));
+            }
+            assert.end();
+        });
+    });
     tape('[GeoJson] digest function should return expected metadata', function(assert) {
         if (UPDATE) expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
         var file = testData + '/data/geojson/DC_polygon.geo.json';

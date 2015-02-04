@@ -7,7 +7,8 @@ var fs = require('fs'),
     modules = [
       require('./lib/geojson'),
       require('./lib/raster'),
-      require('./lib/shape')
+      require('./lib/shape'),
+      require('./lib/ogr')
     ];
 
 // Register datasource plugins
