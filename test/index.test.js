@@ -11,6 +11,7 @@ var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
 var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
 var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 var UPDATE = process.env.UPDATE;
@@ -165,6 +166,67 @@ var UPDATE = process.env.UPDATE;
                 console.log(err);
                 console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
                 fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata, null, 2));
+            }
+            assert.end();
+        });
+    });
+    tape('[VRT] digest function should return expected metadata', function(assert) {
+        if (UPDATE) expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
+        
+        var file = testData + '/data/vrt/sample.vrt';
+        
+        var trunc_6 = function(val) {
+            return Number(val.toFixed(6));
+        };
+
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) {
+              assert.ifError(err, 'should not error');
+              return assert.end();
+            }
+            assert.ok(err === null);
+
+            //Round extent values to avoid floating point discrepancies in Travis
+            metadata.center[0] = trunc_6(metadata.center[0]);
+            metadata.center[1] = trunc_6(metadata.center[1]);
+            metadata.extent[0] = trunc_6(metadata.extent[0]);
+            metadata.extent[1] = trunc_6(metadata.extent[1]);
+            metadata.extent[2] = trunc_6(metadata.extent[2]);
+            metadata.extent[3] = trunc_6(metadata.extent[3]);
+            expectedMetadata_sample_vrt.center[0] = trunc_6(expectedMetadata_sample_vrt.center[0]);
+            expectedMetadata_sample_vrt.center[1] = trunc_6(expectedMetadata_sample_vrt.center[1]);
+            expectedMetadata_sample_vrt.extent[0] = trunc_6(expectedMetadata_sample_vrt.extent[0]);
+            expectedMetadata_sample_vrt.extent[1] = trunc_6(expectedMetadata_sample_vrt.extent[1]);
+            expectedMetadata_sample_vrt.extent[2] = trunc_6(expectedMetadata_sample_vrt.extent[2]);
+            expectedMetadata_sample_vrt.extent[3] = trunc_6(expectedMetadata_sample_vrt.extent[3]);
+
+            //Round pixelsize and band mean/std_dev values for slight differences in Travis
+            var bands_meta = metadata.raster.bands;
+            bands_meta.forEach(function(b) {
+              b.stats.mean = trunc_6(b.stats.mean);
+              b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+
+            var bands_expected = expectedMetadata_sample_vrt.raster.bands;
+            bands_expected.forEach(function(b) {
+              b.stats.mean = trunc_6(b.stats.mean);
+              b.stats.std_dev = trunc_6(b.stats.std_dev);
+            });
+      
+            var pixelSize_meta = metadata.raster.pixelSize;
+            pixelSize_meta[0] = trunc_6(pixelSize_meta[0]);
+            pixelSize_meta[1] = trunc_6(pixelSize_meta[1]);
+
+            var pixelSize_expected = expectedMetadata_sample_vrt.raster.pixelSize;
+            pixelSize_expected[0] = trunc_6(pixelSize_expected[0]);
+            pixelSize_expected[1] = trunc_6(pixelSize_expected[1]);
+
+            try {
+                assert.deepEqual(metadata, expectedMetadata_sample_vrt);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata, null, 2));
             }
             assert.end();
         });
