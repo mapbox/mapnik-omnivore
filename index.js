@@ -4,13 +4,14 @@ var fs = require('fs'),
     mapnik = require('mapnik'),
     sniffer = require('mapbox-file-sniff'),
     queue = require('queue-async'),
+    Csv = require('./lib/csv'),
     modules = [
       require('./lib/geojson'),
       require('./lib/raster'),
       require('./lib/shape'),
       require('./lib/ogr'),
       require('./lib/topojson'),
-      require('./lib/csv')
+      Csv
     ];
 
 // Register datasource plugins
@@ -26,7 +27,14 @@ mapnik.Logger.setSeverity(mapnik.Logger.NONE);
  */
 module.exports.digest = function(file, callback) {
   sniffer.quaff(file, function(err, filetype) {
-    if (err) return callback(err);
+    if (err && err.code === 'EINVALID') {
+      try {
+        new Csv(file);
+        filetype = 'csv';
+      }
+      catch (error) { return callback(err); }
+    } else if (err) return callback(err);
+
     getMetadata(file, filetype, function(err, metadata) {
       if (err) return callback(err);
       return callback(null, metadata);

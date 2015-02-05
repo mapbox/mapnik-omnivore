@@ -37,21 +37,21 @@ var UPDATE = process.env.UPDATE;
             assert.end();
         });
     });
-    // tape('[CSV] Getting datasources: should return expected metadata', function(assert) {
-    //     var file = testData + '/data/csv/bbl_current_csv.csv';
-    //     mapnik_omnivore.digest(file, function(err, metadata) {
-    //         if (err) return done(err);
-    //         assert.ok(err === null);
-    //         try {
-    //             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
-    //         } catch (err) {
-    //             console.log(err);
-    //             console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
-    //             fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
-    //         }
-    //         assert.end();
-    //     });
-    // });
+    tape('[CSV] Getting datasources: should return expected metadata', function(assert) {
+        var file = testData + '/data/csv/bbl_current_csv.csv';
+        mapnik_omnivore.digest(file, function(err, metadata) {
+            if (err) throw err;
+            assert.ok(err === null);
+            try {
+                assert.deepEqual(metadata, expectedMetadata_bbl_csv);
+            } catch (err) {
+                console.log(err);
+                console.log("Expected mapnik-omnivore metadata has changed. Writing new metadata to file.");
+                fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata));
+            }
+            assert.end();
+        });
+    });
     tape('[KML] Getting datasources: should return expected metadata', function(assert) {
         if (UPDATE) expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
         var file = testData + '/data/kml/1week_earthquake.kml';
@@ -111,9 +111,9 @@ var UPDATE = process.env.UPDATE;
     });
     tape('[RASTER] digest function should return expected metadata', function(assert) {
         if (UPDATE) expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
-        
+
         var file = testData + '/data/geotiff/sample.tif';
-        
+
         var trunc_6 = function(val) {
             return Number(val.toFixed(6));
         };
@@ -151,7 +151,7 @@ var UPDATE = process.env.UPDATE;
               b.stats.mean = trunc_6(b.stats.mean);
               b.stats.std_dev = trunc_6(b.stats.std_dev);
             });
-      
+
             var pixelSize_meta = metadata.raster.pixelSize;
             pixelSize_meta[0] = trunc_6(pixelSize_meta[0]);
             pixelSize_meta[1] = trunc_6(pixelSize_meta[1]);
@@ -172,9 +172,9 @@ var UPDATE = process.env.UPDATE;
     });
     tape('[VRT] digest function should return expected metadata', function(assert) {
         if (UPDATE) expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
-        
+
         var file = testData + '/data/vrt/sample.vrt';
-        
+
         var trunc_6 = function(val) {
             return Number(val.toFixed(6));
         };
@@ -212,7 +212,7 @@ var UPDATE = process.env.UPDATE;
               b.stats.mean = trunc_6(b.stats.mean);
               b.stats.std_dev = trunc_6(b.stats.std_dev);
             });
-      
+
             var pixelSize_meta = metadata.raster.pixelSize;
             pixelSize_meta[0] = trunc_6(pixelSize_meta[0]);
             pixelSize_meta[1] = trunc_6(pixelSize_meta[1]);
