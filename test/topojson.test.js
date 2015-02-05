@@ -44,7 +44,7 @@ test('[TopoJson] getLayers: topojson file with layers', function(assert) {
 });
 
 test('[TopoJson] getLayers: no features', function(assert) {
-  var topo = new TopoJSON(path.join(__dirname, 'fixtures', 'invalid-topojson', 'missingFeatures.json'));
+  var topo = new TopoJSON(path.join(__dirname, 'fixtures', 'invalid-topojson', 'missingfeatures.json'));
   topo.getLayers(function(err, layers) {
     assert.ok(err, 'expected error');
     assert.notOk(layers, 'no layers returned');
