@@ -35,15 +35,28 @@ test('[TopoJson] Setting up constructor', function(assert) {
 });
 
 test('[TopoJson] getLayers: topojson file with layers', function(assert) {
-  var fixture = path.join(testData, 'topojson', 'topo.json'),
-      topo = new TopoJSON(fixture);
-
+  var topo = new TopoJSON(path.join(testData, 'topojson', 'topo.json'));
   topo.getLayers(function(err, layers) {
     assert.ifError(err, 'no error');
-    assert.equal(layers.length, expectedMetadata_topo.layers.length, 'correct number of layers');
-    expectedMetadata_topo.layers.forEach(function(layername) {
-      assert.ok(layers.indexOf(layername) > -1, layername + ' found in layers');
-    });
+    assert.deepEqual(layers, ['topo']);
+    assert.end();
+  });
+});
+
+test('[TopoJson] getLayers: no features', function(assert) {
+  var topo = new TopoJSON(path.join(__dirname, 'fixtures', 'invalid-topojson', 'missingFeatures.json'));
+  topo.getLayers(function(err, layers) {
+    assert.ok(err, 'expected error');
+    assert.notOk(layers, 'no layers returned');
+    assert.end();
+  });
+});
+
+test('[TopoJson] getLayers: no features', function(assert) {
+  var topo = new TopoJSON(path.join(__dirname, 'fixtures', 'invalid-topojson', 'invalid.featurecollection.json'));
+  topo.getLayers(function(err, layers) {
+    assert.ok(err, 'expected error');
+    assert.notOk(layers, 'no layers returned');
     assert.end();
   });
 });

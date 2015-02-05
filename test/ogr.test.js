@@ -76,6 +76,16 @@ test('[KML] getLayers: kml file with no layers', function(assert) {
   });
 });
 
+test('[GPX] getLayers: gpx file with no layers', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid.nofeatures.gpx'),
+      ogr = new Ogr(fixture);
+  ogr.getLayers(function(err, layers) {
+    assert.ok(err, 'expected error');
+    assert.notOk(layers, 'no layers returned');
+    assert.end();
+  });
+});
+
 test('[KML] getExtent: kml file with layers', function(assert) {
   var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
       ogr = new Ogr(fixture),
