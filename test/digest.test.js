@@ -6,29 +6,32 @@ var test = require('tape'),
     spawn = require('child_process').spawn;
 
 test('[bin/digest] runs on an absolute file path', function(assert) {
-  var args = [fixture];
-  spawn(digest, args)
+  var args = [digest, fixture];
+
+  spawn(process.execPath, args)
     .on('error', function(err) {
       assert.ifError(err, 'should not error');
     })
-    .on('exit', function(code) {
+    .on('close', function(code) {
       assert.equal(code, 0, 'exit 0');
       assert.end();
-    });
+    })
+    .stderr.pipe(process.stdout);
 });
 
 test('[bin/digest] runs on a relative file path', function(assert) {
   var options = {
         cwd: path.resolve(__dirname, '..', 'node_modules')
       },
-      args = [path.relative(options.cwd, fixture)];
+      args = [digest, path.relative(options.cwd, fixture)];
 
-  spawn(digest, args, options)
+  spawn(process.execPath, args, options)
     .on('error', function(err) {
       assert.ifError(err, 'should not error');
     })
-    .on('exit', function(code) {
+    .on('close', function(code) {
       assert.equal(code, 0, 'exit 0');
       assert.end();
-    });
+    })
+    .stderr.pipe(process.stdout);
 });
