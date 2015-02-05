@@ -10,9 +10,9 @@ var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
 var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
 var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
-var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));   
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
-var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));     
+var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
 var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 var UPDATE = process.env.UPDATE;
@@ -207,10 +207,13 @@ var UPDATE = process.env.UPDATE;
         var type = '.shp';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(shpFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_world_merc.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_world_merc);
-            
+
             assert.end();
         });
     });
@@ -220,7 +223,10 @@ var UPDATE = process.env.UPDATE;
         var filesize = 428328;
         var type = '.shp';
         datasourceProcessor.init(shpFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_world_merc);
             assert.end();
@@ -232,7 +238,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.tif';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'), JSON.stringify(metadata, null, 2));
             if (UPDATE) assert.deepEqual(metadata, expectedMetadata_sample_tif);
             assert.end();
@@ -245,10 +254,13 @@ var UPDATE = process.env.UPDATE;
         var type = '.tif';
         var trunc_6 = function(val) {
             return Number(val.toFixed(6));
-        }
+        };
 
         datasourceProcessor.init(tifFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
 
             //Round extent values to avoid floating point discrepancies in Travis
             metadata.center[0] = trunc_6(metadata.center[0]);
@@ -286,7 +298,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.vrt';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'), JSON.stringify(metadata, null, 2));
             if (UPDATE) assert.deepEqual(metadata, expectedMetadata_sample_vrt);
             assert.end();
@@ -302,7 +317,10 @@ var UPDATE = process.env.UPDATE;
         }
 
         datasourceProcessor.init(vrtFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
 
             //Round extent values to avoid floating point discrepancies in Travis
             metadata.center[0] = trunc_6(metadata.center[0]);
@@ -341,7 +359,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.csv';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
 
@@ -354,7 +375,10 @@ var UPDATE = process.env.UPDATE;
         var filesize = 1667;
         var type = '.csv';
         datasourceProcessor.init(csvFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_bbl_csv);
             assert.end();
@@ -366,7 +390,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.kml';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(kmlFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
 
@@ -379,7 +406,10 @@ var UPDATE = process.env.UPDATE;
         var filesize = 1082451;
         var type = '.kml';
         datasourceProcessor.init(kmlFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_1week_earthquake);
             assert.end();
@@ -391,7 +421,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.geojson';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
 
@@ -404,7 +437,10 @@ var UPDATE = process.env.UPDATE;
         var filesize = 367;
         var type = '.geojson';
         datasourceProcessor.init(geoJsonFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_DC_polygon);
             assert.end();
@@ -415,7 +451,10 @@ var UPDATE = process.env.UPDATE;
         var filesize = 332;
         var type = '.geojson';
         datasourceProcessor.init(topoJsonFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             try {
                 assert.deepEqual(metadata, expectedMetadata_topo);
@@ -433,10 +472,13 @@ var UPDATE = process.env.UPDATE;
         var type = '.gpx';
         //Overwrites metadata json file if output does not match
         datasourceProcessor.init(gpxFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             if (UPDATE) fs.writeFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'), JSON.stringify(metadata, null, 2));
             assert.deepEqual(metadata, expectedMetadata_fells_loop);
-            
+
             assert.end();
         });
     });
@@ -446,7 +488,10 @@ var UPDATE = process.env.UPDATE;
         var filesize = 36815;
         var type = '.gpx';
         datasourceProcessor.init(gpxFile, filesize, type, function(err, metadata) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.deepEqual(metadata, expectedMetadata_fells_loop);
             assert.end();
@@ -499,16 +544,35 @@ var UPDATE = process.env.UPDATE;
             assert.end();
         });
     });
-    
+
     tape('Setting min/max zoom for Landsat 8 source: should not exceed z12', function(assert) {
-      
+
       var expectedMin = 7;
       var expectedMax = 13;
-      
+
       var proj = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
-      
+
       var center = [-98.78906931331828, 49.15195306095049]; // 115-175-9
       var pixelSize = [30.000000000000000,-30.000000000000000];
+
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+
+    });
+    
+    tape('Setting min/max zoom for a WSG84 source: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 1;
+      var expectedMax = 7;
+      
+      var proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+      
+      var center = [75.937499999962156,36.597889133105191];
+      var pixelSize = [0.012824370005926,-0.012824370005926];
       
       datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
         assert.strictEqual(null, err);
@@ -519,6 +583,43 @@ var UPDATE = process.env.UPDATE;
       
     });
     
+    tape('Setting min/max zoom for a web mercator at high latitude: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 6;
+      var expectedMax = 12;
+      
+      var proj = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
+      var center = [-19.069369983626977, 64.20657956243323];
+      var pixelSize = [68.882691928635296,-68.882691928635296];
+      
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+      
+    });
+    
+    
+    tape('Setting min/max zoom for a WSG84 at high latitude: should give reasonable zoom levels', function(assert) {
+      
+      var expectedMin = 6;
+      var expectedMax = 12;
+      
+      var proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+      var center = [-21.785521252969779,65.381874163753935];
+      var pixelSize = [0.000477920574001,-0.000477920574001];
+      
+      datasourceProcessor.getMinMaxZoomGDAL(pixelSize, center, proj, function(err, minzoom, maxzoom) {
+        assert.strictEqual(null, err);
+        assert.equal(minzoom, expectedMin);
+        assert.equal(maxzoom, expectedMax);
+        assert.end();
+      });
+      
+    });
+
     tape('Setting extent to zero: should return an error', function(assert) {
         var extent = [0, 0, 0, 0];
         var bytes = 1234;
@@ -569,7 +670,7 @@ var UPDATE = process.env.UPDATE;
     })(name, errorTests[name]);
     tape('should return an error due to invalid tif file', function(assert) {
         var file = path.resolve('test/data/errors/sampleError.tif');
-        var expectedMessage = 'Invalid gdal source. Error opening dataset';
+        var expectedMessage = 'Invalid GeoTIFF: could not open the file';
         datasourceProcessor.projectionFromRaster(file, function(err, projection) {
             assert.ok(err instanceof Error);
             assert.equal(expectedMessage, err.message);
@@ -582,7 +683,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.shp';
         var expectedProj = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over';
         datasourceProcessor.getProjection(file, type, function(err, projection) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
             assert.end();
@@ -593,7 +697,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.geojson';
         var expectedProj = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
         datasourceProcessor.getProjection(file, type, function(err, projection) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
             assert.end();
@@ -604,7 +711,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.gpx';
         var expectedProj = '+init=epsg:4326';
         datasourceProcessor.getProjection(file, type, function(err, projection) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
             assert.end();
@@ -615,7 +725,10 @@ var UPDATE = process.env.UPDATE;
         var type = '.kml';
         var expectedProj = '+init=epsg:4326';
         datasourceProcessor.getProjection(file, type, function(err, projection) {
-            if (err) return done(err);
+            if (err) {
+                assert.ifError(err, 'should not error');
+                return assert.end();
+            }
             assert.ok(err === null);
             assert.equal(expectedProj, projection);
             assert.end();
@@ -642,5 +755,3 @@ var UPDATE = process.env.UPDATE;
         });
     });
 })();
-
-
