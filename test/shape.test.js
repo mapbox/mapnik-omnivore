@@ -1,7 +1,6 @@
 var tape = require('tape'),
     path = require('path'),
     fs = require('fs'),
-    mapnik = require('mapnik'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
     Shape = require('../lib/shape.js'),
     expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));

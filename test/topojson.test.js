@@ -2,15 +2,14 @@ var test = require('tape'),
     path = require('path'),
     fs = require('fs'),
     testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data'),
-    TopoJSON = require('../lib/topojson.js');
+    TopoJSON = require('../lib/topojson.js'),
+    expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 function closeEnough(assert, found, expected, message) {
   found =  Math.floor(found * Math.pow(10, 6)) / Math.pow(10, 6);
   expected =  Math.floor(expected * Math.pow(10, 6)) / Math.pow(10, 6);
   assert.equal(found, expected, message);
 }
-
-var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 /**
  * Testing GeoJSON functions

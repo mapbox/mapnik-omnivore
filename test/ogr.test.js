@@ -2,16 +2,15 @@ var test = require('tape'),
     path = require('path'),
     fs = require('fs'),
     testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data'),
-    Ogr = require('../lib/ogr.js');
+    Ogr = require('../lib/ogr.js'),
+    expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'))),
+    expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 
 function closeEnough(assert, found, expected, message) {
   found =  Math.floor(found * Math.pow(10, 6)) / Math.pow(10, 6);
   expected =  Math.floor(expected * Math.pow(10, 6)) / Math.pow(10, 6);
   assert.equal(found, expected, message);
 }
-
-var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
-var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 
 test('[OGR] Constructor error on malformed kml', function(assert) {
   var fixture = path.resolve(__dirname, 'fixtures', 'invalid.malformed.kml');
