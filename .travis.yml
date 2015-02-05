@@ -1,5 +1,6 @@
-
 language: cpp
+
+sudo: false
 
 os:
 - linux
@@ -12,7 +13,7 @@ env:
 
 before_install:
  # upgrade libstdc++ to support C++11
- - if [[ $(uname -s) == 'Linux' ]]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;sudo apt-get update -y;sudo apt-get install -y libstdc++6; fi;
+ - if [[ $(uname -s) == 'Linux' ]]; then wget https://launchpad.net/~ubuntu-toolchain-r/+archive/ubuntu/test/+files/libstdc%2B%2B6_4.8.1-2ubuntu1~12.04_amd64.deb && dpkg -x libstdc++6_4.8.1-2ubuntu1~12.04_amd64.deb ./ && export LD_PRELOAD=$(pwd)/usr/lib/x86_64-linux-gnu/libstdc++.so.6; fi
  - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
  - source ~/.nvm/nvm.sh
  - nvm install $NODE_VERSION
