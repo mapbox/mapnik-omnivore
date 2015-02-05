@@ -9,7 +9,8 @@ var fs = require('fs'),
       require('./lib/raster'),
       require('./lib/shape'),
       require('./lib/ogr'),
-      require('./lib/topojson')
+      require('./lib/topojson'),
+      require('./lib/csv')
     ];
 
 // Register datasource plugins
@@ -40,14 +41,11 @@ module.exports.digest = function(file, callback) {
  */
 function getMetadata(file, filetype, callback) {
   var type = modules.filter(function(module) {
-        var done = module.validFileType.some(function(t) {
+        return module.validFileType.some(function(t) {
           return t === filetype;
         });
-        if (done) return module;
       }),
-      metadata = {
-        filename: path.basename(file, path.extname(file))
-      },
+      metadata = { filename: path.basename(file, path.extname(file)) },
       q = queue(1),
       source;
 
