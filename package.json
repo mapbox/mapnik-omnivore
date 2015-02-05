@@ -32,7 +32,7 @@
     "tape": "3.0.x"
   },
   "scripts": {
-    "test": "jshint index.js test/*.js lib/*.js && jscs index.js test/*.js lib/*.js && tape test/*.js",
+    "test": "node test",
     "coverage": "istanbul cover tape test/*.test.js && coveralls < ./coverage/lcov.info"
   },
   "bin": {
