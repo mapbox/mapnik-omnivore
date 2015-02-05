@@ -1,16 +1,16 @@
 {
   "filesize": 36815,
-  "projection": "+init=epsg:4326",
+  "projection": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
   "filename": "fells_loop",
   "center": [
-    -71.1139805,
-    42.44903000000001
+    -71.11478749999993, 
+    42.43485299999996
   ],
   "extent": [
-    -71.122845,
-    42.43095,
-    -71.105116,
-    42.467110000000005
+    -71.12660199999993, 
+    42.40105099999996, 
+    -71.10297299999993, 
+    42.468654999999956
   ],
   "json": {
     "vector_layers": [
@@ -20,18 +20,25 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "name": "String",
-          "cmt": "String",
-          "desc": "String",
-          "src": "String",
-          "link1_href": "String",
-          "link1_text": "String",
-          "link1_type": "String",
-          "link2_href": "String",
-          "link2_text": "String",
-          "link2_type": "String",
-          "number": "Number",
-          "type": "String"
+          "ageofdgpsdata": "a double", 
+          "cmt": "a string", 
+          "desc": "a string", 
+          "dgpsid": "an integer", 
+          "ele": "a double", 
+          "fix": "a string", 
+          "geoidheight": "a double", 
+          "hdop": "a double", 
+          "magvar": "a double", 
+          "name": "a string", 
+          "pdop": "a double", 
+          "sat": "an integer", 
+          "src": "a string", 
+          "sym": "a string", 
+          "time": "a datetime", 
+          "type": "a string", 
+          "url": "a string", 
+          "urlname": "a string", 
+          "vdop": "a double" 
         }
       },
       {
@@ -40,18 +47,18 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "name": "String",
-          "cmt": "String",
-          "desc": "String",
-          "src": "String",
-          "link1_href": "String",
-          "link1_text": "String",
-          "link1_type": "String",
-          "link2_href": "String",
-          "link2_text": "String",
-          "link2_type": "String",
-          "number": "Number",
-          "type": "String"
+          "cmt": "a string",
+          "desc": "a string",
+          "link1_href": "a string",
+          "link1_text": "a string",
+          "link1_type": "a string",
+          "link2_href": "a string",
+          "link2_text": "a string",
+          "link2_type": "a string",
+          "name": "a string",
+          "number": "an integer",
+          "src": "a string",
+          "type": "a string"
         }
       },
       {
@@ -60,18 +67,27 @@
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "name": "String",
-          "cmt": "String",
-          "desc": "String",
-          "src": "String",
-          "link1_href": "String",
-          "link1_text": "String",
-          "link1_type": "String",
-          "link2_href": "String",
-          "link2_text": "String",
-          "link2_type": "String",
-          "number": "Number",
-          "type": "String"
+          "ageofdgpsdata": "a double", 
+          "cmt": "a string", 
+          "desc": "a string", 
+          "dgpsid": "an integer", 
+          "ele": "a double", 
+          "fix": "a string", 
+          "geoidheight": "a double", 
+          "hdop": "a double", 
+          "magvar": "a double", 
+          "name": "a string", 
+          "pdop": "a double",
+          "route_fid": "an integer",
+          "route_point_id": "an integer", 
+          "sat": "an integer", 
+          "src": "a string", 
+          "sym": "a string", 
+          "time": "a datetime", 
+          "type": "a string", 
+          "url": "a string", 
+          "urlname": "a string", 
+          "vdop": "a double" 
         }
       }
     ]
