@@ -219,12 +219,11 @@ tape('Getting filetype: should return an error due to incompatible file', functi
 });
 
 tape('Getting filetype: should return an error because file does not exist.', function(assert) {
-  var file = 'doesnt/exist.shp';
+  var file = path.resolve('doesnt', 'exist.shp');
   mapnik_omnivore.digest(file, function(err, result) {
     assert.ok(err instanceof Error);
     assert.notOk(result, 'no result returned');
     assert.equal('ENOENT', err.code);
-    assert.equal(err.message, 'ENOENT, open \'doesnt/exist.shp\'');
     assert.end();
   });
 });
