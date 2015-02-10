@@ -1,18 +1,18 @@
-var fs = require('fs'),
-    path = require('path'),
-    invalid = require('./lib/invalid'),
-    mapnik = require('mapnik'),
-    sniffer = require('mapbox-file-sniff'),
-    queue = require('queue-async'),
-    Csv = require('./lib/csv'),
-    modules = [
-      require('./lib/geojson'),
-      require('./lib/raster'),
-      require('./lib/shape'),
-      require('./lib/ogr'),
-      require('./lib/topojson'),
-      Csv
-    ];
+var fs = require('fs');
+var path = require('path');
+var invalid = require('./lib/invalid');
+var mapnik = require('mapnik');
+var sniffer = require('mapbox-file-sniff');
+var queue = require('queue-async');
+var Csv = require('./lib/csv');
+var modules = [
+  require('./lib/geojson'),
+  require('./lib/raster'),
+  require('./lib/shape'),
+  require('./lib/ogr'),
+  require('./lib/topojson'),
+  Csv
+];
 
 // Register datasource plugins
 mapnik.register_default_input_plugins();
@@ -49,13 +49,13 @@ module.exports.digest = function(file, callback) {
  */
 function getMetadata(file, filetype, callback) {
   var type = modules.filter(function(module) {
-        return module.validFileType.some(function(t) {
-          return t === filetype;
-        });
-      }),
-      metadata = { filename: path.basename(file, path.extname(file)) },
-      q = queue(1),
-      source;
+    return module.validFileType.some(function(t) {
+      return t === filetype;
+    });
+  });
+  var metadata = { filename: path.basename(file, path.extname(file)) };
+  var q = queue(1);
+  var source;
 
   // Instantiate new object, based on datatype
   try {

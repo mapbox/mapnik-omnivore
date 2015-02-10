@@ -1,9 +1,9 @@
-var test = require('tape'),
-    path = require('path'),
-    fs = require('fs'),
-    testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data'),
-    TopoJSON = require('../lib/topojson.js'),
-    expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
+var test = require('tape');
+var path = require('path');
+var fs = require('fs');
+var testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data');
+var TopoJSON = require('../lib/topojson.js');
+var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 function closeEnough(assert, found, expected, message) {
   found =  Math.floor(found * Math.pow(10, 6)) / Math.pow(10, 6);
@@ -15,11 +15,11 @@ function closeEnough(assert, found, expected, message) {
  * Testing GeoJSON functions
  */
 test('[TopoJson] Setting up constructor', function(assert) {
-  var fixture = path.join(testData, 'topojson', 'topo.json'),
-      expectedCenter = [-81.705583, 41.480573],
-      expectedExtent = [-81.705583, 41.480573, -81.705583, 41.480573],
-      expectedLayers = ['topo'],
-      result = new TopoJSON(fixture);
+  var fixture = path.join(testData, 'topojson', 'topo.json');
+  var expectedCenter = [-81.705583, 41.480573];
+  var expectedExtent = [-81.705583, 41.480573, -81.705583, 41.480573];
+  var expectedLayers = ['topo'];
+  var result = new TopoJSON(fixture);
 
   assert.ok(result);
   assert.ok(result.center);
@@ -62,9 +62,9 @@ test('[TopoJson] getLayers: no features', function(assert) {
 });
 
 test('[TopoJson] getExtent: topojson file with layers', function(assert) {
-  var fixture = path.join(testData, 'topojson', 'topo.json'),
-      topo = new TopoJSON(fixture),
-      expected = [-81.705583, 41.480573, -81.705583, 41.480573];
+  var fixture = path.join(testData, 'topojson', 'topo.json');
+  var topo = new TopoJSON(fixture);
+  var expected = [-81.705583, 41.480573, -81.705583, 41.480573];
 
   topo.getExtent(function(err, extent) {
     assert.ifError(err, 'no error');
@@ -76,9 +76,9 @@ test('[TopoJson] getExtent: topojson file with layers', function(assert) {
 });
 
 test('[TopoJson] getCenter: topojson file with layers', function(assert) {
-  var fixture = path.join(testData, 'topojson', 'topo.json'),
-      topo = new TopoJSON(fixture),
-      expected = [-81.705583, 41.480573];
+  var fixture = path.join(testData, 'topojson', 'topo.json');
+  var topo = new TopoJSON(fixture);
+  var expected = [-81.705583, 41.480573];
 
   topo.getCenter(function(err, center) {
     assert.ifError(err, 'no error');
@@ -90,9 +90,9 @@ test('[TopoJson] getCenter: topojson file with layers', function(assert) {
 });
 
 test('[TopoJson] getProjection: topojson file with layers', function(assert) {
-  var fixture = path.join(testData, 'topojson', 'topo.json'),
-      topo = new TopoJSON(fixture),
-      expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+  var fixture = path.join(testData, 'topojson', 'topo.json');
+  var topo = new TopoJSON(fixture);
+  var expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
   topo.getProjection(function(err, projection) {
     assert.ifError(err, 'no error');
@@ -102,8 +102,8 @@ test('[TopoJson] getProjection: topojson file with layers', function(assert) {
 });
 
 test('[TopoJson] getDetails: topojson file with layers', function(assert) {
-  var fixture = path.join(testData, 'topojson', 'topo.json'),
-      topo = new TopoJSON(fixture);
+  var fixture = path.join(testData, 'topojson', 'topo.json');
+  var topo = new TopoJSON(fixture);
 
   topo.getDetails(function(err, details) {
     assert.ifError(err, 'no error');

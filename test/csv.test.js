@@ -1,10 +1,10 @@
-var test = require('tape'),
-    path = require('path'),
-    Csv = require('../lib/csv'),
-    testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data'),
-    valid = path.join(testData, 'csv', 'bbl_current_csv.csv'),
-    mapnik = require('mapnik'),
-    validDatasource;
+var test = require('tape');
+var path = require('path');
+var Csv = require('../lib/csv');
+var testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data');
+var valid = path.join(testData, 'csv', 'bbl_current_csv.csv');
+var mapnik = require('mapnik');
+var validDatasource;
 
 mapnik.register_default_input_plugins();
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
@@ -56,29 +56,29 @@ test('[CSV] getCenter', function(assert) {
   var csv = new Csv(valid);
   csv.getCenter(function(err, center) {
     assert.ifError(err, 'no error');
-    var extent = validDatasource.extent(),
-        expected = [
-          0.5 * (extent[0] + extent[2]),
-          0.5 * (extent[1] + extent[3])
-        ];
+    var extent = validDatasource.extent();
+    var expected = [
+      0.5 * (extent[0] + extent[2]),
+      0.5 * (extent[1] + extent[3])
+    ];
     assert.deepEqual(center, expected, 'expected center');
     assert.end();
   });
 });
 
 test('[CSV] getDetails', function(assert) {
-  var csv = new Csv(valid),
-      expected = {
-        vector_layers: [
-          {
-            id: 'bbl_current_csv',
-            description: '',
-            minzoom: 0,
-            maxzoom: 22,
-            fields: validDatasource.describe().fields
-          }
-        ]
-      };
+  var csv = new Csv(valid);
+  var expected = {
+    vector_layers: [
+      {
+        id: 'bbl_current_csv',
+        description: '',
+        minzoom: 0,
+        maxzoom: 22,
+        fields: validDatasource.describe().fields
+      }
+    ]
+  };
 
   csv.getDetails(function(err, details) {
     assert.ifError(err, 'no error');

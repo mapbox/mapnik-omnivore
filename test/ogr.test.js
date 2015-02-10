@@ -1,10 +1,10 @@
-var test = require('tape'),
-    path = require('path'),
-    fs = require('fs'),
-    testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data'),
-    Ogr = require('../lib/ogr.js'),
-    expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'))),
-    expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
+var test = require('tape');
+var path = require('path');
+var fs = require('fs');
+var testData = path.join(path.dirname(require.resolve('mapnik-test-data')), 'data');
+var Ogr = require('../lib/ogr.js');
+var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
 
 function closeEnough(assert, found, expected, message) {
   found =  Math.floor(found * Math.pow(10, 6)) / Math.pow(10, 6);
@@ -21,8 +21,8 @@ test('[OGR] Constructor error on malformed kml', function(assert) {
 });
 
 test('[KML] Constructor success on valid kml', function(assert) {
-  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', 'TIMS.kml');
+  var ogr = new Ogr(fixture);
   assert.ok(ogr instanceof Ogr, 'creates a Ogr instance');
   assert.equal(ogr.detailsName, 'json', 'expected detailsName');
   assert.equal(ogr.dstype, 'ogr', 'expected dstype');
@@ -30,8 +30,8 @@ test('[KML] Constructor success on valid kml', function(assert) {
 });
 
 test('[GPX] Constructor success on valid gpx', function(assert) {
-  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
+  var ogr = new Ogr(fixture);
   assert.ok(ogr instanceof Ogr, 'creates a Ogr instance');
   assert.equal(ogr.detailsName, 'json', 'expected detailsName');
   assert.equal(ogr.dstype, 'ogr', 'expected dstype');
@@ -39,8 +39,8 @@ test('[GPX] Constructor success on valid gpx', function(assert) {
 });
 
 test('[KML] getLayers: kml file with layers', function(assert) {
-  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml');
+  var ogr = new Ogr(fixture);
 
   ogr.getLayers(function(err, layers) {
     assert.ifError(err, 'no error');
@@ -53,8 +53,8 @@ test('[KML] getLayers: kml file with layers', function(assert) {
 });
 
 test('[GPX] getLayers: gpx file with layers', function(assert) {
-  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
+  var ogr = new Ogr(fixture);
 
   ogr.getLayers(function(err, layers) {
     assert.ifError(err, 'no error');
@@ -67,8 +67,8 @@ test('[GPX] getLayers: gpx file with layers', function(assert) {
 });
 
 test('[KML] getLayers: kml file with no layers', function(assert) {
-  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', 'TIMS.kml');
+  var ogr = new Ogr(fixture);
   ogr.getLayers(function(err, layers) {
     assert.ok(err, 'expected error');
     assert.notOk(layers, 'no layers returned');
@@ -77,8 +77,8 @@ test('[KML] getLayers: kml file with no layers', function(assert) {
 });
 
 test('[GPX] getLayers: gpx file with no layers', function(assert) {
-  var fixture = path.join(__dirname, 'fixtures', 'invalid.nofeatures.gpx'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(__dirname, 'fixtures', 'invalid.nofeatures.gpx');
+  var ogr = new Ogr(fixture);
   ogr.getLayers(function(err, layers) {
     assert.ok(err, 'expected error');
     assert.notOk(layers, 'no layers returned');
@@ -87,9 +87,9 @@ test('[GPX] getLayers: gpx file with no layers', function(assert) {
 });
 
 test('[KML] getExtent: kml file with layers', function(assert) {
-  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
-      ogr = new Ogr(fixture),
-      expected = [-179.28269999999998, -56.1221, 179.08359999999996, 68.823];
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml');
+  var ogr = new Ogr(fixture);
+  var expected = [-179.28269999999998, -56.1221, 179.08359999999996, 68.823];
 
   ogr.getExtent(function(err, extent) {
     assert.ifError(err, 'no error');
@@ -101,9 +101,9 @@ test('[KML] getExtent: kml file with layers', function(assert) {
 });
 
 test('[GPX] getExtent: gpx file with layers', function(assert) {
-  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
-      ogr = new Ogr(fixture),
-      expected = [-71.12660199999993, 42.40105099999996, -71.10297299999993, 42.468654999999956];
+  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
+  var ogr = new Ogr(fixture);
+  var expected = [-71.12660199999993, 42.40105099999996, -71.10297299999993, 42.468654999999956];
 
   ogr.getExtent(function(err, extent) {
     assert.ifError(err, 'no error');
@@ -115,8 +115,8 @@ test('[GPX] getExtent: gpx file with layers', function(assert) {
 });
 
 test('[KML] getExtent: kml file with no layers', function(assert) {
-  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
-      kml = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', 'TIMS.kml');
+  var kml = new Ogr(fixture);
   kml.getExtent(function(err, extent) {
     assert.ok(err, 'expected error');
     assert.notOk(extent, 'no extent returned');
@@ -125,9 +125,9 @@ test('[KML] getExtent: kml file with no layers', function(assert) {
 });
 
 test('[KML] getCenter: kml file with layers', function(assert) {
-  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
-      kml = new Ogr(fixture),
-      expected = [-0.0995500000000078, 6.350449999999995];
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml');
+  var kml = new Ogr(fixture);
+  var expected = [-0.0995500000000078, 6.350449999999995];
 
   kml.getCenter(function(err, center) {
     assert.ifError(err, 'no error');
@@ -139,9 +139,9 @@ test('[KML] getCenter: kml file with layers', function(assert) {
 });
 
 test('[GPX] getCenter: gpx file with layers', function(assert) {
-  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
-      ogr = new Ogr(fixture),
-      expected = [-71.11478749999993, 42.43485299999996];
+  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
+  var ogr = new Ogr(fixture);
+  var expected = [-71.11478749999993, 42.43485299999996];
 
   ogr.getCenter(function(err, center) {
     assert.ifError(err, 'no error');
@@ -153,8 +153,8 @@ test('[GPX] getCenter: gpx file with layers', function(assert) {
 });
 
 test('[KML] getCenter: kml file with no layers', function(assert) {
-  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', 'TIMS.kml');
+  var ogr = new Ogr(fixture);
   ogr.getCenter(function(err, center) {
     assert.ok(err, 'expected error');
     assert.notOk(center, 'no center returned');
@@ -163,9 +163,9 @@ test('[KML] getCenter: kml file with no layers', function(assert) {
 });
 
 test('[KML] getProjection: kml file with layers', function(assert) {
-  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
-      ogr = new Ogr(fixture),
-      expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml');
+  var ogr = new Ogr(fixture);
+  var expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
   ogr.getProjection(function(err, projection) {
     assert.ifError(err, 'no error');
@@ -175,9 +175,9 @@ test('[KML] getProjection: kml file with layers', function(assert) {
 });
 
 test('[GPX] getProjection: gpx file with layers', function(assert) {
-  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
-      ogr = new Ogr(fixture),
-      expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
+  var ogr = new Ogr(fixture);
+  var expected = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
   ogr.getProjection(function(err, projection) {
     assert.ifError(err, 'no error');
@@ -187,8 +187,8 @@ test('[GPX] getProjection: gpx file with layers', function(assert) {
 });
 
 test('[KML] getProjection: kml file with no layers', function(assert) {
-  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', 'TIMS.kml');
+  var ogr = new Ogr(fixture);
   ogr.getProjection(function(err, projection) {
     assert.ok(err, 'expected error');
     assert.notOk(projection, 'no projection returned');
@@ -197,8 +197,8 @@ test('[KML] getProjection: kml file with no layers', function(assert) {
 });
 
 test('[KML] getDetails: kml file with layers', function(assert) {
-  var fixture = path.join(testData, 'kml', '1week_earthquake.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml');
+  var ogr = new Ogr(fixture);
 
   ogr.getDetails(function(err, details) {
     assert.ifError(err, 'no error');
@@ -208,8 +208,8 @@ test('[KML] getDetails: kml file with layers', function(assert) {
 });
 
 test('[GPX] getDetails: gpx file with layers', function(assert) {
-  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
+  var ogr = new Ogr(fixture);
 
   ogr.getDetails(function(err, details) {
     assert.ifError(err, 'no error');
@@ -219,8 +219,8 @@ test('[GPX] getDetails: gpx file with layers', function(assert) {
 });
 
 test('[KML] getDetails: kml file with no layers', function(assert) {
-  var fixture = path.join(testData, 'kml', 'TIMS.kml'),
-      ogr = new Ogr(fixture);
+  var fixture = path.join(testData, 'kml', 'TIMS.kml');
+  var ogr = new Ogr(fixture);
   ogr.getDetails(function(err, details) {
     assert.ok(err, 'expected error');
     assert.notOk(details, 'no details returned');

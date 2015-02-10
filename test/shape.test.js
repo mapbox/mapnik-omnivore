@@ -1,17 +1,17 @@
-var tape = require('tape'),
-    path = require('path'),
-    fs = require('fs'),
-    testData = path.dirname(require.resolve('mapnik-test-data')),
-    Shape = require('../lib/shape.js'),
-    expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
+var tape = require('tape');
+var path = require('path');
+var fs = require('fs');
+var testData = path.dirname(require.resolve('mapnik-test-data'));
+var Shape = require('../lib/shape.js');
+var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 
 /**
  * Testing Shape functions
  */
 tape('[SHAPE] Setting up constructor', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedBasename = 'world_merc',
-      result = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedBasename = 'world_merc';
+  var result = new Shape(file);
 
   assert.ok(result);
   assert.ok(result.basename);
@@ -20,9 +20,9 @@ tape('[SHAPE] Setting up constructor', function(assert) {
 });
 
 tape('[SHAPE] Get center', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedCenter = [0, 12.048603815490733],
-      source = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedCenter = [0, 12.048603815490733];
+  var source = new Shape(file);
 
   source.getCenter(function(err, center) {
     if (err) {
@@ -37,9 +37,9 @@ tape('[SHAPE] Get center', function(assert) {
 });
 
 tape('[SHAPE] Get extent', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedExtent = [-180, -59.47306100000001, 180, 83.57026863098147],
-      source = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedExtent = [-180, -59.47306100000001, 180, 83.57026863098147];
+  var source = new Shape(file);
 
   source.getExtent(function(err, extent) {
     if (err) {
@@ -56,9 +56,9 @@ tape('[SHAPE] Get extent', function(assert) {
 });
 
 tape('[SHAPE] Get details', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedDetails = expectedMetadata_world_merc.json,
-      source = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedDetails = expectedMetadata_world_merc.json;
+  var source = new Shape(file);
 
   source.getDetails(function(err, details) {
     if (err) {
@@ -73,9 +73,9 @@ tape('[SHAPE] Get details', function(assert) {
 });
 
 tape('[SHAPE] Get layers', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedLayers = ['world_merc'],
-      source = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedLayers = ['world_merc'];
+  var source = new Shape(file);
 
   source.getLayers(function(err, layers) {
     if (err) {
@@ -90,10 +90,10 @@ tape('[SHAPE] Get layers', function(assert) {
 });
 
 tape('[SHAPE] Get zooms', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedMinzoom = 0,
-      expectedMaxzoom = 5,
-      source = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedMinzoom = 0;
+  var expectedMaxzoom = 5;
+  var source = new Shape(file);
 
   source.getZooms(function(err, minzoom, maxzoom) {
     if (err) {
@@ -108,9 +108,9 @@ tape('[SHAPE] Get zooms', function(assert) {
 });
 
 tape('[SHAPE] Get projection', function(assert) {
-  var file = testData + '/data/shp/world_merc/world_merc.shp',
-      expectedProjection = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over',
-      source = new Shape(file);
+  var file = testData + '/data/shp/world_merc/world_merc.shp';
+  var expectedProjection = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over';
+  var source = new Shape(file);
 
   source.getProjection(function(err, projection) {
     if (err) {
@@ -124,8 +124,8 @@ tape('[SHAPE] Get projection', function(assert) {
 });
 
 tape('[SHAPE] getProjection: shp with invalid projection', function(assert) {
-  var file = path.join(__dirname, 'fixtures', 'invalid-proj-shp', 'invalidProjection.shp'),
-      source = new Shape(file);
+  var file = path.join(__dirname, 'fixtures', 'invalid-proj-shp', 'invalidProjection.shp');
+  var source = new Shape(file);
   source.getProjection(function(err, projection) {
     assert.ok(err, 'expected error');
     assert.notOk(projection, 'no projection returned');
@@ -134,8 +134,8 @@ tape('[SHAPE] getProjection: shp with invalid projection', function(assert) {
 });
 
 tape('[SHAPE] getProjection: shp with missing projection', function(assert) {
-  var file = path.join(__dirname, 'fixtures', 'missing-proj-shp', 'missingProjection.shp'),
-      source = new Shape(file);
+  var file = path.join(__dirname, 'fixtures', 'missing-proj-shp', 'missingProjection.shp');
+  var source = new Shape(file);
   source.getProjection(function(err, projection) {
     assert.ok(err, 'expected error');
     assert.notOk(projection, 'no projection returned');
@@ -144,8 +144,8 @@ tape('[SHAPE] getProjection: shp with missing projection', function(assert) {
 });
 
 tape('[SHAPE] getProjection: shp with undefined proj4 string', function(assert) {
-  var file = path.join(__dirname, 'fixtures', 'undefined-proj-shp', 'undefinedProjection.shp'),
-      source = new Shape(file);
+  var file = path.join(__dirname, 'fixtures', 'undefined-proj-shp', 'undefinedProjection.shp');
+  var source = new Shape(file);
   source.getProjection(function(err, projection) {
     assert.ok(err, 'expected error');
     assert.notOk(projection, 'no projection returned');

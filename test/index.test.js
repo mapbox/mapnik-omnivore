@@ -1,17 +1,17 @@
-var tape = require('tape'),
-    path = require('path'),
-    fs = require('fs'),
-    testData = path.dirname(require.resolve('mapnik-test-data')),
-    mapnik_omnivore = require('../index.js'),
+var tape = require('tape');
+var path = require('path');
+var fs = require('fs');
+var testData = path.dirname(require.resolve('mapnik-test-data'));
+var mapnik_omnivore = require('../index.js');
 
-    expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json'))),
-    expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json'))),
-    expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json'))),
-    expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json'))),
-    expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json'))),
-    expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json'))),
-    expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json'))),
-    expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
+var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
+var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
+var expectedMetadata_DC_polygon = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_DC_polygon.json')));
+var expectedMetadata_bbl_csv = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_bbl_current_csv.json')));
+var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_1week_earthquake.json')));
+var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
+var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
+var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
 
 /**
  * Testing mapnik-omnivore.digest
@@ -111,10 +111,10 @@ tape('[RASTER] digest function should return expected metadata', function(assert
     expectedMetadata_sample_tif.extent[2] = trunc_6(expectedMetadata_sample_tif.extent[2]);
     expectedMetadata_sample_tif.extent[3] = trunc_6(expectedMetadata_sample_tif.extent[3]);
 
-    var bands_meta = metadata.raster.bands,
-        bands_expected = expectedMetadata_sample_tif.raster.bands,
-        pixelSize_expected = expectedMetadata_sample_tif.raster.pixelSize,
-        pixelSize_meta = metadata.raster.pixelSize;
+    var bands_meta = metadata.raster.bands;
+    var bands_expected = expectedMetadata_sample_tif.raster.bands;
+    var pixelSize_expected = expectedMetadata_sample_tif.raster.pixelSize;
+    var pixelSize_meta = metadata.raster.pixelSize;
 
     //Round pixelsize and band mean/std_dev values for slight differences in Travis
     bands_meta.forEach(function(b) {
@@ -166,10 +166,10 @@ tape('[VRT] digest function should return expected metadata', function(assert) {
     expectedMetadata_sample_vrt.extent[2] = trunc_6(expectedMetadata_sample_vrt.extent[2]);
     expectedMetadata_sample_vrt.extent[3] = trunc_6(expectedMetadata_sample_vrt.extent[3]);
 
-    var bands_meta = metadata.raster.bands,
-        pixelSize_meta = metadata.raster.pixelSize,
-        bands_expected = expectedMetadata_sample_vrt.raster.bands,
-        pixelSize_expected = expectedMetadata_sample_vrt.raster.pixelSize;
+    var bands_meta = metadata.raster.bands;
+    var pixelSize_meta = metadata.raster.pixelSize;
+    var bands_expected = expectedMetadata_sample_vrt.raster.bands;
+    var pixelSize_expected = expectedMetadata_sample_vrt.raster.pixelSize;
 
     // Round pixelsize and band mean/std_dev values for slight differences in Travis
     bands_meta.forEach(function(b) {

@@ -47,7 +47,9 @@
   },
   "jscsConfig": {
     "preset": "airbnb",
-    "requireCamelCaseOrUpperCaseIdentifiers": null
+    "requireCamelCaseOrUpperCaseIdentifiers": null,
+    "disallowMultipleVarDecl": true,
+    "requireMultipleVarDecl": null
   },
   "author": "Carol B. Hansen"
 }
