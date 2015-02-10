@@ -89,6 +89,14 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
             assert.end();
         });
     });
+    tape('Getting filetype: should be able to read BigTIFF', function(assert) {
+        var file = path.resolve('test/fixtures/bigtiff_header_extract.tif');
+        mapnik_omnivore.getFileType(file, function(err, type) {
+            assert.ok(err === null);
+            assert.equal(type, '.tif');
+            assert.end();
+        });
+    });
     tape('Getting filetype: should return an error due to incompatible file', function(assert) {
         var file = path.resolve('test/data/errors/incompatible.txt');
         mapnik_omnivore.getFileType(file, function(err, type) {
