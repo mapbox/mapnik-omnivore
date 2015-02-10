@@ -12,7 +12,7 @@
     "srs": "~0.4.5",
     "mapnik": "~3.1.2",
     "sphericalmercator": "~1.0.2",
-    "gdal": "0.3.1"
+    "gdal": "0.4.1"
   },
   "repository": {
     "type": "git",
