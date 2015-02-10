@@ -1,0 +1,17 @@
+{
+  "type": "Bears",
+  "features": [
+    {
+      "type": "Black",
+      "properties": {
+        "size": "small"
+      }
+    },
+    {
+      "type": "Grizzly",
+      "properties": {
+        "size": "large"
+      }
+    }
+  ]
+}

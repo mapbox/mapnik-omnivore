@@ -2,7 +2,8 @@ var tape = require('tape'),
     path = require('path'),
     fs = require('fs'),
     testData = path.dirname(require.resolve('mapnik-test-data')),
-    mapnik_omnivore = require('../index.js');
+    mapnik_omnivore = require('../index.js'),
+    queue = require('queue-async');
 //json fixtures
 var expectedMetadata_world_merc = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_world_merc.json')));
 var expectedMetadata_fells_loop = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_fells_loop.json')));
@@ -112,6 +113,40 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
             assert.ok(err instanceof Error);
             assert.equal('EINVALID', err.code);
             assert.equal(err.message, 'Error getting stats from file. File might not exist.');
+            assert.end();
+        });
+    });
+
+    tape('should mark geojson invalid unless it is a FeatureCollection', function(assert) {
+        var invalidGeojsonFiles = path.resolve(__dirname, 'fixtures', 'invalid-geojson');
+        fs.readdir(invalidGeojsonFiles, function(err, files) {
+            if (err) throw err;
+
+            var q = queue();
+
+            files.forEach(function(filename) {
+                filename = path.join(invalidGeojsonFiles, filename);
+                q.defer(function(next) {
+                    mapnik_omnivore.getMetadata(filename, function(err, metadata) {
+                        assert.ok(err instanceof Error, 'expected error');
+                        assert.equal(err.code, 'EINVALID', 'expected error code');
+                        next();
+                    });
+                });
+            });
+
+            q.await(function() {
+                assert.end();
+            });
+        });
+    });
+
+    tape('should catch unexpected mapnik parsing errors', function(assert) {
+        var fixture = path.resolve(__dirname, 'fixtures', 'nested.properties.geojson');
+        mapnik_omnivore.getMetadata(fixture, function(err, metadata) {
+            assert.ok(err, 'expected error');
+            assert.equal(err.message, 'Source file could not be parsed');
+            assert.notOk(metadata, 'no metadata created');
             assert.end();
         });
     });
