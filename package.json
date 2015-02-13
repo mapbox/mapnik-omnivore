@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "srs": "~0.4.5",
-    "mapnik": "~3.1.2",
+    "mapnik": "https://github.com/mapnik/node-mapnik/tarball/master",
     "sphericalmercator": "~1.0.2",
     "gdal": "0.4.1"
   },
