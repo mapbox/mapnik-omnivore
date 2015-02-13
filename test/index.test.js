@@ -153,7 +153,7 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
         var fixture = path.resolve(__dirname, 'fixtures', 'nested.properties.geojson');
         mapnik_omnivore.getMetadata(fixture, function(err, metadata) {
             assert.ok(err, 'expected error');
-            assert.equal(err.message, 'Source file could not be parsed');
+            assert.equal(err.message, 'Error calculating min/max zoom: Bounds invalid');
             assert.notOk(metadata, 'no metadata created');
             assert.end();
         });
