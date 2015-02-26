@@ -7,16 +7,17 @@ Version format follows [Semantic Version](http://semver.org/)
 [![Coverage Status](https://coveralls.io/repos/mapbox/mapnik-omnivore/badge.png)](https://coveralls.io/r/mapbox/mapnik-omnivore)
 
 Currently supports the following file types:
-- geojson/topojson
-- `.kml`
-- `.gpx`
-- `.tif`
-- `.vrt` : raster files listed in the VRT file must be in the same directory as the VRT file
-- `.csv` : must be valid geo CSV, and can be in the form of `.csv`, `.txt`, or `.tsv`
-- `.shp` : In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file
+- `geojson`
+- `topojson`
+- `kml`
+- `gpx`
+- `tif`
+- `vrt` : raster files listed in the VRT file must be in the same directory as the VRT file
+- `csv` : must be valid geo CSV, and can be in the form of `csv`, `txt`, or `tsv`
+- `shp` : In order to set the projection, the `.prj` file must be in the same directory and have the same name as the `.shp` file
 
 
-# Example
+## Javascript Usage
 
 ```
 var mapnikOmnivore = require('mapnik-omnivore'),
@@ -25,14 +26,13 @@ var mapnikOmnivore = require('mapnik-omnivore'),
 var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
 
 mapnikOmnivore.digest(file, function(err, metadata){
-	if(err) return callback(err);
+	if (err) return callback(err);
 	else {
 		console.log('Metadata returned!');
 		console.log(metadata);
 	}
 });
 ```
-
 
 ### mapnikOmnivore.digest(filepath, callback)
 - filepath `required`
@@ -103,16 +103,17 @@ Raster files will include a `raster` object:
 
 ```
 
+## CLI Usage
+```
+$ npm install --global mapnik-omnivore
+$ digest <filepath>
+# Prints a JSON string
+```
 
 ## Install
-With npm:
 ```
 npm install mapnik-omnivore
 ```
-
-
-Run `node runModule.js` from the root to try it out.
-
 
 ## Tests
 `npm test`
