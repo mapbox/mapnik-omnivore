@@ -15,13 +15,18 @@
   "json": {
     "vector_layers": [
       {
-        "id": "escaped",
+        "id": "topo",
         "description": "",
         "minzoom": 0,
         "maxzoom": 22,
         "fields": {
-          "id": "String",
-          "name": "String"
+          "NOM_FR": "String", 
+          "boolean": "Boolean", 
+          "description": "String", 
+          "double": "Number", 
+          "int": "Number", 
+          "name": "String", 
+          "spaces": "String" 
         }
       }
     ]
@@ -29,8 +34,8 @@
   "minzoom": 0,
   "maxzoom": 22,
   "layers": [
-    "escaped"
+    "topo"
   ],
-  "dstype": "ogr",
-  "filetype": ".geojson"
+  "dstype": "topojson",
+  "filetype": ".topojson"
 }

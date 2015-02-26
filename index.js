@@ -1,120 +1,133 @@
-var fs = require('fs'),
-    path = require('path'),
-    invalid = require('./lib/invalid'),
-    processDatasource = require('./lib/datasource-processor'),
-    gdal = require('gdal'),
-    mapnik = require('mapnik');
+var fs = require('fs');
+var path = require('path');
+var invalid = require('./lib/invalid');
+var mapnik = require('mapnik');
+var sniffer = require('mapbox-file-sniff');
+var queue = require('queue-async');
+var Csv = require('./lib/csv');
+var modules = [
+  require('./lib/geojson'),
+  require('./lib/raster'),
+  require('./lib/shape'),
+  require('./lib/ogr'),
+  require('./lib/topojson'),
+  Csv
+];
 
 // Register datasource plugins
-mapnik.register_default_input_plugins()
+mapnik.register_default_input_plugins();
+
 // silence mapnik logs
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
 
-var _options = {
-    encoding: 'utf8'
-};
 /**
  * Initializes the module
  * @param file (filepath)
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
-function digest(file, callback) {
-    getMetadata(file, function(err, metadata) {
-        if (err) return callback(err);
-        return callback(null, metadata);
+module.exports.digest = function(file, callback) {
+  sniffer.quaff(file, function(err, filetype) {
+    if (err && err.code === 'EINVALID') {
+      try {
+        new Csv(file);
+        filetype = 'csv';
+      }
+      catch (error) { return callback(err); }
+    } else if (err) return callback(err);
+
+    getMetadata(file, filetype, function(err, metadata) {
+      if (err) return callback(err);
+      return callback(null, metadata);
     });
+  });
 };
+
 /**
  * Validates size of file and processes the file
  * @param file (filepath)
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
-function getMetadata(file, callback) {
-    var metadata = {};
-    //Get filsize from fs.stats
+function getMetadata(file, filetype, callback) {
+  var type = modules.filter(function(module) {
+    return module.validFileType.some(function(t) {
+      return t === filetype;
+    });
+  });
+  var metadata = { filename: path.basename(file, path.extname(file)) };
+  var q = queue(1);
+  var source;
+
+  // Instantiate new object, based on datatype
+  try {
+    source = new type[0](file);
+  } catch (err) {
+    return callback(invalid('Error creating Mapnik Datasource: ' + err.message));
+  }
+
+  // Build metadata object for source asynchronously
+  metadata.filetype = '.' + filetype;
+  metadata.dstype = source.dstype;
+
+  q.defer(function(next) {
     fs.stat(file, function(err, stats) {
-        if (err) return callback(invalid('Error getting stats from file. File might not exist.'));
-        var filesize = stats['size'];
-        getFileType(file, function(err, filetype) {
-            if (err) return callback(err);
-            processDatasource.init(file, filesize, filetype, function(err, metadata) {
-                if (err) return callback(err);
-                return callback(null, metadata);
-            });
-        });
+      if (err) return callback(invalid(err));
+      metadata.filesize = stats.size;
+      next();
     });
-};
-/**
- * Validates filetype based on the file's contents
- * @param file (filepath)
- * @returns (error, filetype);
- */
-function getFileType(file, callback) {
-    //get file contents
-    fs.open(file, 'r', function(err, fd) {
-        if (err) return callback(err);
-        var buf = new Buffer(100);
-        //Read file
-        fs.read(fd, buf, 0, 100, null, function(err, bytesRead, buffer) {
-            if (err) return callback(err);
-            var head = buffer.slice(0, 100).toString();
-            //process as shapefile
-            if (buffer.readUInt32BE(0) === 9994) closeAndReturn('.shp');
-            //process as geotiff
-            else if ((head.slice(0, 2).toString() === 'II' || head.slice(0, 2).toString() === 'MM') && ((buffer[2] === 42) || buffer[3] === 42 || buffer[2] === 43)) closeAndReturn('.tif');
-            //process as kml, gpx, topojson, geojson, or vrt
-            //else if (head.indexOf('\"type\":\"Topology\"') !== -1) closeAndReturn('.topojson');
-            else if (head.trim().indexOf('{') == 0) closeAndReturn('.geojson');
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<kml') !== -1)) closeAndReturn('.kml');
-            else if ((head.indexOf('<?xml') !== -1) && (head.indexOf('<gpx') !== -1)) closeAndReturn('.gpx');
-            else if (head.indexOf('<VRTDataset') !== -1){
-                //verify vrt has valid source files
-                verifyVRT(file, function(err, valid){
-                    if(err) return callback(err);
-                    else if(valid) closeAndReturn('.vrt');
-                });
-            }
-            //should detect all geo CSV type files, regardless of file extension (e.g. '.txt' or '.tsv')
-            else if (isCSV(file)) closeAndReturn('.csv');
-            else return callback(invalid('Incompatible filetype.'));
-            
-            function closeAndReturn(type){
-                //Close file
-                fs.close(fd, function() {});
-                return callback(null, type);
-            };
-        });
+  });
+
+  q.defer(function(next) {
+    source.getCenter(function(err, center) {
+      if (err) return next(err);
+      metadata.center = center;
+      next();
     });
-};
-function verifyVRT(file, callback){
-    ds = gdal.open(file);
-    var filelist = ds.getFileList();
-    if(filelist.length === 1) return callback(invalid("VRT file does not reference existing source files."));
-    else return callback(null, true);
+  });
+
+  q.defer(function(next) {
+    source.getExtent(function(err, extent) {
+      if (err) return next(err);
+      metadata.extent = extent;
+      next();
+    });
+  });
+
+  q.defer(function(next) {
+    source.getZooms(function(err, minzoom, maxzoom) {
+      if (err) return next(err);
+      metadata.minzoom = minzoom;
+      metadata.maxzoom = maxzoom;
+      next();
+    });
+  });
+
+  q.defer(function(next) {
+    source.getProjection(function(err, projection) {
+      if (err) return next(err);
+      metadata.projection = projection;
+      next();
+    });
+  });
+
+  q.defer(function(next) {
+    source.getDetails(function(err, details) {
+      if (err) return next(err);
+      var detailsName = source.detailsName;
+      metadata[detailsName] = details;
+      next();
+    });
+  });
+
+  q.defer(function(next) {
+    source.getLayers(function(err, layers) {
+      if (err) return next(err);
+      metadata.layers = layers;
+      next();
+    });
+  });
+
+  q.await(function(err) {
+    if (err) return callback(invalid(err));
+    callback(err, metadata);
+  });
 }
-/**
- * Checks if tile is valid geoCSV
- * @param file (filepath)
- * @returns boolean;
- */
-function isCSV(file) {
-    var options = {
-        type: 'csv',
-        file: file,
-        row_limit: 100
-    };
-    // Using mapnik CSV plugin to validate geocsv files, since mapnik is eventually what 
-    // will be digesting it to obtain fields, extent, and center point
-    try {
-        var ds = new mapnik.Datasource(options);
-        return true;
-    } catch (err) {
-        return false;
-    }
-};
-module.exports = {
-    digest: digest,
-    getFileType: getFileType,
-    getMetadata: getMetadata,
-    getCenterAndExtent: processDatasource.getCenterAndExtent
-};

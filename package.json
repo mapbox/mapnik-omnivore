@@ -1,6 +1,6 @@
 {
   "name": "mapnik-omnivore",
-  "version": "4.1.0",
+  "version": "4.0.3",
   "description": "Node module that returns metadata of spatial files.",
   "main": "index.js",
   "keywords": [
@@ -10,9 +10,11 @@
   ],
   "dependencies": {
     "srs": "~0.4.5",
-    "mapnik": "~3.1.2",
+    "mapnik": "~3.1.4",
     "sphericalmercator": "~1.0.2",
-    "gdal": "0.4.1"
+    "gdal": "0.4.1",
+    "mapbox-file-sniff": "0.3.0",
+    "queue-async": "1.0.7"
   },
   "repository": {
     "type": "git",
@@ -24,16 +26,30 @@
   "devDependencies": {
     "coveralls": "~2.11.1",
     "istanbul": "~0.3.0",
+    "jscs": "^1.10.0",
+    "jshint": "^2.6.0",
     "mapnik-test-data": "http://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.3-fece0a9c546074a1479e9eae2333184029bb2279.tgz",
-    "queue-async": "^1.0.7",
     "tape": "3.0.x"
   },
   "scripts": {
-    "test": "tape test/*.js",
+    "test": "jshint index.js test lib && jscs index.js test lib && tape test/*.js",
     "coverage": "istanbul cover tape test/*.test.js && coveralls < ./coverage/lcov.info"
   },
   "bin": {
     "digest": "bin/digest"
+  },
+  "jshintConfig": {
+    "node": true,
+    "globalstrict": false,
+    "undef": true,
+    "unused": true,
+    "noarg": true
+  },
+  "jscsConfig": {
+    "preset": "airbnb",
+    "requireCamelCaseOrUpperCaseIdentifiers": null,
+    "disallowMultipleVarDecl": true,
+    "requireMultipleVarDecl": null
   },
   "author": "Carol B. Hansen"
 }
