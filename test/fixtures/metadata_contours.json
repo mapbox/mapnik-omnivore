@@ -1,0 +1,36 @@
+{
+  "filename": "contours",
+  "filetype": ".shp",
+  "dstype": "shape",
+  "filesize": 24576628,
+  "center": [
+    -122.31742219942615,
+    37.87235316048361
+  ],
+  "extent": [
+    -122.31849442745843,
+    37.871487370753606,
+    -122.31634997139385,
+    37.87321895021363
+  ],
+  "minzoom": 19,
+  "maxzoom": 22,
+  "projection": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "json": {
+    "vector_layers": [
+      {
+        "id": "contours",
+        "description": "",
+        "minzoom": 0,
+        "maxzoom": 22,
+        "fields": {
+          "ID": "Number",
+          "elev": "Number"
+        }
+      }
+    ]
+  },
+  "layers": [
+    "contours"
+  ]
+}

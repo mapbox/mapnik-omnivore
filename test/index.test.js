@@ -12,6 +12,7 @@ var expectedMetadata_1week_earthquake = JSON.parse(fs.readFileSync(path.resolve(
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
 var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
 var expectedMetadata_topo = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_topo.json')));
+var expectedMetadata_contours = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_contours.json')));
 
 /**
  * Testing mapnik-omnivore.digest
@@ -26,6 +27,23 @@ tape('[SHAPE] Getting datasources: should return expected metadata', function(as
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_world_merc, 'expected metadata');
+    assert.end();
+  });
+});
+
+/**
+ * Testing mapnik-omnivore.digest
+ */
+tape('[SHAPE: super detailed] Getting datasources: should return expected metadata', function(assert) {
+  var file = testData + '/data/shp/contours/contours.shp';
+  mapnik_omnivore.digest(file, function(err, metadata) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
+    assert.ok(err === null);
+
+    assert.deepEqual(metadata, expectedMetadata_contours, 'expected metadata');
     assert.end();
   });
 });
