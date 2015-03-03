@@ -188,7 +188,7 @@ tape('[VRT] Get extent', function(assert) {
 });
 
 tape('[VRT] Invalid georeference', function(assert) {
-  var fixture = path.join(__dirname, 'fixtures', 'invalid-georef-vrt', 'invalid.malformed.vrt');
+  var fixture = path.join(__dirname, 'fixtures', 'invalid.malformed.vrt');
   assert.throws(function() {
     new Raster(fixture);
   }, 'throws an error');
