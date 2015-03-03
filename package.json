@@ -28,7 +28,7 @@
     "istanbul": "~0.3.0",
     "jscs": "^1.10.0",
     "jshint": "^2.6.0",
-    "mapnik-test-data": "https://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.4-c1c9aa8357c29a98a4be07efaa0bc790bebec74f.tgz",
+    "mapnik-test-data": "http://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.4-c1c9aa8357c29a98a4be07efaa0bc790bebec74f.tgz",
     "tape": "3.0.x"
   },
   "scripts": {
