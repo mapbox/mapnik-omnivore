@@ -12,7 +12,7 @@
     "srs": "~0.4.5",
     "mapnik": "~3.1.4",
     "sphericalmercator": "~1.0.2",
-    "gdal": "0.4.1",
+    "gdal": "^0.4.1",
     "mapbox-file-sniff": "0.3.0",
     "queue-async": "1.0.7"
   },
