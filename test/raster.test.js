@@ -72,6 +72,7 @@ tape('[VRT] Invalid VRT', function(assert) {
   assert.throws(function() {
     new Raster(fixture);
   }, 'throws an error');
+
   assert.end();
 });
 
@@ -85,6 +86,7 @@ tape('[TIFF] Get projection', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(projection, expectedProjection);
     assert.end();
@@ -101,6 +103,7 @@ tape('[VRT] Get projection', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(projection, expectedProjection);
     assert.end();
@@ -112,6 +115,7 @@ tape('[VRT] Invalid projection', function(assert) {
   assert.throws(function() {
     new Raster(fixture);
   }, 'throws an error');
+
   assert.end();
 });
 
@@ -125,6 +129,7 @@ tape('[TIFF] Get center', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(center[0] > (expectedCenter[0] - 0.0001) && center[0] < (expectedCenter[0] + 0.0001));
     assert.ok(center[1] > (expectedCenter[1] - 0.0001) && center[1] < (expectedCenter[1] + 0.0001));
@@ -142,6 +147,7 @@ tape('[VRT] Get center', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(center[0] > (expectedCenter[0] - 0.0001) && center[0] < (expectedCenter[0] + 0.0001));
     assert.ok(center[1] > (expectedCenter[1] - 0.0001) && center[1] < (expectedCenter[1] + 0.0001));
@@ -159,6 +165,7 @@ tape('[TIFF] Get extent', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(extent[0] > (expectedExtent[0] - 0.0001) && extent[0] < (expectedExtent[0] + 0.0001));
     assert.ok(extent[1] > (expectedExtent[1] - 0.0001) && extent[1] < (expectedExtent[1] + 0.0001));
@@ -178,6 +185,7 @@ tape('[VRT] Get extent', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(extent[0] > (expectedExtent[0] - 0.0001) && extent[0] < (expectedExtent[0] + 0.0001));
     assert.ok(extent[1] > (expectedExtent[1] - 0.0001) && extent[1] < (expectedExtent[1] + 0.0001));
@@ -192,6 +200,7 @@ tape('[VRT] Invalid georeference', function(assert) {
   assert.throws(function() {
     new Raster(fixture);
   }, 'throws an error');
+
   assert.end();
 });
 
@@ -328,6 +337,7 @@ tape('[TIFF] Get zooms', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(minzoom, expectedMinzoom);
     assert.deepEqual(maxzoom, expectedMaxzoom);
@@ -346,6 +356,7 @@ tape('[VRT] Get zooms', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(minzoom, expectedMinzoom);
     assert.deepEqual(maxzoom, expectedMaxzoom);

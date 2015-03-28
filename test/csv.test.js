@@ -21,6 +21,7 @@ test('[CSV] constructor: invalid file', function(assert) {
   assert.throws(function() {
     new Csv(fixture);
   }, 'throws an error');
+
   assert.end();
 });
 
@@ -29,6 +30,7 @@ test('[CSV] constructor: valid file', function(assert) {
   assert.doesNotThrow(function() {
     csv = new Csv(valid);
   }, 'no error');
+
   assert.equal(csv.detailsName, 'json', 'exposes details name');
   assert.equal(csv.dstype, 'csv', 'exposes dstype');
   assert.end();

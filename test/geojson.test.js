@@ -34,6 +34,7 @@ tape('[GeoJson] Get projection', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(projection, expectedProjection);
     assert.end();
@@ -50,6 +51,7 @@ tape('[GeoJson] Get center', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(center, expectedCenter);
     assert.end();
@@ -66,6 +68,7 @@ tape('[GeoJson] Get extent', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(extent, expectedExtent);
     assert.end();
@@ -96,6 +99,7 @@ tape('[GeoJson] Get details', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(details, expectedDetails);
     assert.end();
@@ -112,6 +116,7 @@ tape('[GeoJson] Get layers', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(typeof layers === 'object');
     assert.deepEqual(layers, expectedLayers);
@@ -130,6 +135,7 @@ tape('[GeoJson] Get zooms', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(minzoom, expectedMinzoom);
     assert.deepEqual(maxzoom, expectedMaxzoom);

@@ -29,6 +29,7 @@ tape('[SHAPE] Get center', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(center[0] > (expectedCenter[0] - 0.0001) && center[0] < (expectedCenter[0] + 0.0001));
     assert.ok(center[1] > (expectedCenter[1] - 0.0001) && center[1] < (expectedCenter[1] + 0.0001));
@@ -46,6 +47,7 @@ tape('[SHAPE] Get extent', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(extent[0] > (expectedExtent[0] - 0.0001) && extent[0] < (expectedExtent[0] + 0.0001));
     assert.ok(extent[1] > (expectedExtent[1] - 0.0001) && extent[1] < (expectedExtent[1] + 0.0001));
@@ -82,6 +84,7 @@ tape('[SHAPE] Get layers', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.ok(typeof layers === 'object');
     assert.deepEqual(layers, expectedLayers);
@@ -100,6 +103,7 @@ tape('[SHAPE] Get zooms', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(minzoom, expectedMinzoom);
     assert.deepEqual(maxzoom, expectedMaxzoom);
@@ -117,6 +121,7 @@ tape('[SHAPE] Get projection', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
     assert.deepEqual(projection, expectedProjection);
     assert.end();

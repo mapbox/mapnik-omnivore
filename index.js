@@ -53,6 +53,7 @@ function getMetadata(file, filetype, callback) {
       return t === filetype;
     });
   });
+
   var metadata = { filename: path.basename(file, path.extname(file)) };
   var q = queue(1);
   var source;

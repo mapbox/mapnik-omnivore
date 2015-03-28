@@ -71,6 +71,7 @@ test('[TopoJson] getExtent: topojson file with layers', function(assert) {
     extent.forEach(function(coord, i) {
       closeEnough(assert, coord, expected[i], 'correct extent value');
     });
+
     assert.end();
   });
 });
@@ -85,6 +86,7 @@ test('[TopoJson] getCenter: topojson file with layers', function(assert) {
     center.forEach(function(coord, i) {
       closeEnough(assert, coord, expected[i], 'correct center value');
     });
+
     assert.end();
   });
 });
