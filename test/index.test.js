@@ -24,6 +24,7 @@ tape('[SHAPE] Getting datasources: should return expected metadata', function(as
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_world_merc, 'expected metadata');
@@ -41,6 +42,7 @@ tape('[SHAPE: super detailed] Getting datasources: should return expected metada
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_contours, 'expected metadata');
@@ -66,6 +68,7 @@ tape('[KML] Getting datasources: should return expected metadata', function(asse
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_1week_earthquake, 'expected metadata');
@@ -80,6 +83,7 @@ tape('[GeoJson] digest function should return expected metadata', function(asser
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_DC_polygon, 'expected metadata');
@@ -94,6 +98,7 @@ tape('[TopoJson] digest function should return expected metadata', function(asse
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_topo, 'expected metadata');
@@ -113,6 +118,7 @@ tape('[RASTER] digest function should return expected metadata', function(assert
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     //Round extent values to avoid floating point discrepancies in Travis
@@ -168,6 +174,7 @@ tape('[VRT] digest function should return expected metadata', function(assert) {
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     //Round extent values to avoid floating point discrepancies in Travis
@@ -218,6 +225,7 @@ tape('[GPX] Getting datasource: should return expected datasource and layer name
       assert.ifError(err, 'should not error');
       return assert.end();
     }
+
     assert.ok(err === null);
 
     assert.deepEqual(metadata, expectedMetadata_fells_loop, 'expected metadata');

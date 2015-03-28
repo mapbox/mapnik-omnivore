@@ -17,6 +17,7 @@ test('[OGR] Constructor error on malformed kml', function(assert) {
   assert.throws(function() {
     new Ogr(fixture);
   }, 'throws an error');
+
   assert.end();
 });
 
@@ -48,6 +49,7 @@ test('[KML] getLayers: kml file with layers', function(assert) {
     expectedMetadata_1week_earthquake.layers.forEach(function(layername) {
       assert.ok(layers.indexOf(layername) > -1, layername + ' found in layers');
     });
+
     assert.end();
   });
 });
@@ -62,6 +64,7 @@ test('[GPX] getLayers: gpx file with layers', function(assert) {
     expectedMetadata_fells_loop.layers.forEach(function(layername) {
       assert.ok(layers.indexOf(layername) > -1, layername + ' found in layers');
     });
+
     assert.end();
   });
 });
@@ -96,6 +99,7 @@ test('[KML] getExtent: kml file with layers', function(assert) {
     extent.forEach(function(coord, i) {
       closeEnough(assert, coord, expected[i], 'correct extent value');
     });
+
     assert.end();
   });
 });
@@ -110,6 +114,7 @@ test('[GPX] getExtent: gpx file with layers', function(assert) {
     extent.forEach(function(coord, i) {
       closeEnough(assert, coord, expected[i], 'correct extent value');
     });
+
     assert.end();
   });
 });
@@ -134,6 +139,7 @@ test('[KML] getCenter: kml file with layers', function(assert) {
     center.forEach(function(coord, i) {
       closeEnough(assert, coord, expected[i], 'correct center value');
     });
+
     assert.end();
   });
 });
@@ -148,6 +154,7 @@ test('[GPX] getCenter: gpx file with layers', function(assert) {
     center.forEach(function(coord, i) {
       closeEnough(assert, coord, expected[i], 'correct center value');
     });
+
     assert.end();
   });
 });
