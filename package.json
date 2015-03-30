@@ -1,6 +1,6 @@
 {
   "name": "mapnik-omnivore",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "Node module that returns metadata of spatial files.",
   "main": "index.js",
   "keywords": [
