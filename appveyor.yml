@@ -26,8 +26,8 @@ install:
   - if "%msvs_toolset%" == "12" powershell Install-Product node $env:nodejs_version $env:platform
   - if "%msvs_toolset%" == "14" powershell Write-Output "fetching https://mapbox.s3.amazonaws.com/node-cpp11/v$env:nodejs_version/${env:ARCHPATH}node.exe"
   - if "%msvs_toolset%" == "14" powershell Start-FileDownload "https://mapbox.s3.amazonaws.com/node-cpp11/v$env:nodejs_version/${env:ARCHPATH}node.exe"
-  - powershell Write-Output "https://mapbox.s3.amazonaws.com/node-cpp11/vcredist_$env:platform.exe"
-  - powershell Start-FileDownload "https://mapbox.s3.amazonaws.com/node-cpp11/vcredist_$env:platform.exe"
+  - powershell Write-Output "http://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_$env:Platform.exe"
+  - powershell Start-FileDownload "http://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_$env:Platform.exe"
   - .\vcredist_%platform%.exe /q /norestart
   - node -v
   - node -e "console.log(process.argv,process.execPath,process.arch)"
