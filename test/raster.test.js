@@ -363,3 +363,13 @@ tape('[VRT] Get zooms', function(assert) {
     assert.end();
   });
 });
+
+tape('[TIFF] Multi-band', function(assert) {
+  var file = testData + '/data/geotiff/DC_rgb.tif';
+  var source = new Raster(file);
+  var bands = source.getBands();
+
+  assert.equal(bands.length, 4);
+
+  assert.end();
+});
