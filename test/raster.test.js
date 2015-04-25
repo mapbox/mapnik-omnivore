@@ -373,3 +373,17 @@ tape('[TIFF] Multi-band', function(assert) {
 
   assert.end();
 });
+
+tape('[TIFF] JPEG-compressed', function(assert) {
+  var file = testData + '/data/geotiff/jpeg.tif';
+  var source = new Raster(file);
+
+  try {
+    source.getBands();
+  }
+  catch (err) {
+    assert.fail(err);
+  }
+
+  assert.end();
+});
