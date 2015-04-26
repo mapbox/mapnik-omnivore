@@ -2,18 +2,25 @@ language: cpp
 
 sudo: false
 
-os:
-- linux
-- osx
+addons:
+  apt:
+    sources:
+     - ubuntu-toolchain-r-test
+    packages:
+     - libstdc++6 # upgrade libstdc++ on linux to support C++11
 
-env:
-  matrix:
-    - NODE_VERSION="0.10"
-    - NODE_VERSION="0.11.14"
+matrix:
+  include:
+     - os: linux
+       env: NODE_VERSION="0.12" COVERAGE=true
+     - os: linux
+       env: NODE_VERSION="0.10"
+     - os: osx
+       env: NODE_VERSION="0.12"
+     - os: osx
+       env: NODE_VERSION="0.10"
 
 before_install:
- # upgrade libstdc++ to support C++11
- - if [[ $(uname -s) == 'Linux' ]]; then wget https://launchpad.net/~ubuntu-toolchain-r/+archive/ubuntu/test/+files/libstdc%2B%2B6_4.8.1-2ubuntu1~12.04_amd64.deb && dpkg -x libstdc++6_4.8.1-2ubuntu1~12.04_amd64.deb ./ && export LD_PRELOAD=$(pwd)/usr/lib/x86_64-linux-gnu/libstdc++.so.6; fi
  - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
  - source ~/.nvm/nvm.sh
  - nvm install $NODE_VERSION
@@ -22,6 +29,8 @@ before_install:
 install:
  - npm install
 
+before_script:
+ - if [[ ${COVERAGE:-false} != false ]]; then npm run coverage; fi;
+
 script:
  - npm test
- - npm run coverage
