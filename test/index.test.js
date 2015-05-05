@@ -91,6 +91,16 @@ tape('[GeoJson] digest function should return expected metadata', function(asser
   });
 });
 
+tape('[GeoJson] digest function should error and return sanitized message', function(assert) {
+  var fixture = path.resolve(__dirname, 'fixtures', 'parse.error.json');
+  var expectedError = 'Error creating Mapnik Datasource: GeoJSON Plugin: could not parse source';
+  mapnik_omnivore.digest(fixture, function(err) {
+    assert.ok(err, 'expected error');
+    assert.deepEqual(err.message, expectedError, 'expected error message');
+    assert.end();
+  });
+});
+
 tape('[TopoJson] digest function should return expected metadata', function(assert) {
   var file = testData + '/data/topojson/topo.json';
   mapnik_omnivore.digest(file, function(err, metadata) {
