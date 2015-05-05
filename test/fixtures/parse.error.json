@@ -1,17 +1,8 @@
 {
+  "type": "FeatureCollection",
   "features": [
     {
-      "type": "Feature",
-      "properties": {
-        "panda": {
-          "bears": "know best"
-        }
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [ -122, 48 ]
-      }
+      "oofda"
     }
-  ],
-  "type": "FeatureCollection"
+  ]
 }
