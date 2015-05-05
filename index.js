@@ -62,6 +62,11 @@ function getMetadata(file, filetype, callback) {
   try {
     source = new type[0](file);
   } catch (err) {
+    if (err.message.indexOf('could not parse') !== -1) {
+        // Sanitize error message
+        var filepath = err.message.split('could not parse')[1];
+        err.message = err.message.replace(filepath, ' source');
+    }
     return callback(invalid('Error creating Mapnik Datasource: ' + err.message));
   }
 
