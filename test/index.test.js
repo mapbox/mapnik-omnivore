@@ -263,3 +263,14 @@ tape('Getting filetype: should return an error because file does not exist.', fu
     assert.end();
   });
 });
+
+tape('[TIFF] Getting projection: should return an error due invalid projection', function(assert) {
+  var file = path.resolve('test/fixtures/invalid.projection.tif');
+  mapnik_omnivore.digest(file, function(err, result) {
+    assert.ok(err instanceof Error);
+    assert.notOk(result, 'no result returned');
+    assert.equal('EINVALID', err.code);
+    assert.equal(err.message, 'Error creating Mapnik Datasource: Invalid projection');
+    assert.end();
+  });
+});
