@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Parkering</name>
+		<Placemark>
+			<name>Parkering</name>
+			<description><![CDATA[Adresse: Ærtekildevej 1<br>Postnummer: 4100<br>By: Ringsted<br>Tekst: Ubegrænset parkering]]></description>
+			<styleUrl>#icon-995</styleUrl>
+			<ExtendedData>
+				<Data name='Adresse'>
+					<value>Ærtekildevej 1</value>
+				</Data>
+				<Data name='Postnummer'>
+					<value>4100.0</value>
+				</Data>
+				<Data name='By'>
+					<value>Ringsted</value>
+				</Data>
+				<Data name='Tekst'>
+					<value>Ubegrænset parkering</value>
+				</Data>
+			</ExtendedData>
+			<address>Ærtekildevej 1, 4100, Ringsted</address>
+		</Placemark>
+	</Document>
+</kml>
