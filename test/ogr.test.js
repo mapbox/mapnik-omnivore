@@ -104,6 +104,17 @@ test('[KML] getExtent: kml file with layers', function(assert) {
   });
 });
 
+test('[KML] getExtent: should fail due to missing extent', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid.missingextent.kml');
+  var ogr = new Ogr(fixture);
+
+  ogr.getExtent(function(err, extent) {
+    assert.ok(err, 'expected error');
+    assert.notOk(extent, 'no extent returned');
+    assert.end();
+  });
+});
+
 test('[GPX] getExtent: gpx file with layers', function(assert) {
   var fixture = path.join(testData, 'gpx', 'fells_loop.gpx');
   var ogr = new Ogr(fixture);
