@@ -93,7 +93,7 @@ tape('[GeoJson] digest function should return expected metadata', function(asser
 
 tape('[GeoJson] digest function should error and return sanitized message', function(assert) {
   var fixture = path.resolve(__dirname, 'fixtures', 'parse.error.json');
-  var expectedError = 'Invalid geojson: GeoJSON file must be a FeatureCollection';
+  var expectedError = 'Error creating Mapnik Datasource: GeoJSON Plugin: could not parse source';
   mapnik_omnivore.digest(fixture, function(err) {
     assert.ok(err, 'expected error');
     assert.deepEqual(err.message, expectedError, 'expected error message');
@@ -260,6 +260,17 @@ tape('Getting filetype: should return an error because file does not exist.', fu
     assert.ok(err instanceof Error);
     assert.notOk(result, 'no result returned');
     assert.equal('ENOENT', err.code);
+    assert.end();
+  });
+});
+
+tape('[TIFF] Getting projection: should return an error due invalid projection', function(assert) {
+  var file = path.resolve('test/fixtures/invalid.projection.tif');
+  mapnik_omnivore.digest(file, function(err, result) {
+    assert.ok(err instanceof Error);
+    assert.notOk(result, 'no result returned');
+    assert.equal('EINVALID', err.code);
+    assert.equal(err.message, 'Error creating Mapnik Datasource: Invalid projection');
     assert.end();
   });
 });
