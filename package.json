@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "srs": "~0.4.8",
-    "mapnik": "~3.2.0",
+    "mapnik": "~3.3.1",
     "sphericalmercator": "~1.0.2",
     "gdal": "~0.4.4",
     "mapbox-file-sniff": "~0.4.0",
