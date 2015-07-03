@@ -157,7 +157,7 @@ tape('[VRT] Get center', function(assert) {
 
 tape('[TIFF] Get extent', function(assert) {
   var file = testData + '/data/geotiff/sample.tif';
-  var expectedExtent = [-110.3650933429331, 44.53327824851143, -110.28443250326441, 44.596766518228264];
+  var expectedExtent = [-110.37655746458053, 44.53327824851143, -110.27303961243528, 44.59676651822824];
   var source = new Raster(file);
 
   source.getExtent(function(err, extent) {
@@ -177,7 +177,7 @@ tape('[TIFF] Get extent', function(assert) {
 
 tape('[VRT] Get extent', function(assert) {
   var file = testData + '/data/vrt/sample.vrt';
-  var expectedExtent = [-110.3650933429331, 44.53327824851143, -110.28443250326441, 44.596766518228264];
+  var expectedExtent = [-110.37655746458053, 44.53327824851143, -110.27303961243528, 44.59676651822824];
   var source = new Raster(file);
 
   source.getExtent(function(err, extent) {
