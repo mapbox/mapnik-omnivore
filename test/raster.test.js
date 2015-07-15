@@ -204,6 +204,15 @@ tape('[VRT] Invalid georeference', function(assert) {
   assert.end();
 });
 
+tape('[TIFF] Missing georeference', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid.nogeoref.tif');
+  assert.throws(function() {
+    new Raster(fixture);
+  }, 'throws an error');
+
+  assert.end();
+});
+
 tape('[TIFF] Get details', function(assert) {
   var file = testData + '/data/geotiff/sample.tif';
   var expectedDetails = expectedMetadata_sample_tif.raster;
