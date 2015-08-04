@@ -354,6 +354,25 @@ tape('[TIFF] Get zooms', function(assert) {
   });
 });
 
+tape('[TIFF] Get happy zooms', function(assert) {
+  var file = path.resolve(__dirname, 'fixtures', 'valid.happytiff.tif');
+  var expectedMinzoom = 7;
+  var expectedMaxzoom = 7;
+  var source = new Raster(file);
+
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
+
+    assert.ok(err === null);
+    assert.deepEqual(minzoom, expectedMinzoom);
+    assert.deepEqual(maxzoom, expectedMaxzoom);
+    assert.end();
+  });
+});
+
 tape('[VRT] Get zooms', function(assert) {
   var file = testData + '/data/vrt/sample.vrt';
   var expectedMinzoom = 9;
