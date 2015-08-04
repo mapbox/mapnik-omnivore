@@ -15,7 +15,7 @@
     "gdal": "~0.5.0",
     "mapbox-file-sniff": "~0.4.0",
     "queue-async": "1.0.7",
-    "happytiff": "0.3.0"
+    "happytiff": "git://github.com/mapbox/node-happytiff.git#happyzoom"
   },
   "repository": {
     "type": "git",
