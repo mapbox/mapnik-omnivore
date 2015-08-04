@@ -356,7 +356,6 @@ tape('[TIFF] Get zooms', function(assert) {
 
 tape('[TIFF] Get happy zooms', function(assert) {
   var file = path.resolve(__dirname, 'fixtures', 'valid.happytiff.tif');
-  console.log(file);
   var expectedMinzoom = 7;
   var expectedMaxzoom = 7;
   var source = new Raster(file);
