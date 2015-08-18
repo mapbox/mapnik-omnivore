@@ -9,10 +9,10 @@
     "geodata"
   ],
   "dependencies": {
-    "srs": "~0.4.8",
-    "mapnik": "~3.4.0",
+    "srs": "~0.4.9",
+    "mapnik": "~3.4.1",
     "sphericalmercator": "~1.0.2",
-    "gdal": "~0.5.0",
+    "gdal": "~0.7.0",
     "mapbox-file-sniff": "~0.4.0",
     "queue-async": "1.0.7"
   },
