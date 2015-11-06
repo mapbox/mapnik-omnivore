@@ -154,3 +154,15 @@ tape('[GeoJson] should return an error due to invalid geojson', function(assert)
     assert.end();
   });
 });
+
+tape('[GeoJson] should return an error due to invalid geojson', function(assert) {
+  var file = path.resolve('test/fixtures/invalid-geojson/parseinvalid-min.geojson');
+  var source = new GeoJSON(file);
+  source.getDetails(function(err, result) {
+    assert.ok(err instanceof Error);
+    assert.notOk(result, 'no result returned');
+    assert.equal('EINVALID', err.code);
+    assert.equal(err.message, 'Invalid geojson');
+    assert.end();
+  });
+});
