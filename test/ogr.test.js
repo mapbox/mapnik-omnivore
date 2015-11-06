@@ -23,7 +23,9 @@ test('[OGR] GDAL_DATA direcory not bundled with node-gdal', function(assert) {
 
   process.env.GDAL_DATA = env_gdal_data;
   var ogr = new Ogr(fixture, 'gdal_data/thats/not/there');
-  assert.equal(process.env.GDAL_DATA, ogr.gdalData(), 'gdal.config.get("GDAL_DATA") is equal to process.env.GDAL_DATA');
+  assert.equal(ogr.gdalData(), process.env.GDAL_DATA, 'gdal.config.get("GDAL_DATA") is equal to process.env.GDAL_DATA');
+  ogr.gdalData('my/GDAL_DATA');
+  assert.equal(ogr.gdalData(), 'my/GDAL_DATA', 'GDAL_DATA is set and read correctly');
   assert.end();
 });
 
