@@ -12,6 +12,21 @@ function closeEnough(assert, found, expected, message) {
   assert.equal(found, expected, message);
 }
 
+test('[OGR] GDAL_DATA direcory not bundled with node-gdal', function(assert) {
+  // reason: 'gdal/deps' directory is removed when packaging Mapbox Studio Clasic to save space
+  var env_gdal_data = process.env.GDAL_DATA;
+  process.env.GDAL_DATA = 'gdal_data/thats/not/there';
+  var fixture = path.join(testData, 'kml', '1week_earthquake.kml');
+  assert.throws(function() {
+    new Ogr(fixture, 'gdal_data/thats/not/there');
+  }, 'throws if there is no GDAL_DATA directory');
+
+  process.env.GDAL_DATA = env_gdal_data;
+  var ogr = new Ogr(fixture, 'gdal_data/thats/not/there');
+  assert.equal(process.env.GDAL_DATA, ogr.gdalData(), 'gdal.config.get("GDAL_DATA") is equal to process.env.GDAL_DATA');
+  assert.end();
+});
+
 test('[OGR] Constructor error on malformed kml', function(assert) {
   var fixture = path.resolve(__dirname, 'fixtures', 'invalid.malformed.kml');
   assert.throws(function() {
