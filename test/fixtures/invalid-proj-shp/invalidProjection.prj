@@ -1,1 +1,1 @@
-bad projection
+this file is actually wgs84 but this .prj is made bogus to trigger an error
