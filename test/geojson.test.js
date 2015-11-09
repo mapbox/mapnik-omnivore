@@ -2,6 +2,7 @@ var tape = require('tape');
 var path = require('path');
 var testData = path.dirname(require.resolve('mapnik-test-data'));
 var GeoJSON = require('../lib/geojson.js');
+var fs = require('fs');
 
 /**
  * Testing GeoJSON functions
@@ -102,6 +103,27 @@ tape('[GeoJson] Get details', function(assert) {
 
     assert.ok(err === null);
     assert.deepEqual(details, expectedDetails);
+    assert.end();
+  });
+});
+
+// https://github.com/mapbox/mapnik-omnivore/issues/88
+tape('[GeoJson] can open null island', function(assert) {
+  var file = path.resolve('test/fixtures/null-island.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  assert.deepEqual(source.extent,[0,0,0,0]);
+  assert.deepEqual(source.center,[0,0]);
+  assert.deepEqual(source.layers,[ 'null-island' ]);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
+
+    assert.ok(err === null);
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 0);
     assert.end();
   });
 });
