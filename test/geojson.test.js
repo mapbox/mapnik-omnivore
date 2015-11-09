@@ -112,9 +112,9 @@ tape('[GeoJson] can open null island', function(assert) {
   var file = path.resolve('test/fixtures/null-island.geojson');
   assert.ok(fs.existsSync(file));
   var source = new GeoJSON(file);
-  assert.deepEqual(source.extent,[0,0,0,0]);
-  assert.deepEqual(source.center,[0,0]);
-  assert.deepEqual(source.layers,[ 'null-island' ]);
+  assert.deepEqual(source.extent, [0, 0, 0, 0]);
+  assert.deepEqual(source.center, [0, 0]);
+  assert.deepEqual(source.layers, ['null-island']);
   source.getZooms(function(err, minzoom, maxzoom) {
     if (err) {
       assert.ifError(err, 'should not error');
