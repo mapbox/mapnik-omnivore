@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "NAME": null, "TM_CAT": "pACHARE_7" }, "geometry": { "type": "Point", "coordinates": [ -74.014325954999947, 45.428254783000057 ] } },
+{ "type": "Feature", "properties": { "NAME": null, "TM_CAT": "pACHARE_7" }, "geometry": { "type": "Point", "coordinates": [ -74.22829995799998, 45.485650487000044 ] } },
+{ "type": "Feature", "properties": { "NAME": null, "TM_CAT": "pACHARE_7" }, "geometry": { "type": "Point", "coordinates": [ -74.348988593999934, 45.522009528000069 ] } },
+{ "type": "Feature", "properties": { "NAME": null, "TM_CAT": "pACHARE_7" }, "geometry": { "type": "Point", "coordinates": [ -74.119734845999972, 45.456868624000037 ] } },
+{ "type": "Feature", "properties": { "TM_CAT": "pWRECKS_2" }, "geometry": { "type": "Point", "coordinates": [ -73.978615778999938, 45.485249387000067 ] } },
+{ "type": "Feature", "properties": { "TM_CAT": "pWRECKS_2" }, "geometry": { "type": "Point", "coordinates": [ -73.964693979999936, 45.494334135000031 ] } },
+{ "type": "Feature", "properties": { "TM_CAT": "lNAVLNE_0" }, "geometry": { "type": "LineString", "coordinates": [ [ -74.159155663999968, 45.495072965000077 ], [ -74.158455968999988, 45.498466468000061 ] ] } },
+{ "type": "Feature", "properties": { "TM_CAT": "lNAVLNE_0" }, "geometry": { "type": "LineString", "coordinates": [ [ -74.158172578999938, 45.498999769000079 ], [ -74.158512212999938, 45.497775414000046 ] ] } },
+{ "type": "Feature", "properties": { "TM_CAT": aDEPARE, "DRVAL1": -99, "DRVAL2": 0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -73.894235392999917, 45.530895268000165 ] ] ] } }
+]
+}
