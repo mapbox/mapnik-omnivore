@@ -164,3 +164,32 @@ tape('[GeoJson] Get zooms', function(assert) {
     assert.end();
   });
 });
+
+tape('[GeoJson] should return an error open initial open due to invalid geojson', function(assert) {
+  var file = path.resolve('test/fixtures/invalid-geojson/parseinvalid-min.geojson');
+  try {
+    new GeoJSON(file);
+    assert.ok(false, 'Should not get here');
+  } catch (err) {
+    assert.ok(err instanceof Error);
+    assert.equal('EINVALID', err.code);
+    assert.equal(err.message, 'Invalid geojson');
+  }
+
+  assert.end();
+});
+
+tape('[GeoJson] should return an error upon getDetails due to invalid geojson', function(assert) {
+  var file = path.resolve('test/fixtures/invalid-geojson/parseinvalid-min2.geojson');
+  var source = new GeoJSON(file);
+  source.getDetails(function(err, result) {
+    assert.ok(err instanceof Error);
+    assert.notOk(result, 'no result returned');
+    if (err) {
+      assert.equal('EINVALID', err.code);
+      assert.equal(err.message, 'Invalid geojson');
+    }
+
+    assert.end();
+  });
+});
