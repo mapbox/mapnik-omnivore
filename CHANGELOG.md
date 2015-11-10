@@ -1,6 +1,12 @@
 
 # Changelog
 
+## 6.3.2
+
+ - Now handles more types of GeoJSON parsing errors (both datasource creation and when calling `ds.describe()`) (#128)
+ - Upgraded to node-srs@1.x
+ - Compatibility with latest node-mapnk@3.4.10 / Mapnik v3.0.9
+
 ## 2.2.1
 
  - Updated node-mapnik to 3.1.1
