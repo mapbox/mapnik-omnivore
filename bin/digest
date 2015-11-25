@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+if (!process.argv[2]) {
+    console.log('Please provide the path to a file to digest');
+    process.exit(1);
+}
+
 var omnivore = require('..'),
     path = require('path'),
     filepath = path.resolve(process.argv[2]);
