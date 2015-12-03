@@ -403,7 +403,7 @@ tape('[SPATIAL RESOLUTIONS] Get spatial resolutions', function(assert) {
   assert.deepLooseEqual(spatialResolutions, expectedResolutions);
 
   var validSpatialResolutions = Raster.getValidSpatialResolutions(spatialResolutions, 30.20012);
-  var expectedValidResolutions = JSON.parse('[156542.96875,78271.484375,39135.7421875,19567.87109375,9783.935546875,4891.9677734375,2445.98388671875,1222.991943359375,611.4959716796875,305.74798583984375,152.87399291992188,76.43699645996094,38.21849822998047]')
+  var expectedValidResolutions = JSON.parse('[156542.96875,78271.484375,39135.7421875,19567.87109375,9783.935546875,4891.9677734375,2445.98388671875,1222.991943359375,611.4959716796875,305.74798583984375,152.87399291992188,76.43699645996094,38.21849822998047]');
   assert.deepLooseEqual(validSpatialResolutions, expectedValidResolutions);
 
   assert.end();
