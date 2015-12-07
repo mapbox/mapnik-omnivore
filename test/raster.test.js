@@ -3,6 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var testData = path.dirname(require.resolve('mapnik-test-data'));
 var Raster = require('../lib/raster.js');
+var utils = require('../lib/utils.js');
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
 var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
 
@@ -393,6 +394,18 @@ tape('[TIFF] JPEG-compressed', function(assert) {
   catch (err) {
     assert.fail(err);
   }
+
+  assert.end();
+});
+
+tape('[SPATIAL RESOLUTIONS] Get spatial resolutions / valid spatial resolutions', function(assert) {
+  var spatialResolutions = utils.getSpatialResolutions();
+  var expectedResolutions = JSON.parse('[156542.96875,78271.484375,39135.7421875,19567.87109375,9783.935546875,4891.9677734375,2445.98388671875,1222.991943359375,611.4959716796875,305.74798583984375,152.87399291992188,76.43699645996094,38.21849822998047,19.109249114990234,9.554624557495117,4.777312278747559,2.3886561393737793,1.1943280696868896,0.5971640348434448,0.2985820174217224]');
+  assert.deepLooseEqual(spatialResolutions, expectedResolutions);
+
+  var validSpatialResolutions = utils.getValidSpatialResolutions(spatialResolutions, 30.20012);
+  var expectedValidResolutions = JSON.parse('[156542.96875,78271.484375,39135.7421875,19567.87109375,9783.935546875,4891.9677734375,2445.98388671875,1222.991943359375,611.4959716796875,305.74798583984375,152.87399291992188,76.43699645996094,38.21849822998047]');
+  assert.deepLooseEqual(validSpatialResolutions, expectedValidResolutions);
 
   assert.end();
 });
