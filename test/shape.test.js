@@ -128,6 +128,16 @@ tape('[SHAPE] Get projection', function(assert) {
   });
 });
 
+tape('[SHAPE] shp with projection mapnik cannot parse', function(assert) {
+  var file = path.resolve(__dirname, 'fixtures', 'invalid-proj-mapnik-shp', 'invalidProjection.shp');
+  var source = new Shape(file);
+  source.getProjection(function(err) {
+    assert.ok(err, 'expected error');
+    assert.equal(err.code, 'EINVALID', 'expected error code');
+    assert.end();
+  });
+});
+
 tape('[SHAPE] getProjection: shp with invalid projection', function(assert) {
   var file = path.join(__dirname, 'fixtures', 'invalid-proj-shp', 'invalidProjection.shp');
   var source = new Shape(file);
