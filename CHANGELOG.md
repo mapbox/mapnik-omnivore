@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 7.0.0
+
+ - Adjustments to maxzoom calculations for rasters that result in less oversampling and may yield different ranges than previous versions
+ - Fixes a bug in shapefile analysis when mapnik cannot parse the file's projection information
+
 ## 6.3.2
 
  - Now handles more types of GeoJSON parsing errors (both datasource creation and when calling `ds.describe()`) (#128)
