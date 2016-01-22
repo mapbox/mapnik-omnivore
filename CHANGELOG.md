@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 7.1.0
+
+ - Upgraded to node-gdal@0.8.0 and queue-async@1.1.1
+
 ## 7.0.0
 
  - Adjustments to maxzoom calculations for rasters that result in less oversampling and may yield different ranges than previous versions
