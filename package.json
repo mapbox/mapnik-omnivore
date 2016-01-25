@@ -14,7 +14,7 @@
     "sphericalmercator": "~1.0.2",
     "gdal": "~0.8.0",
     "mapbox-file-sniff": "~0.4.0",
-    "queue-async": "~1.1.1"
+    "queue-async": "~1.2.0"
   },
   "repository": {
     "type": "git",
