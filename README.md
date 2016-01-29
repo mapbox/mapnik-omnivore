@@ -110,6 +110,13 @@ $ digest <filepath>
 # Prints a JSON string
 ```
 
+## Generating Mapnik XML
+
+1) Install the https://github.com/mapbox/tilelive-omnivore
+
+2) Use the command line tool it provides, called `mapnik-omnivore` to generate Mapnik XML
+
+
 ## Install
 ```
 npm install mapnik-omnivore
