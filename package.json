@@ -1,6 +1,6 @@
 {
   "name": "mapnik-omnivore",
-  "version": "7.1.1",
+  "version": "7.2.0",
   "description": "Node module that returns metadata of spatial files.",
   "main": "index.js",
   "keywords": [
@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "srs": "~1.1.0",
-    "mapnik": "~3.4.1",
+    "mapnik": "~3.4.17",
     "sphericalmercator": "~1.0.2",
     "gdal": "~0.8.0",
     "mapbox-file-sniff": "~0.4.0",
