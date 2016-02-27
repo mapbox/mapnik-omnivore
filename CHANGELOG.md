@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 7.3.0
+
+ - Updated to use 3.5.0 mapnik
+
 ## 7.1.1
 
  - Upgraded to node-srs@1.1.0 to pull in node-gdal@0.8.0
