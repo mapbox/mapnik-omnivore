@@ -12,11 +12,11 @@ addons:
 matrix:
   include:
      - os: linux
-       env: NODE_VERSION="0.12" COVERAGE=true
+       env: NODE_VERSION="4" COVERAGE=true
      - os: linux
        env: NODE_VERSION="0.10"
      - os: osx
-       env: NODE_VERSION="0.12"
+       env: NODE_VERSION="4"
      - os: osx
        env: NODE_VERSION="0.10"
 
