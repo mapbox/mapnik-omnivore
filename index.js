@@ -5,6 +5,10 @@ var mapnik = require('mapnik');
 var sniffer = require('mapbox-file-sniff');
 var queue = require('queue-async');
 var Csv = require('./lib/csv');
+
+// Register datasource plugins
+mapnik.register_default_input_plugins();
+
 var modules = [
   require('./lib/geojson'),
   require('./lib/raster'),
@@ -13,9 +17,6 @@ var modules = [
   require('./lib/topojson'),
   Csv
 ];
-
-// Register datasource plugins
-mapnik.register_default_input_plugins();
 
 // silence mapnik logs
 mapnik.Logger.setSeverity(mapnik.Logger.NONE);
