@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 7.4.0
+
+ - Adjust maxzoom limits for rasters. New fillzoom max: 21, New maxzoom: 22
+
 ## 7.3.0
 
  - Updated to use 3.5.0 mapnik
