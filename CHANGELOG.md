@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 8.0.0
+
+ - Will no longer provide a recommended max zoom level less than 6
+
 ## 7.4.0
 
  - Adjust maxzoom limits for rasters. New fillzoom max: 21, New maxzoom: 22
