@@ -95,7 +95,7 @@ tape('[SHAPE] Get layers', function(assert) {
 tape('[SHAPE] Get zooms', function(assert) {
   var file = testData + '/data/shp/world_merc/world_merc.shp';
   var expectedMinzoom = 0;
-  var expectedMaxzoom = 5;
+  var expectedMaxzoom = 6;
   var source = new Shape(file);
 
   source.getZooms(function(err, minzoom, maxzoom) {
