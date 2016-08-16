@@ -128,6 +128,54 @@ tape('[GeoJson] can open null island', function(assert) {
   });
 });
 
+tape('[GeoJson] can open point at otherworldly eastern lng', function(assert) {
+  var file = path.resolve('test/fixtures/way_east_point.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    assert.ifError(err, 'should not error');
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 6);
+    assert.end();
+  });
+});
+
+tape('[GeoJson] can open point at otherworldly western lng', function(assert) {
+  var file = path.resolve('test/fixtures/way_west_point.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    assert.ifError(err, 'should not error');
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 6);
+    assert.end();
+  });
+});
+
+tape('[GeoJson] can open line stretching to otherworldly eastern lng', function(assert) {
+  var file = path.resolve('test/fixtures/way_east_line.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    assert.ifError(err, 'should not error');
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 22);
+    assert.end();
+  });
+});
+
+tape('[GeoJson] can open line stretching to otherworldly western lng', function(assert) {
+  var file = path.resolve('test/fixtures/way_west_line.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    assert.ifError(err, 'should not error');
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 22);
+    assert.end();
+  });
+});
+
 tape('[GeoJson] Get layers', function(assert) {
   var file = testData + '/data/geojson/DC_polygon.geo.json';
   var expectedLayers = ['DC_polygon.geo'];
