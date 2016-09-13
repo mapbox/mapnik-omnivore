@@ -14,11 +14,11 @@ matrix:
      - os: linux
        env: NODE_VERSION="4" COVERAGE=true
      - os: linux
-       env: NODE_VERSION="0.10"
+       env: NODE_VERSION="6"
      - os: osx
        env: NODE_VERSION="4"
      - os: osx
-       env: NODE_VERSION="0.10"
+       env: NODE_VERSION="6"
 
 before_install:
  - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
