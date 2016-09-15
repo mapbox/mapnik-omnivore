@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 8.1.0
+
+ - Update to node v6; mapnik 3.5.14; gdal 0.9.3; and mapbox-file-sniff 0.5.2
+
 ## 8.0.0
 
  - Will no longer provide a recommended max zoom level less than 6
