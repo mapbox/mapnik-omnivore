@@ -13,7 +13,7 @@
     "mapnik": "~3.5.14",
     "sphericalmercator": "~1.0.2",
     "gdal": "~0.9.3",
-    "mapbox-file-sniff": "https://github.com/mapbox/mapbox-file-sniff/tarball/smelloscope",
+    "mapbox-file-sniff": "~0.5.2",
     "queue-async": "~1.2.0"
   },
   "repository": {
