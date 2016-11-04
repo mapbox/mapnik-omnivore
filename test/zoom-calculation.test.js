@@ -1,61 +1,100 @@
-var test = require('tape');
-var path = require('path');
+var tape = require('tape');
+var GeoJSON = require('../lib/geojson.js');
 var mapnik = require('mapnik');
-var calcZoom = require('../lib/utils.js').zoomsBySize;
-var SphericalMercator = require('sphericalmercator');
-var sm = new SphericalMercator();
-
 mapnik.register_default_input_plugins();
 
-test('geojson - single point', function(t) {
+tape('[zoom calculation] poi-calgary.geojson', function(assert) {
+  var file = 'test/fixtures/zoom-ratio/poi-calgary.geo.json';
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
 
-  var filepath = path.resolve(__dirname, 'fixtures', 'zoom-size-calculations', 'single-point.json');
-  var original = require(filepath);
-  
-  var ds = new mapnik.Datasource({
-    type: 'geojson',
-    file: filepath,
-    cache_features: false
+    assert.ok(err === null);
+    console.log(file);
+    console.log(minzoom, maxzoom);
+    assert.end();
   });
-
-  featureComparison(t, original, filepath, ds);
-
 });
 
-function featureComparison(test, original, filepath, datasource) {
-  calcZoom(filepath, datasource, function(err, minzoom, maxzoom) {
-    if (err) throw err;
+tape('[zoom calculation] single-point.geojson', function(assert) {
+  var file = 'test/fixtures/zoom-ratio/single-point.geojson';
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
 
-    // - get tile for each feature
-    original.features.forEach(function(f, i) {
-      var bbox = [f.geometry.coordinates[0], f.geometry.coordinates[1], f.geometry.coordinates[0], f.geometry.coordinates[1]];
-      xyz = sm.xyz(bbox, maxzoom);
-
-      // create new tile for this feature
-      var vt = new mapnik.VectorTile(maxzoom, xyz.minX, xyz.minY);
-      vt.addGeoJSON(JSON.stringify({ type: "FeatureCollection", features: [f]}), 'test-layer');
-      vtgj = JSON.parse(vt.toGeoJSONSync('test-layer'));
-
-      console.log('feature '+ i);
-      console.log('longitude delta: ', vtgj.features[0].geometry.coordinates[0] - f.geometry.coordinates[0]);
-      console.log('latitude delta: ', vtgj.features[0].geometry.coordinates[1] - f.geometry.coordinates[1]);
-    });
-
-    test.end();
+    assert.ok(err === null);
+    console.log(file);
+    console.log(minzoom, maxzoom);
+    assert.end();
   });
-}
+});
 
-test('geojson - two points', function(t) {
+tape('[zoom calculation] two-points-close.geojson', function(assert) {
+  var file = 'test/fixtures/zoom-ratio/two-points-close.geojson';
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
 
-  var filepath = path.resolve(__dirname, 'fixtures', 'zoom-size-calculations', 'two-points.json');
-  var original = require(filepath);
-  
-  var ds = new mapnik.Datasource({
-    type: 'geojson',
-    file: filepath,
-    cache_features: false
+    assert.ok(err === null);
+    console.log(file);
+    console.log(minzoom, maxzoom);
+    assert.end();
   });
+});
 
-  featureComparison(t, original, filepath, ds);
+tape('[zoom calculation] two-points-far.geojson', function(assert) {
+  var file = 'test/fixtures/zoom-ratio/two-points-far.geojson';
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
 
+    assert.ok(err === null);
+    console.log(file);
+    console.log(minzoom, maxzoom);
+    assert.end();
+  });
+});
+
+tape('[zoom calculation] two-points-medium.geojson', function(assert) {
+  var file = 'test/fixtures/zoom-ratio/two-points-medium.geojson';
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
+
+    assert.ok(err === null);
+    console.log(file);
+    console.log(minzoom, maxzoom);
+    assert.end();
+  });
+});
+
+tape('[zoom calculation] us-capitals.geojson', function(assert) {
+  var file = 'test/fixtures/zoom-ratio/us-capitals.geojson';
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
+
+    assert.ok(err === null);
+    console.log(file);
+    console.log(minzoom, maxzoom);
+    assert.end();
+  });
 });
