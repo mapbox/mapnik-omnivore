@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 8.2.0
+
+- Move module to @mapbox namespace
+- Fixes incorrect ft + mi + km coordinate conversion for raster pixel sizes
+
 ## 8.1.0
 
  - Update to node v6; mapnik 3.5.14; gdal 0.9.3; and mapbox-file-sniff 0.5.2
