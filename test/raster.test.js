@@ -3,7 +3,6 @@ var path = require('path');
 var fs = require('fs');
 var testData = path.dirname(require.resolve('mapnik-test-data'));
 var Raster = require('../lib/raster.js');
-var utils = require('../lib/utils.js');
 var expectedMetadata_sample_tif = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_tif.json')));
 var expectedMetadata_sample_vrt = JSON.parse(fs.readFileSync(path.resolve('test/fixtures/metadata_sample_vrt.json')));
 
