@@ -25,6 +25,15 @@ test('[CSV] constructor: invalid file', function(assert) {
   assert.end();
 });
 
+test('[CSV] constructor: invalid file - bad header', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid-emptystring-header.csv');
+  assert.throws(function() {
+    new Csv(fixture);
+  }, 'throws an error');
+
+  assert.end();
+});
+
 test('[CSV] constructor: valid file', function(assert) {
   var csv;
   assert.doesNotThrow(function() {
