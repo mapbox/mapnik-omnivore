@@ -20,9 +20,6 @@
     "type": "git",
     "url": "https://github.com/mapbox/mapnik-omnivore"
   },
-  "engines": {
-    "node": "0.10.x"
-  },
   "devDependencies": {
     "coveralls": "~2.11.1",
     "istanbul": "~0.3.0",
