@@ -142,7 +142,8 @@
 "Country": "Morocco",
 "geo_longitude": -7.6208947,
 "geo_latitude": 33.5878457,
-"City": "Casablanca"
+"City": "Casablanca",
+"Capital": "Rabat"
 },
 "type": "Feature",
 "geometry": {
