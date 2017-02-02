@@ -1,158 +1,158 @@
 {
-"type": "FeatureCollection",
-"features": [
-{
-"id": "Petra",
-"properties": {
-"Site": "Petra",
-"Address": "",
-"Country": "Jordan",
-"geo_longitude": 35.4464006,
-"geo_latitude": 30.3273975,
-"City": "Wadi Musa"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
-35.4464006,
-30.3273975
-]
-}
-},
-{
-"id": "Hagia Sophia",
-"properties": {
-"Site": "Hagia Sophia",
-"Address": "Hagia Sophia Square",
-"Country": "Turkey",
-"geo_longitude": 41.008672,
-"geo_latitude": 28.98049,
-"City": "Istanbul"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
-41.008672,
-28.98049
-]
-}
-},
-{
-"id": "Pyramids",
-"properties": {
-"Site": "Pyramids",
-"Address": "",
-"Country": "Egypt",
-"geo_longitude": 31.0856351,
-"geo_latitude": 30.0112875,
-"City": "Giza"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
-31.0856351,
-30.0112875
-]
-}
-},
-{
-"id": "Berlin Wall",
-"properties": {
-"Site": "Berlin Wall",
-"Address": "",
-"Country": "Germany",
-"geo_longitude": 13.3826139,
-"geo_latitude": 52.507139,
-"City": "Berlin"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
-13.3826139,
-52.507139
-]
-}
-},
-{
-"id": "Ã˜sterbÃ¸",
-"properties": {
-"Site": "Ã˜sterbÃ¸",
-"Address": "5745 Aurland",
-"Country": "Norway",
-"geo_longitude": 7.5066563,
-"geo_latitude": 60.8286016,
-"City": "Sogn"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
-7.5066563,
-60.8286016
-]
-}
-},
-{
-"id": "The Dead Sea",
-"properties": {
-"Site": "The Dead Sea",
-"Address": "Ein Gedi Country Kibbutz",
-"Country": "Israel",
-"geo_longitude": 31.612723,
-"geo_latitude": 35.58221,
-"City": "Ein Gedi"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
-31.612723,
-35.58221
-]
-}
-},
-{
-"id": "Home",
-"properties": {
-"Site": "Home",
-"Address": "",
-"Country": "United States",
-"geo_longitude": -122.6870466,
-"geo_latitude": 45.5746151,
-"City": "Portland"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
--122.6870466,
-45.5746151
-]
-}
-},
-{
-"id": "Hassan II",
-"properties": {
-"Site": "Hassan II",
-"Address": "",
-"Country": "Morocco",
-"geo_longitude": -7.6208947,
-"geo_latitude": 33.5878457,
-"City": "Casablanca",
-"Capital": "Rabat"
-},
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": [
--7.6208947,
-33.5878457
-]
-}
-}
-]
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "Petra",
+      "properties": {
+        "Site": "Petra",
+        "Address": "",
+        "Country": "Jordan",
+        "geo_longitude": 35.4464006,
+        "geo_latitude": 30.3273975,
+        "City": "Wadi Musa"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.4464006,
+          30.3273975
+        ]
+      }
+    },
+    {
+      "id": "Hagia Sophia",
+      "properties": {
+        "Site": "Hagia Sophia",
+        "Address": "Hagia Sophia Square",
+        "Country": "Turkey",
+        "geo_longitude": 41.008672,
+        "geo_latitude": 28.98049,
+        "City": "Istanbul"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.008672,
+          28.98049
+        ]
+      }
+    },
+    {
+      "id": "Pyramids",
+      "properties": {
+        "Site": "Pyramids",
+        "Address": "",
+        "Country": "Egypt",
+        "geo_longitude": 31.0856351,
+        "geo_latitude": 30.0112875,
+        "City": "Giza"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.0856351,
+          30.0112875
+        ]
+      }
+    },
+    {
+      "id": "Berlin Wall",
+      "properties": {
+        "Site": "Berlin Wall",
+        "Address": "",
+        "Country": "Germany",
+        "geo_longitude": 13.3826139,
+        "geo_latitude": 52.507139,
+        "City": "Berlin"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3826139,
+          52.507139
+        ]
+      }
+    },
+    {
+      "id": "Ã˜sterbÃ¸",
+      "properties": {
+        "Site": "Ã˜sterbÃ¸",
+        "Address": "5745 Aurland",
+        "Country": "Norway",
+        "geo_longitude": 7.5066563,
+        "geo_latitude": 60.8286016,
+        "City": "Sogn"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5066563,
+          60.8286016
+        ]
+      }
+    },
+    {
+      "id": "The Dead Sea",
+      "properties": {
+        "Site": "The Dead Sea",
+        "Address": "Ein Gedi Country Kibbutz",
+        "Country": "Israel",
+        "geo_longitude": 31.612723,
+        "geo_latitude": 35.58221,
+        "City": "Ein Gedi"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.612723,
+          35.58221
+        ]
+      }
+    },
+    {
+      "id": "Home",
+      "properties": {
+        "Site": "Home",
+        "Address": "",
+        "Country": "United States",
+        "geo_longitude": -122.6870466,
+        "geo_latitude": 45.5746151,
+        "City": "Portland"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6870466,
+          45.5746151
+        ]
+      }
+    },
+    {
+      "id": "Hassan II",
+      "properties": {
+        "Site": "Hassan II",
+        "Address": "",
+        "Country": "Morocco",
+        "geo_longitude": -7.6208947,
+        "geo_latitude": 33.5878457,
+        "City": "Casablanca",
+        "Capital": "Rabat"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.6208947,
+          33.5878457
+        ]
+      }
+    }
+  ]
 }
