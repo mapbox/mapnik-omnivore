@@ -189,7 +189,7 @@ tape('[GeoJson] should return an error upon creation of datasource due to invali
   assert.end();
 });
 
-tape.only('[GeoJson] Retrieving properties', function(assert) {
+tape('[GeoJson] Retrieving properties', function(assert) {
   var file = path.resolve('test/fixtures/valid-geojson.json');
   var result = new GeoJSON(file);
   var expectedDetails = {
