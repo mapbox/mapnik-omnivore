@@ -188,3 +188,26 @@ tape('[GeoJson] should return an error upon creation of datasource due to invali
   );
   assert.end();
 });
+
+tape('[GeoJson] Retrieving properties', function(assert) {
+  var file = path.resolve('test/fixtures/valid-geojson.json');
+
+  //  var expectedCenter = [-40.839187300000006, 44.9045458];
+  //  var expectedExtent = [-122.6870466, 28.98049, 41.008672, 60.8286016];
+  var expectedLayers = ['valid-geojson'];
+  var result = new GeoJSON(file);
+  var num_features_to_query = 10;
+
+  assert.ok(result);
+
+  // assert.ok(result.center);
+  // assert.ok(result.extent);
+  // assert.ok(typeof result.extent == 'object');
+  // assert.ok(typeof result.center == 'object');
+  // assert.deepEqual(result.center, expectedCenter);
+  // assert.deepEqual(result.extent, expectedExtent);
+  assert.deepEqual(result.layers, expectedLayers);
+  assert.equal(result.getDetails, num_features_to_query);
+  console.log(result.getDetails);
+  assert.end();
+});
