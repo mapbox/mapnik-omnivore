@@ -208,6 +208,5 @@ tape('[GeoJson] Retrieving properties', function(assert) {
   // assert.deepEqual(result.extent, expectedExtent);
   assert.deepEqual(result.layers, expectedLayers);
   assert.equal(result.getDetails, num_features_to_query);
-  console.log(result.getDetails);
   assert.end();
 });
