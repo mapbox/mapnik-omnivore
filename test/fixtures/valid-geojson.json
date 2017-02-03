@@ -5,7 +5,7 @@
       "properties": {
         "Site": "Petra",
         "Address": "",
-        "Location": "Jordan",
+        "location": "Jordan",
         "geo_longitude": 35.4464006,
         "geo_latitude": 30.3273975,
         "Town": "Wadi Musa"
