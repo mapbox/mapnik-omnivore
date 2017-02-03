@@ -20,7 +20,7 @@ Currently supports the following file types:
 ## Javascript Usage
 
 ```
-var mapnikOmnivore = require('mapnik-omnivore'),
+var mapnikOmnivore = require('@mapbox/mapnik-omnivore'),
     path = require('path');
 
 var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
@@ -103,7 +103,7 @@ Raster files will include a `raster` object:
 
 ## CLI Usage
 ```
-$ npm install --global mapnik-omnivore
+$ npm install --global @mapbox/mapnik-omnivore
 $ digest <filepath>
 # Prints a JSON string
 ```
