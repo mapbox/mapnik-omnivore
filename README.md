@@ -117,7 +117,7 @@ $ digest <filepath>
 
 ## Install
 ```
-npm install mapnik-omnivore
+npm install @mapbox/mapnik-omnivore
 ```
 
 ## Tests
