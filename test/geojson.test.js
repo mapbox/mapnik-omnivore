@@ -123,7 +123,7 @@ tape('[GeoJson] can open null island', function(assert) {
 
     assert.ok(err === null);
     assert.deepEqual(minzoom, 0);
-    assert.deepEqual(maxzoom, 11);
+    assert.deepEqual(maxzoom, 10);
     assert.end();
   });
 });

@@ -31,7 +31,7 @@ tape('[zoom calculation] points', function(assert) {
 
       assert.ok(err === null);
       assert.equal(minzoom, 0);
-      assert.equal(maxzoom, 11);
+      assert.equal(maxzoom, 10);
       assert.end();
     });
   });
@@ -63,7 +63,7 @@ tape('[zoom calculation] points', function(assert) {
 
       assert.ok(err === null);
       assert.equal(minzoom, 0);
-      assert.equal(maxzoom, 11);
+      assert.equal(maxzoom, 10);
       assert.end();
     });
   });
@@ -79,7 +79,7 @@ tape('[zoom calculation] points', function(assert) {
 
       assert.ok(err === null);
       assert.equal(minzoom, 0);
-      assert.equal(maxzoom, 11);
+      assert.equal(maxzoom, 10);
       assert.end();
     });
   });
@@ -95,7 +95,7 @@ tape('[zoom calculation] points', function(assert) {
 
       assert.ok(err === null);
       assert.equal(minzoom, 0);
-      assert.equal(maxzoom, 11);
+      assert.equal(maxzoom, 10);
       assert.end();
     });
   });
