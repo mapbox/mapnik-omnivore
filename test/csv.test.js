@@ -19,6 +19,27 @@ validDatasource = new mapnik.Datasource({
 test('[CSV] constructor: invalid file', function(assert) {
   var fixture = path.join(__dirname, 'fixtures', 'invalid.malformed.csv');
   assert.throws(function() {
+    var csv = new Csv(fixture);
+  }, 'throws an error');
+
+  var expected = {
+    vector_layers: [
+      {
+        id: '',
+        description: '',
+        minzoom: 0,
+        maxzoom: 22,
+        fields: validDatasource.describe().fields
+      }
+    ]
+  };
+
+  assert.end();
+});
+
+test('[CSV] constructor: invalid - malformed header', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', '');
+  assert.throws(function() {
     new Csv(fixture);
   }, 'throws an error');
 
@@ -83,6 +104,7 @@ test('[CSV] getDetails', function(assert) {
   };
 
   csv.getDetails(function(err, details) {
+    console.log(err);
     assert.ifError(err, 'no error');
     assert.deepEqual(details, expected, 'expected details');
     assert.end();
