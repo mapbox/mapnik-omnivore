@@ -128,6 +128,30 @@ tape('[GeoJson] can open null island', function(assert) {
   });
 });
 
+tape('[GeoJson] can open point at lng just under 560', function(assert) {
+  var file = path.resolve('test/fixtures/way_east_point.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    assert.ifError(err, 'should not error');
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 6);
+    assert.end();
+  });
+});
+
+tape('[GeoJson] can open line stretching to lng just above -560', function(assert) {
+  var file = path.resolve('test/fixtures/way_west_line.geojson');
+  assert.ok(fs.existsSync(file));
+  var source = new GeoJSON(file);
+  source.getZooms(function(err, minzoom, maxzoom) {
+    assert.ifError(err, 'should not error');
+    assert.deepEqual(minzoom, 0);
+    assert.deepEqual(maxzoom, 6);
+    assert.end();
+  });
+});
+
 tape('[GeoJson] Get layers', function(assert) {
   var file = testData + '/data/geojson/DC_polygon.geo.json';
   var expectedLayers = ['DC_polygon.geo'];
