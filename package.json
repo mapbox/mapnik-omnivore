@@ -9,7 +9,7 @@
     "geodata"
   ],
   "dependencies": {
-    "@mapbox/sphericalmercator": "~1.0.2",
+    "@mapbox/sphericalmercator": "~1.0.5",
     "@mapbox/mapbox-file-sniff": "~1.0.0",
     "srs": "~1.2.0",
     "mapnik": "~3.5.14",
