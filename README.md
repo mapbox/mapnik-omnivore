@@ -20,7 +20,7 @@ Currently supports the following file types:
 ## Javascript Usage
 
 ```
-var mapnikOmnivore = require('mapnik-omnivore'),
+var mapnikOmnivore = require('@mapbox/mapnik-omnivore'),
     path = require('path');
 
 var file = path.resolve('test/data/zip/world_merc/world_merc.shp');
@@ -41,7 +41,6 @@ mapnikOmnivore.digest(file, function(err, metadata){
 
 #### Example of returned `metadata`
 ```
- metadata: 
 { filesize: 428328,   // size of file in bytes
   projection: '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over',
   filename: 'world_merc',
@@ -76,7 +75,6 @@ mapnikOmnivore.digest(file, function(err, metadata){
 
 Raster files will include a `raster` object:
 ```
- metadata:
 { filesize: 1494,
   projection: '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
   raster: 
@@ -105,7 +103,7 @@ Raster files will include a `raster` object:
 
 ## CLI Usage
 ```
-$ npm install --global mapnik-omnivore
+$ npm install --global @mapbox/mapnik-omnivore
 $ digest <filepath>
 # Prints a JSON string
 ```
@@ -119,7 +117,7 @@ $ digest <filepath>
 
 ## Install
 ```
-npm install mapnik-omnivore
+npm install @mapbox/mapnik-omnivore
 ```
 
 ## Tests

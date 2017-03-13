@@ -188,3 +188,66 @@ tape('[GeoJson] should return an error upon creation of datasource due to invali
   );
   assert.end();
 });
+
+tape('[GeoJson] Retrieving properties', function(assert) {
+  var file = path.resolve('test/fixtures/valid-geojson.json');
+  var result = new GeoJSON(file);
+  var expectedDetails = {
+    vector_layers: [
+      {
+        id: 'valid-geojson',
+        description: '',
+        minzoom: 0,
+        maxzoom: 22,
+        fields: {
+          Abode: 'String',
+          Address: 'String',
+          Ally: 'String',
+          Avenue: 'String',
+          Border: 'String',
+          Boulevard: 'String',
+          Builder: 'String',
+          Capital: 'String',
+          City: 'String',
+          Country: 'String',
+          Destination: 'String',
+          Film: 'String',
+          Group: 'String',
+          Height: 'String',
+          Lake: 'String',
+          location: 'String',
+          Material: 'String',
+          Nation: 'String',
+          Neighbor: 'String',
+          Nickname: 'String',
+          Parliament: 'String',
+          Port: 'String',
+          Province: 'String',
+          River: 'String',
+          Ruler: 'String',
+          Sea: 'String',
+          Shape: 'String',
+          Site: 'String',
+          Square: 'String',
+          Terrain: 'String',
+          Title: 'String',
+          Town: 'String',
+          Wall: 'String',
+          geo_latitude: 'Number',
+          geo_longitude: 'Number'
+        }
+      }
+    ]
+  };
+
+  result.getDetails(function(err, details) {
+    if (err) {
+      assert.ifError(err, 'should not error');
+      return assert.end();
+    }
+
+    assert.ok(result);
+    assert.deepEqual(details, expectedDetails);
+    assert.end();
+  });
+});
