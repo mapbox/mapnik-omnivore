@@ -1,6 +1,14 @@
 
 # Changelog
 
+## 8.2.2
+
+- Update to collect all feature's properties from GeoJSON files
+
+## 8.2.1
+
+- Increase raster maxzoom to z23
+
 ## 8.2.0
 
 - Move module to @mapbox namespace

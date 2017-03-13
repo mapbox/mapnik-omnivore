@@ -1,0 +1,151 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "properties": {
+        "Site": "Petra",
+        "Address": "",
+        "location": "Jordan",
+        "geo_longitude": 35.4464006,
+        "geo_latitude": 30.3273975,
+        "Town": "Wadi Musa"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.4464006,
+          30.3273975
+        ]
+      }
+    },
+    {
+      "properties": {
+        "Title": "Hagia Sophia",
+        "Square": "Hagia Sophia Square",
+        "Country": "Turkey",
+        "geo_longitude": 41.008672,
+        "geo_latitude": 28.98049,
+        "Destination": "Istanbul"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.008672,
+          28.98049
+        ]
+      }
+    },
+    {
+      "properties": {
+        "Shape": "Pyramids",
+        "Avenue": "",
+        "River": "Nile",
+        "geo_longitude": 31.0856351,
+        "geo_latitude": 30.0112875,
+        "Nickname": "Giza"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.0856351,
+          30.0112875
+        ]
+      }
+    },
+    {
+      "properties": {
+        "Wall": "Berlin Wall",
+        "Height": "",
+        "Builder": "Germany",
+        "geo_longitude": 13.3826139,
+        "geo_latitude": 52.507139,
+        "Terrain": "Hilly"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3826139,
+          52.507139
+        ]
+      }
+    },
+    {
+      "properties": {
+        "City": "Ã˜sterbÃ¸",
+        "Boulevard": "5745 Aurland",
+        "Province": "Norway",
+        "geo_longitude": 7.5066563,
+        "geo_latitude": 60.8286016,
+        "Lake": "Sogn"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5066563,
+          60.8286016
+        ]
+      }
+    },
+    {
+      "properties": {
+        "Sea": "The Dead Sea",
+        "Group": "Ein Gedi Country Kibbutz",
+        "Nation": "Israel",
+        "geo_longitude": 31.612723,
+        "geo_latitude": 35.58221,
+        "Border": "Ein Gedi"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.612723,
+          35.58221
+        ]
+      }
+    },
+    {
+      "id": "Home",
+      "properties": {
+        "Abode": "Home",
+        "Material": "Brick",
+        "Ally": "United States",
+        "geo_longitude": -122.6870466,
+        "geo_latitude": 45.5746151,
+        "Port": "Portland"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6870466,
+          45.5746151
+        ]
+      }
+    },
+    {
+      "properties": {
+        "Ruler": "Hassan II",
+        "Parliament": "",
+        "Neighbor": "Morocco",
+        "geo_longitude": -7.6208947,
+        "geo_latitude": 33.5878457,
+        "Film": "Casablanca",
+        "Capital": "Rabat"
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.6208947,
+          33.5878457
+        ]
+      }
+    }
+  ]
+}
