@@ -25,10 +25,31 @@ test('[CSV] constructor: invalid file', function(assert) {
   assert.end();
 });
 
+test('[CSV] constructor: invalid file - empty string header', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid-emptystring-header.csv');
+
+  assert.throws(function() {
+    new Csv(fixture);
+  }, 'throws an error');
+
+  assert.end();
+});
+
+test('[CSV] constructor: invalid file - incorrect header names', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid-header-names.csv');
+
+  assert.throws(function() {
+    new Csv(fixture);
+  }, 'throws an error');
+
+  assert.end();
+});
+
 test('[CSV] constructor: valid file', function(assert) {
-  var csv;
+  var fixture = path.join(__dirname, 'fixtures', 'valid-nypd.csv');
+  var csv = new Csv(fixture);
   assert.doesNotThrow(function() {
-    csv = new Csv(valid);
+    new Csv(fixture);
   }, 'no error');
 
   assert.equal(csv.detailsName, 'json', 'exposes details name');
