@@ -31,7 +31,7 @@ module.exports.digest = function(file, callback) {
     if (err && err.code === 'EINVALID') {
       try {
         new Csv(file);
-        filetype = 'csv';
+        fileinfo.type = 'csv';
       }
       catch (error) { return callback(err); }
     } else if (err) return callback(err);
