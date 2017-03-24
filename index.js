@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var invalid = require('./lib/invalid');
 var mapnik = require('mapnik');
-var sniffer = require('mapbox-file-sniff');
+var sniffer = require('@mapbox/mapbox-file-sniff');
 var queue = require('queue-async');
 var Csv = require('./lib/csv');
 
@@ -27,16 +27,16 @@ mapnik.Logger.setSeverity(mapnik.Logger.NONE);
  * @returns metadata {filesize, projection, filename, center, extent, json, minzoom, maxzoom, layers, dstype, filetype}
  */
 module.exports.digest = function(file, callback) {
-  sniffer.quaff(file, function(err, filetype) {
+  sniffer.fromFile(file, function(err, fileinfo) {
     if (err && err.code === 'EINVALID') {
       try {
         new Csv(file);
-        filetype = 'csv';
+        fileinfo.type = 'csv';
       }
       catch (error) { return callback(err); }
     } else if (err) return callback(err);
 
-    getMetadata(file, filetype, function(err, metadata) {
+    getMetadata(file, fileinfo.type, function(err, metadata) {
       if (err) return callback(err);
       return callback(null, metadata);
     });

@@ -1,5 +1,11 @@
-
 # Changelog
+
+## 8.3.0
+
+- Shorten the CSV errors when Mapnik cannot find proper column headers [#157](https://github.com/mapbox/mapnik-omnivore/issues/157)
+- Introduce an internal framework for determining feature-specific zoom levels, just starting with small point datasets for now [#151](https://github.com/mapbox/mapnik-omnivore/issues/151), [#140](https://github.com/mapbox/mapnik-omnivore/issues/140)
+- Update to @mapbox/mapbox-file-sniff and @mapbox/sphericalmercator packages
+- Update appveyor to Node v4 and v6, no longer testing on Node v0.10.x
 
 ## 8.2.2
 
