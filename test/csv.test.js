@@ -55,7 +55,7 @@ test('[CSV] constructor: valid - empty string header', function(assert) {
   }, 'throws an error');
 
   var fields = csv.datasource.fields();
-  assert.ok(fields['_0'], 'created temporary header from empty string');
+  assert.ok(fields._0, 'created temporary header from empty string');
   assert.end();
 });
 
