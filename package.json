@@ -12,7 +12,7 @@
     "@mapbox/sphericalmercator": "~1.0.5",
     "@mapbox/mapbox-file-sniff": "~1.0.0",
     "srs": "~1.2.0",
-    "mapnik": "https://github.com/mapnik/node-mapnik/tarball/wagyu",
+    "mapnik": "https://github.com/mapnik/node-mapnik/tarball/master",
     "gdal": "~0.9.3",
     "queue-async": "~1.2.0"
   },
