@@ -25,16 +25,6 @@ test('[CSV] constructor: invalid file', function(assert) {
   assert.end();
 });
 
-test('[CSV] constructor: invalid file - empty string header', function(assert) {
-  var fixture = path.join(__dirname, 'fixtures', 'invalid-emptystring-header.csv');
-
-  assert.throws(function() {
-    new Csv(fixture);
-  }, 'throws an error');
-
-  assert.end();
-});
-
 test('[CSV] constructor: invalid file - incorrect header names', function(assert) {
   var fixture = path.join(__dirname, 'fixtures', 'invalid-header-names.csv');
 
@@ -54,6 +44,18 @@ test('[CSV] constructor: valid file', function(assert) {
 
   assert.equal(csv.detailsName, 'json', 'exposes details name');
   assert.equal(csv.dstype, 'csv', 'exposes dstype');
+  assert.end();
+});
+
+test('[CSV] constructor: valid - empty string header', function(assert) {
+  var fixture = path.join(__dirname, 'fixtures', 'invalid-emptystring-header.csv');
+  var csv = new Csv(fixture);
+  assert.doesNotThrow(function() {
+    new Csv(fixture);
+  }, 'throws an error');
+
+  var fields = csv.datasource.fields();
+  assert.ok(fields._0, 'created temporary header from empty string');
   assert.end();
 });
 
