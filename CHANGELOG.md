@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.4.0
+
+- Upgraded to use mapnik 3.6.0
+
 ## 8.3.0
 
 - Shorten the CSV errors when Mapnik cannot find proper column headers [#157](https://github.com/mapbox/mapnik-omnivore/issues/157)
