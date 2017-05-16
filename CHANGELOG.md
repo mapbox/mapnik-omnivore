@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.4.1
+
+- Increase raster maxzoom to z25
+
 ## 8.4.0
 
 - Upgraded to use mapnik 3.6.0
