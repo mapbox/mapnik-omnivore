@@ -1,5 +1,40 @@
 var tape = require('tape');
 var utils = require('../lib/utils.js');
+var os = require('os');
+var path = require('path');
+var fs = require('fs');
+var tmp_dir = os.tmpdir();
+
+tape('[zoomsBySize] we detect z0 for file less than 10 MB', function(assert) {
+  var filepath = path.join(tmp_dir,'test.csv');
+  fd = fs.openSync(filepath, 'w+')
+  fs.writeSync(fd,'x,y');
+  for (var i=0;i<1000000;++i) {
+    fs.writeSync(fd,'-122,48');
+  }
+  assert.ok(fs.statSync(filepath).size < 10000000);
+  utils.zoomsBySize(filepath,[ -122,48,-122,48],function(err,min,max) {
+      assert.equal(min,0);
+      assert.equal(max,22);
+      assert.end();
+  });
+});
+
+tape('[zoomsBySize] we detect > z0 for file greater than 10 MB', function(assert) {
+  var filepath = path.join(tmp_dir,'test2.csv');
+  fd = fs.openSync(filepath, 'w+')
+  fs.writeSync(fd,'x,y');
+  for (var i=0;i<2000000;++i) {
+    fs.writeSync(fd,'-122,48');
+  }
+  assert.ok(fs.statSync(filepath).size > 10000000);
+  utils.zoomsBySize(filepath,[ -122,48,-122,48],function(err,min,max) {
+      assert.equal(min,22);
+      assert.equal(max,22);
+      assert.end();
+  });
+});
+
 
 tape('[CONVERT TO METERS] Should not convert cell sizes in m', function(assert) {
   var cellSize = [10, 10];
