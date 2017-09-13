@@ -337,7 +337,7 @@ tape('[VRT] Get layers', function(assert) {
 
 tape('[TIFF] Get zooms', function(assert) {
   var file = testData + '/data/geotiff/sample.tif';
-  var expectedMinzoom = 9;
+  var expectedMinzoom = 0;
   var expectedMaxzoom = 15;
   var source = new Raster(file);
 
@@ -356,7 +356,7 @@ tape('[TIFF] Get zooms', function(assert) {
 
 tape('[VRT] Get zooms', function(assert) {
   var file = testData + '/data/vrt/sample.vrt';
-  var expectedMinzoom = 9;
+  var expectedMinzoom = 0;
   var expectedMaxzoom = 15;
   var source = new Raster(file);
 
