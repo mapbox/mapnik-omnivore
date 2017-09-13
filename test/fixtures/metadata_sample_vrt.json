@@ -59,7 +59,7 @@
     -110.27304, 
     44.596767
   ],
-  "minzoom": 9,
+  "minzoom": 0,
   "maxzoom": 15,
   "dstype": "gdal",
   "filetype": ".vrt",
