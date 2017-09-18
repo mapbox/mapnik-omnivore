@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.4.2
+
+- Clamp minzoom to z0 for vector data files under 10 MB
+
 ## 8.4.1
 
 - Increase raster maxzoom to z25
