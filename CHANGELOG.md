@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.5.0
+
+- Clamp minzoom to z0 for all raster data
+- Try/catch forward projections in raster extent method
+
 ## 8.4.2
 
 - Clamp minzoom to z0 for vector data files under 10 MB
