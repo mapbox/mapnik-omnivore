@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.0.0
+
+- Updated to mapnik 3.7.0
+- Dropped support for Windows binaries
+
 ## 8.5.0
 
 - Clamp minzoom to z0 for all raster data
