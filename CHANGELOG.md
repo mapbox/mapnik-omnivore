@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.0.1
+
+- try/catch around more reprojection errors
+
 ## 9.0.0
 
 - Updated to mapnik 3.7.0
