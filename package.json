@@ -21,12 +21,12 @@
     "url": "https://github.com/mapbox/mapnik-omnivore"
   },
   "devDependencies": {
-    "coveralls": "~2.11.1",
+    "coveralls": "^3.0.2",
     "istanbul": "~0.3.0",
     "jscs": "^1.10.0",
     "jshint": "^2.6.0",
     "mapnik-test-data": "https://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.5-c84800ed20a6a9bc2143dd11b1b2a3190b9ae698.tgz",
-    "tape": "3.0.x"
+    "tape": "^4.10.1"
   },
   "scripts": {
     "test": "jshint index.js test lib && jscs index.js test lib && tape test/*.js",
