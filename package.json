@@ -22,14 +22,15 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
-    "istanbul": "~0.3.0",
-    "jscs": "^1.10.0",
-    "jshint": "^2.6.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "istanbul": "^0.4.5",
     "mapnik-test-data": "https://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.5-c84800ed20a6a9bc2143dd11b1b2a3190b9ae698.tgz",
     "tape": "^4.10.1"
   },
   "scripts": {
-    "test": "jshint index.js test lib && jscs index.js test lib && tape test/*.js",
+    "test": "eslint index.js test lib && tape test/*.js",
     "coverage": "istanbul cover tape test/*.test.js && coveralls < ./coverage/lcov.info"
   },
   "bin": {
