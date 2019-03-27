@@ -9,12 +9,12 @@
     "geodata"
   ],
   "dependencies": {
-    "@mapbox/sphericalmercator": "~1.0.5",
     "@mapbox/mapbox-file-sniff": "~1.0.0",
-    "srs": "~1.2.0",
-    "mapnik": "~4.2.1",
+    "@mapbox/sphericalmercator": "~1.0.5",
     "gdal": "~0.9.3",
-    "queue-async": "~1.2.0"
+    "mapnik": "~4.2.1",
+    "queue-async": "~1.2.0",
+    "srs": "~1.2.0"
   },
   "repository": {
     "type": "git",
@@ -22,16 +22,16 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
+    "nyc": "^13.3.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "istanbul": "^0.4.5",
     "mapnik-test-data": "https://mapbox-npm.s3.amazonaws.com/package/mapnik-test-data-2.0.5-c84800ed20a6a9bc2143dd11b1b2a3190b9ae698.tgz",
     "tape": "^4.10.1"
   },
   "scripts": {
     "test": "eslint index.js test lib && tape test/*.js",
-    "coverage": "istanbul cover tape test/*.test.js && coveralls < ./coverage/lcov.info"
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "bin": {
     "digest": "bin/digest"
