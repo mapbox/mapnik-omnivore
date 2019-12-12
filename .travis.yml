@@ -1,36 +1,9 @@
-language: cpp
+language: node_js
 
-sudo: false
-
-addons:
-  apt:
-    sources:
-     - ubuntu-toolchain-r-test
-    packages:
-     - libstdc++6 # upgrade libstdc++ on linux to support C++11
-
-matrix:
-  include:
-     - os: linux
-       env: NODE_VERSION="4" COVERAGE=true
-     - os: linux
-       env: NODE_VERSION="6"
-     - os: osx
-       env: NODE_VERSION="4"
-     - os: osx
-       env: NODE_VERSION="6"
-
-before_install:
- - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
- - source ~/.nvm/nvm.sh
- - nvm install $NODE_VERSION
- - nvm use $NODE_VERSION
-
-install:
- - npm install
-
-before_script:
- - if [[ ${COVERAGE:-false} != false ]]; then npm run coverage; fi;
+node_js:
+ - "8"
+ - "10"
+ - "12"
 
 script:
  - npm test
