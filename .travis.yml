@@ -12,13 +12,13 @@ addons:
 matrix:
   include:
      - os: linux
-       env: NODE_VERSION="4" COVERAGE=true
+       env: NODE_VERSION="10" COVERAGE=true
      - os: linux
-       env: NODE_VERSION="6"
+       env: NODE_VERSION="12"
      - os: osx
-       env: NODE_VERSION="4"
+       env: NODE_VERSION="10"
      - os: osx
-       env: NODE_VERSION="6"
+       env: NODE_VERSION="12"
 
 before_install:
  - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
