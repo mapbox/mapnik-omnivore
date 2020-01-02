@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.1
+
+- Update mapnik install to allow 4.x or 3.x
+
 ## 9.1.0
 
 - Updated dependencies to allow install with node v10
