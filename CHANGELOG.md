@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.2.0
+
+- Updated dependencies to allow install with node v10
+
 ## 9.0.1
 
 - try/catch around more reprojection errors
