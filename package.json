@@ -9,12 +9,12 @@
     "geodata"
   ],
   "dependencies": {
-    "@mapbox/sphericalmercator": "~1.0.5",
     "@mapbox/mapbox-file-sniff": "~1.0.0",
-    "srs": "~1.2.0",
+    "@mapbox/sphericalmercator": "~1.0.5",
+    "gdal": "~0.9.9",
     "mapnik": "4.x || 3.x",
-    "gdal": "~0.9.3",
-    "queue-async": "~1.2.0"
+    "queue-async": "~1.2.0",
+    "srs": "~1.2.0"
   },
   "repository": {
     "type": "git",
