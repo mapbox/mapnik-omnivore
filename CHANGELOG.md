@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.1.0
+
+- Updated dependencies to allow install with node v10
+- Add linter
+- Remove test for node 4 + 6, add tests for node 8 + 10
+
 ## 9.0.1
 
 - try/catch around more reprojection errors
