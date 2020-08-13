@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.0.0
+
+- Limit maxzoom output to z16 for any vector source
+- Remove node8 support, test with node12
+
 ## 9.1.1
 
 - Update mapnik install to allow 4.x or 3.x
