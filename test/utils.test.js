@@ -16,7 +16,7 @@ tape('[zoomsBySize] we detect z0 for file less than 10 MB', function(assert) {
   assert.ok(fs.statSync(filepath).size < 10000000);
   utils.zoomsBySize(filepath, [-122, 48, -122, 48], function(err, min, max) {
     assert.equal(min, 0);
-    assert.equal(max, 22);
+    assert.equal(max, 16);
     assert.end();
   });
 });
@@ -31,8 +31,8 @@ tape('[zoomsBySize] we detect > z0 for file greater than 10 MB', function(assert
 
   assert.ok(fs.statSync(filepath).size > 10000000);
   utils.zoomsBySize(filepath, [-122, 48, -122, 48], function(err, min, max) {
-    assert.equal(min, 22);
-    assert.equal(max, 22);
+    assert.equal(min, 16);
+    assert.equal(max, 16);
     assert.end();
   });
 });
