@@ -32,7 +32,7 @@
     ]
   },
   "minzoom": 0,
-  "maxzoom": 22,
+  "maxzoom": 16,
   "layers": [
     "topo"
   ],
