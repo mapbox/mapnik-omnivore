@@ -2,7 +2,7 @@
 Node module that returns metadata of spatial files.
 Version format follows [Semantic Version](http://semver.org/)
 
-[![Build Status](https://travis-ci.org/mapbox/mapnik-omnivore.svg?branch=master)](https://travis-ci.org/mapbox/mapnik-omnivore)
+[![Build Status](https://travis-ci.com/mapbox/mapnik-omnivore.svg?branch=master)](https://travis-ci.com/mapbox/mapnik-omnivore)
 [![Coverage Status](https://coveralls.io/repos/mapbox/mapnik-omnivore/badge.svg?branch=master)](https://coveralls.io/r/mapbox/mapnik-omnivore?branch=master)
 
 Currently supports the following file types:
