@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node-version: '10'
+            coverage: true
+          - os: macos-latest
+            node-version: '10'
+            coverage: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install system dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          python3-dev \
+          libstdc++6 \
+          libgdal-dev \
+          gdal-bin \
+          libproj-dev \
+          libtiff5-dev \
+          libpng-dev \
+          libjpeg-dev \
+          zlib1g-dev \
+          libfreetype6-dev \
+          libxml2-dev \
+          libxslt-dev \
+          libsqlite3-dev \
+          libboost-dev \
+          libboost-system-dev \
+          libboost-filesystem-dev \
+          libboost-program-options-dev \
+          libboost-python-dev \
+          libboost-regex-dev \
+          libboost-thread-dev \
+          libicu-dev \
+          libcairo2-dev
+
+    - name: Install system dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew update
+        brew install \
+          gdal \
+          proj \
+          libtiff \
+          libpng \
+          jpeg \
+          freetype \
+          libxml2 \
+          sqlite \
+          boost \
+          icu4c \
+          cairo
+
+    - name: Set environment variables (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig" >> $GITHUB_ENV
+        echo "LDFLAGS=-L/opt/homebrew/lib -L/usr/local/lib" >> $GITHUB_ENV
+        echo "CPPFLAGS=-I/opt/homebrew/include -I/usr/local/include" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: npm install
+      env:
+        npm_config_build_from_source: true
+
+    - name: Run tests
+      run: npm test
