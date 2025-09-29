@@ -13,6 +13,7 @@
     "@mapbox/sphericalmercator": "~1.0.5",
     "gdal": "~0.9.3",
     "mapnik": "4.x || 3.x",
+    "minimist": "^1.2.6",
     "queue-async": "~1.2.0",
     "srs": "~1.2.0"
   },
