@@ -17,7 +17,7 @@ jobs:
           - os: ubuntu-latest
             node-version: '10'
             coverage: true
-          - os: macos-latest
+          - os: macos-12
             node-version: '10'
             coverage: false
 
@@ -67,7 +67,7 @@ jobs:
           libcairo2-dev
 
     - name: Install system dependencies (macOS)
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'macos-12'
       run: |
         brew update
         brew install \
@@ -84,7 +84,7 @@ jobs:
           cairo
 
     - name: Set environment variables (macOS)
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'macos-12'
       run: |
         echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig" >> $GITHUB_ENV
         echo "LDFLAGS=-L/opt/homebrew/lib -L/usr/local/lib" >> $GITHUB_ENV
