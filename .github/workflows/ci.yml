@@ -25,6 +25,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -38,6 +43,7 @@ jobs:
         sudo apt-get install -y \
           build-essential \
           python3-dev \
+          python3.8-dev \
           libstdc++6 \
           libgdal-dev \
           gdal-bin \
@@ -84,10 +90,16 @@ jobs:
         echo "LDFLAGS=-L/opt/homebrew/lib -L/usr/local/lib" >> $GITHUB_ENV
         echo "CPPFLAGS=-I/opt/homebrew/include -I/usr/local/include" >> $GITHUB_ENV
 
+    - name: Upgrade npm and node-gyp
+      run: |
+        npm install -g npm@6.14.18
+        npm install -g node-gyp@8.4.1
+
     - name: Install dependencies
       run: npm install
       env:
         npm_config_build_from_source: true
+        PYTHON: python3.8
 
     - name: Run tests
       run: npm test
