@@ -243,13 +243,24 @@ tape('[GPX] Getting datasource: should return expected datasource and layer name
   });
 });
 
-tape('Getting filetype: should return an error due to incompatible file', function(assert) {
+tape('[TIFF] Getting filetype: should return an error due to incompatible file', function(assert) {
   var file = path.resolve('test/fixtures/invalid.unknown.tif');
   mapnik_omnivore.digest(file, function(err, result) {
     assert.ok(err instanceof Error);
     assert.notOk(result, 'no result returned');
     assert.equal('EINVALID', err.code);
     assert.equal(err.message, 'Unknown filetype');
+    assert.end();
+  });
+});
+
+tape('[SQLite] Getting filetype: should return an error due to incompatible file', function(assert) {
+  var file = path.resolve();
+  mapnik_omnivore.digest(file, function(err, result) {
+    assert.ok(err instanceof Error);
+    assert.notOk(result, 'no result returned');
+    assert.equal('EINVALID', err.code);
+    assert.equal(err.message, 'encountered unsupported file type');
     assert.end();
   });
 });
